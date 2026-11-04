@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="rm27_world">
+
+    <physics name="default_physics" type="dart">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.2 0.2 0.2 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light name="sun" type="directional">
+      <pose>0 0 20 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <direction>-0.3 0.2 -0.9</direction>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+    </light>
+
+    <!-- The arena visual comes from the world level arena_textured model at the
+         end of this file. model://rmuc_2027 is not included here: a textured
+         mesh inside an included model cannot resolve its map (see
+         docs/arena_texture.md). -->
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+
+    <model name="arena_ground">
+      <static>true</static>
+      <pose>0 0 0.019 0 0 0</pose>
+      <link name="link">
+        <collision name="ground">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name="arena_walls">
+      <static>true</static>
+      <link name="link">
+        <collision name="west">
+          <pose>0.249 8.065 1.918 0 0 0</pose>
+          <geometry><box><size>0.2 16.0 3.8</size></box></geometry>
+        </collision>
+        <collision name="east">
+          <pose>28.049 8.065 1.918 0 0 0</pose>
+          <geometry><box><size>0.2 16.0 3.8</size></box></geometry>
+        </collision>
+        <collision name="south">
+          <pose>14.149 0.164 1.918 0 0 0</pose>
+          <geometry><box><size>28.0 0.2 3.8</size></box></geometry>
+        </collision>
+        <collision name="north">
+          <pose>14.149 15.967 1.918 0 0 0</pose>
+          <geometry><box><size>28.0 0.2 3.8</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- The arena mesh has no collision, so its raised base platform near the
+         far (enemy) base is invisible to physics. This pad matches the visible
+         platform top (z=0.318) under base_far_front, so the drone lands on it
+         instead of sinking through the visual floor. -->
+    <model name="base_landing_pad">
+      <static>true</static>
+      <pose>24.7 8.0 0.169 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2.0 2.0 0.3</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Arena visual: the original STL re-exported as OBJ with planar top-down
+         UVs from the official RMUC 2027 map (28 x 15 m play area, 100 px/m),
+         paired with an MTL so the texture resolves. Kept at world level
+         because a map referenced inside an included model:// gets prefixed
+         with the model path and fails. The MTL points at the PNG by bare
+         filename; an absolute path there gives an untextured white mesh. -->
+    <model name="arena_textured">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="arena">
+          <geometry>
+            <mesh>
+              <uri>model://rmuc_2027/meshes/arena_textured.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <!-- Static blocks for the obstacle avoidance demo. Poses are world
+       coordinates (x = east, y = north, z = up). Each block is 3 m tall so
+       it really blocks a drone flying at 2 m AGL. -->
+  <model name="nav_obstacles">
+    <static>true</static>
+    <link name="link">
+
+      <collision name="center_highland_collision">
+        <pose>14.125 7.875 1.9 0 0 0</pose>
+        <geometry><box><size>1.75 1.75 3.8</size></box></geometry>
+      </collision>
+      <visual name="center_highland_visual">
+        <pose>14.125 7.875 1.9 0 0 0</pose>
+        <geometry><box><size>1.75 1.75 3.8</size></box></geometry>
+        <material>
+          <ambient>0.18 0.22 0.28 1</ambient>
+          <diffuse>0.26 0.32 0.40 1</diffuse>
+          <specular>0.05 0.05 0.05 1</specular>
+        </material>
+      </visual>
+
+      <collision name="block_a_collision">
+        <pose>9.0 5.0 1.5 0 0 0</pose>
+        <geometry><box><size>2.0 2.0 3.0</size></box></geometry>
+      </collision>
+      <visual name="block_a_visual">
+        <pose>9.0 5.0 1.5 0 0 0</pose>
+        <geometry><box><size>2.0 2.0 3.0</size></box></geometry>
+        <material>
+          <ambient>0.34 0.20 0.16 1</ambient>
+          <diffuse>0.46 0.28 0.20 1</diffuse>
+          <specular>0.05 0.05 0.05 1</specular>
+        </material>
+      </visual>
+
+      <collision name="block_b_collision">
+        <pose>11.0 13.0 1.5 0 0 0</pose>
+        <geometry><box><size>2.0 2.0 3.0</size></box></geometry>
+      </collision>
+      <visual name="block_b_visual">
+        <pose>11.0 13.0 1.5 0 0 0</pose>
+        <geometry><box><size>2.0 2.0 3.0</size></box></geometry>
+        <material>
+          <ambient>0.34 0.20 0.16 1</ambient>
+          <diffuse>0.46 0.28 0.20 1</diffuse>
+          <specular>0.05 0.05 0.05 1</specular>
+        </material>
+      </visual>
+
+    </link>
+  </model>
+</sdf>
