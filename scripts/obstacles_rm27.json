@@ -1,0 +1,28 @@
+{
+  "frame": "gazebo_world_xy",
+  "note": "Obstacles and targets in Gazebo ENU world coordinates (x = east, y = north, metres). rm27_nav.py converts to PX4 local NED as (north, east) = (y - spawn_y, x - spawn_x).",
+  "spawn_world_xy": [5.0, 6.0],
+  "altitude_m": 2.0,
+  "obstacles": [
+    {"name": "wall_west", "x": [0.149, 0.349], "y": [0.065, 16.065]},
+    {"name": "wall_east", "x": [27.949, 28.149], "y": [0.065, 16.065]},
+    {"name": "wall_south", "x": [0.149, 28.149], "y": [0.064, 0.264]},
+    {"name": "wall_north", "x": [0.149, 28.149], "y": [15.867, 16.067]},
+    {"name": "center_highland", "x": [13.25, 15.0], "y": [7.0, 8.75]},
+    {"name": "block_a", "x": [8.0, 10.0], "y": [4.0, 6.0]},
+    {"name": "block_b", "x": [10.0, 12.0], "y": [12.0, 14.0]}
+  ],
+  "targets_world_xy": [
+    [18.0, 3.0],
+    [14.0, 13.0],
+    [8.0, 13.0],
+    [5.0, 6.0]
+  ],
+  "landmarks_world_xy": {
+    "note": "从 rmuc_2027.stl 实测（z>1.2 m 的连通块），仅供 --target 参考",
+    "base_near": [2.5, 8.0],
+    "base_far": [25.75, 8.0],
+    "base_far_front": [24.7, 8.0],
+    "center_highland": [14.1, 7.9]
+  }
+}

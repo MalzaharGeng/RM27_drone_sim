@@ -1,0 +1,22 @@
+{
+  "frame": "gazebo_world_xy",
+  "note": "rm27_world（纯场地，没有 nav_obstacles 方块）用的地图：只有四面围栏和场地中央 3.8 m 高的高地柱。中央高地尺寸来自 rmuc_2027.stl 实测。坐标是 Gazebo ENU（x=东, y=北），脚本换成 PX4 NED 时会对调 x/y。",
+  "spawn_world_xy": [5.0, 6.0],
+  "altitude_m": 2.0,
+  "obstacles": [
+    {"name": "wall_west", "x": [0.149, 0.349], "y": [0.065, 16.065]},
+    {"name": "wall_east", "x": [27.949, 28.149], "y": [0.065, 16.065]},
+    {"name": "wall_south", "x": [0.149, 28.149], "y": [0.064, 0.264]},
+    {"name": "wall_north", "x": [0.149, 28.149], "y": [15.867, 16.067]},
+    {"name": "center_highland", "x": [13.25, 15.0], "y": [7.0, 8.75]}
+  ],
+  "targets_world_xy": [
+    [25.75, 8.0]
+  ],
+  "landmarks_world_xy": {
+    "base_near": [2.5, 8.0],
+    "base_far": [25.75, 8.0],
+    "base_far_front": [24.7, 8.0],
+    "center_highland": [14.1, 7.9]
+  }
+}
