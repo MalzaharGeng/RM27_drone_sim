@@ -1,0 +1,22 @@
+target: enemy base (base_far_front)
+leg 1: N=+2.0 E=+19.7  heading +84 deg  直飞 19.80 m / 规划 20.03 m  拐点 1  最窄余量 1.90 m
+    via N=-0.34 E=+11.35
+total planned distance: 20.03 m
+connecting to PX4 on udp 14540 (Ctrl-C to abort) ...
+connected to PX4
+waiting for position estimate ...
+[px4 mode] HOLD
+position estimate OK
+waiting for preflight checks ...
+preflight checks OK
+taking off to 2.0 m
+[px4 mode] TAKEOFF
+[px4 mode] HOLD
+Received ack for not-existing command: 176! Ignoring... (mavlink_command_sender.cpp:324)
+offboard active
+leg 1/1 -> N=+2.0 E=+19.7 (41 setpoints, 0.5 m apart, heading +84 deg)
+[px4 mode] OFFBOARD
+Received ack for not-existing command: 176! Ignoring... (mavlink_command_sender.cpp:324)
+descending to 0.8 m in front of the target, then holding 3 s
+holding 3 s at the last target
+mission complete, log: ~/drone_sim/logs/nav_positions.csv
