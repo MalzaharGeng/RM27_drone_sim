@@ -4,6 +4,13 @@
      fly around. rm27_world.sdf itself is left untouched. -->
 <sdf version="1.9">
   <world name="rm27_nav_world">
+    <!-- 渲染传感器（相机/深度）必须由 Sensors 系统驱动，否则 model 里的
+         <sensor type="camera"> 只有组件、没有图像发布者。默认 server.config
+         只加载 Physics / UserCommands / SceneBroadcaster 三个系统。 -->
+    <plugin name="gz::sim::systems::Sensors" filename="gz-sim-sensors-system">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
 
     <physics name="default_physics" type="dart">
       <max_step_size>0.004</max_step_size>
@@ -27,7 +34,7 @@
       <specular>0.2 0.2 0.2 1</specular>
     </light>
 
-    <!-- replaced by arena_textured below () -->
+    <!-- 场地视觉由文件末尾的 model://rmuc_2027 include 提供 -->
 
     <include>
       <uri>model://nav_obstacles</uri>
@@ -94,25 +101,12 @@
     </model>
 
   
-      <!-- Arena, textured: the original STL re-exported as OBJ with planar
-         top-down UVs from the official RMUC 2027 map (28 x 15 m play area,
-         100 px/m), expressed as an OBJ+MTL pair so the texture resolves.
-         Placed at world level because texture URIs inside a model:// include
-         are prefixed with the model path and break.
-         The MTL references the map by absolute path (relative paths are
-         resolved against the process CWD, not the model directory). -->
-    <model name="arena_textured">
-      <static>true</static>
+      <!-- 场地视觉：model://rmuc_2027 内是官方 STP 转出的四块纯色网格，
+           不再使用贴图或 UV。碰撞仍由上面的 arena_ground / arena_walls 提供。 -->
+    <include>
+      <uri>model://rmuc_2027</uri>
+      <name>rmuc_2027</name>
       <pose>0 0 0 0 0 0</pose>
-      <link name="link">
-        <visual name="arena">
-          <geometry>
-            <mesh>
-              <uri>model://rmuc_2027/meshes/arena_textured.obj</uri>
-            </mesh>
-          </geometry>
-        </visual>
-      </link>
-    </model>
+    </include>
   </world>
 </sdf>

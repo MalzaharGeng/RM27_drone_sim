@@ -1,14 +1,32 @@
-# PX4 v1.17.0 是独立仓库，按 README 单独 clone，不进本仓库
+# ---- 嵌套仓库：PX4 由官方维护，不作为本仓库内容 ----
 PX4-Autopilot/
 
-# 运行时产物
+# ---- 官方 CAD 原始文件（653 MB），不进仓库 ----
+rm27_sim/cad/
+
+# ---- 运行时产物 ----
 logs/
 __pycache__/
 *.pyc
 *.pyo
+*.bak
+*.bak2_*
+*.orig
+rm27_sim/worlds/*.bak*
+rm27_sim/backups/
+rm27_sim/models/rmuc_2027/materials/
 
-# 编辑器 / 系统
+# ---- 编辑器 / 系统 ----
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+# ---- 说明：大资产默认提交 ----
+# rm27_sim/models/rmuc_2027/meshes/arena_textured.obj  33.7 MB
+# rm27_sim/models/rmuc_2027/meshes/rmuc_2027.stl       18.1 MB
+# rm27_sim/models/rmuc_2027/meshes/rmuc2027_floor.png   3.0 MB
+# 若想改用 Git LFS，执行：
+#   git lfs install
+#   git lfs track "*.obj" "*.stl" "*.png"
+#   git add .gitattributes

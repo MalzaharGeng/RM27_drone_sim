@@ -1,15 +1,23 @@
 # RM27 无人机导航仿真
 
 WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2027
-官方网格，任务是"已知地图 + A* 规划 + offboard 航点飞行"的避障航线验证。
+官方 STP 转出的实体网格，任务是"已知地图 + A* 规划 + offboard 航点飞行"的避障航线验证。
 渲染走本机 RTX 5070 Ti。
+
+![RMUC 2027 场地在 Gazebo 中的实体渲染](docs/images/arena_gazebo_20261107.png)
+
+场地不使用贴图：官方 `RMUC2027_V1.0.0.stp` 经 OCCT 三角化，按 XCAF 的逐面颜色
+分成 9 组网格，颜色和布局都来自原始 CAD，构建流程见
+[tools/step_to_arena/](tools/step_to_arena/)。
 
 配套文档：
 
 | 文档 | 内容 |
 |---|---|
 | [docs/TERMINAL_SLAM_GAZEBO.md](docs/TERMINAL_SLAM_GAZEBO.md) | 终端调参、参数速查、Gazebo 操作、SLAM 接入方案 |
-| [docs/arena_texture.md](docs/arena_texture.md) | 场地贴图方案与 gz 贴图加载规律 |
+| [docs/arena_texture.md](docs/arena_texture.md) | 早期贴图方案，已弃用，保留作历史记录 |
+| [tools/step_to_arena/](tools/step_to_arena/) | 官方 STP 到场地网格的构建脚本与踩坑记录 |
+| [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3) | 双目 VIO、PX4 外部视觉桥、相机规格与仿真配置 |
 | [docs/specs/2026-10-31-px4-gazebo-ubuntu2604-design.md](docs/specs/2026-10-31-px4-gazebo-ubuntu2604-design.md) | 环境选型与验收标准 |
 | [docs/worklog/](docs/worklog/) | 11-03 / 11-04 两天的排障过程 |
 | [docs/flight_records/](docs/flight_records/) | 实飞日志（nav_positions.csv、mission.log、PX4 控制台） |
@@ -35,7 +43,7 @@ PX4 官方只认证到 24.04，26.04 靠 ROS 的 gz vendor 包对齐版本，所
 
 - `glxinfo -B` 在 `GALLIUM_DRIVER=d3d12` + `MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA`
   下报 `D3D12 (NVIDIA GeForce RTX 5070 Ti Laptop GPU)`、`Accelerated: yes`
-- RMUC 2027 场地（28 × 15 m）能加载，贴图正常，物理为 dart，围栏与抬升平台有碰撞体
+- RMUC 2027 场地（28 × 16 m，含围栏）能加载，9 组实体网格颜色正确（截图见上），物理为 dart，围栏与抬升平台有碰撞体
 - PX4 v1.17.0 SITL 编译通过，`make px4_sitl gz_x500` 在场地内起飞
 - offboard 方形航点飞完一圈，位置日志见 `docs/flight_records/offboard_positions.csv`
 - `nav_planner.py` 13 项单元测试通过，`rm27_nav.py --dry-run` 能离线输出完整航线
@@ -60,8 +68,10 @@ RM27_drone_sim
 │   │   ├── rm27_nav_world.sdf    场地 + 导航障碍块
 │   │   └── rm27_gui.config       GUI 布局与面板
 │   └── models/
-│       ├── rmuc_2027/            场地网格：meshes/arena_textured.obj + .mtl + 贴图
+│       ├── rmuc_2027/            场地：model.sdf + meshes/color_*.stl（9 组，约 117 MB）
 │       └── nav_obstacles/        1 个高地柱 + 2 个 3 m 方块（带碰撞）
+├── tools/
+│   └── step_to_arena/        STP → 网格 → SDF 的构建脚本
 ├── scripts/
 │   ├── nav_planner.py        网格 A*，纯标准库
 │   ├── rm27_nav.py           带避障的航点任务（含安全中断）
@@ -152,7 +162,7 @@ PX4 和 Gazebo 的输出写进 `logs/sim_console.log`，任务日志写进
 cd rm27_sim && ./run_rm27.sh
 ```
 
-场地实测坐标（从 `rmuc_2027.stl` 聚类，z > 1.2 m 的结构）：
+场地实测坐标（从当前网格聚类，z > 1.2 m 的结构）：
 
 | 结构 | 中心 (x, y) | 高度 |
 |---|---|---|
@@ -163,6 +173,30 @@ cd rm27_sim && ./run_rm27.sh
 出生点 `(5, 6)`，最远的基地在本地 NED 里是 `N=2.0, E=20.75`。远端基地装甲板
 前沿在 `x≈25.52`，直接飞中心会和装甲板重合，`--enemy-base` 用
 `base_far_front = (24.7, 8.0)` 作落点。
+
+## 场地模型
+
+`rm27_sim/models/rmuc_2027/` 下的网格来自官方 `RMUC2027_V1.0.0.stp`
+（653 MB，CREO 导出），不手工建模、不贴图：
+
+| 文件 | 内容 | 面数 |
+|---|---|---|
+| `meshes/color_black.stl` | 地面主体 | 42,168 |
+| `meshes/color_beige.stl` | 围栏与框架 | 52,851 |
+| `meshes/color_darkgrey.stl` | 桁架与设备 | 7,132 |
+| `meshes/color_red.stl` | 红方线条 | 2,487 |
+| `meshes/color_blue.stl` | 蓝方线条 | 2,514 |
+| `meshes/color_deepblue.stl` | 暗部装饰 | 798 |
+| `meshes/color_grey.stl` | 过渡件 | 1,502 |
+| `meshes/color_white.stl` | 高光件 | 820 |
+| `meshes/color_cyan.stl` | 青色装饰 | 293 |
+
+构建流程：XCAF 建装配 → 12 mm 三角化 → 逐面取色 → 9 色聚类 → STL + SDF。
+脚本、依赖和踩过的坑都在 [tools/step_to_arena/](tools/step_to_arena/)。
+9 个 STL 共约 117 MB，首次加载 10–20 秒。
+
+坐标 x 0.149..28.149、y 0.064..16.067、z 0.019..3.817，与旧 STL 逐位一致；
+`arena_ground` 和 `arena_walls` 的碰撞体没有改，导航和降落逻辑不受影响。
 
 ## 避障实现
 
@@ -216,8 +250,9 @@ cd rm27_sim && ./run_rm27.sh
 
 ## 待办
 
-1. 场地底图源分辨率约 31 px/m，近看偏软；想彻底清晰要走 CAD 资产路线，
-   见 `docs/arena_texture.md` 的已知限制
+1. 场地已改实体渲染，贴图方案停用；9 个主色是聚类结果，如果要逐面保留 319 色，
+   需要先解决 Gazebo 的材质切换开销
 2. 机载视觉（相机 + VIO）还没接进 SITL，方案在
-   `docs/TERMINAL_SLAM_GAZEBO.md` 第 3 节，未实机验证
+   `docs/TERMINAL_SLAM_GAZEBO.md` 第 3 节，未实机验证；双目配置与相机规格在
+   [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3)
 3. 多机与动态障碍不在当前范围内

@@ -3,19 +3,133 @@
   <model name="rmuc_2027">
     <static>true</static>
     <link name="arena">
-      <visual name="arena_visual">
-         <geometry>
-    	    <mesh>
-               <uri>meshes/rmuc_2027.stl</uri>
-               <scale>1 1 1</scale>
-            </mesh>
-         </geometry>
+      <!-- 实体渲染：官方 STP 经 OCCT 三角化，颜色取自 XCAF label 树里的逐面
+           颜色（59,685 个面带色，含纯红/纯蓝），按 9 个主色聚类。
+           不再使用贴图或 UV；四区后备版本在 model.sdf.bak_fourzone。 -->
+      <visual name="arena_black">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_black.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.015 0.015 0.015 1</ambient>
+          <diffuse>0.030 0.030 0.030 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
 
-  	 <material>
-    	       <ambient>0.30 0.34 0.30 1</ambient>
-               <diffuse>0.42 0.48 0.42 1</diffuse>
-               <specular>0.05 0.05 0.05 1</specular>
-  	</material>
+      <visual name="arena_darkgrey">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_darkgrey.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.075 0.075 0.075 1</ambient>
+          <diffuse>0.150 0.150 0.150 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_grey">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_grey.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.160 0.160 0.160 1</ambient>
+          <diffuse>0.320 0.320 0.320 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_beige">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_beige.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.310 0.295 0.235 1</ambient>
+          <diffuse>0.620 0.590 0.470 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_white">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_white.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.450 0.450 0.450 1</ambient>
+          <diffuse>0.900 0.900 0.900 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_red">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_red.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.375 0.050 0.050 1</ambient>
+          <diffuse>0.750 0.100 0.100 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_blue">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_blue.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.050 0.110 0.350 1</ambient>
+          <diffuse>0.100 0.220 0.700 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_deepblue">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_deepblue.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.010 0.035 0.255 1</ambient>
+          <diffuse>0.020 0.070 0.510 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_cyan">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_cyan.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.025 0.155 0.175 1</ambient>
+          <diffuse>0.050 0.310 0.350 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
       </visual>
 
     </link>
