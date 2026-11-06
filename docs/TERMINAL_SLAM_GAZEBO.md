@@ -488,7 +488,8 @@ ros2 run ros_gz_bridge parameter_bridge \
 
 本机已经有一份 ORB-SLAM3：
 
-- 源码：`~/ORB_SLAM3`
+- 仓库：<https://github.com/MalzaharGeng/ORB_SLAM3>
+- 源码：`~/ORB_SLAM3`（上面仓库的本地 clone）
 - 实机 D435i 操作：`~/ORB_SLAM3/操作手册.md`
 - PX4 VIO 桥：`~/ORB_SLAM3/tests/PX4_VIO.md`
 - 摄像头直连示例：`~/slam_webcam_demo/webcam_orb_slam3.cpp`
@@ -525,6 +526,11 @@ R_optical_body = [ 0 -1  0
 ```
 
 填到 ORB-SLAM3 的 `T_b_c` / `Tbc` 前，先用一帧已知方向的小样本验证符号，别直接抄。
+
+仿真侧的双目配置在 ORB_SLAM3 仓库的 `config/RM27_Sim_D435i_Stereo.yaml`：
+1360×960、fx=fy 667.0、bf 33.35，对应 `x500_mono_cam/model.sdf` 的
+HFOV 1.590 rad。改 SDF 的视场或分辨率后，这个 YAML 必须同步重算，
+否则 ORB-SLAM3 的双目初始化会直接失败。
 
 ### 3.5 把位姿喂给 PX4
 
