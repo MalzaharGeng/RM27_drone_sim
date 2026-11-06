@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 覆盖 PX4 自带的 x500_mono_cam：改为「前视双目」，规格对齐 2026-11-06 在用的
+     USB3.0 模组（德创信，2720x960 双目拼接）
+     - 基线 50 mm（沿用上一版仿真假设；实机基线未测，标定后同步）
+     - 两路 1360x960@30，水平 FOV 91.1deg = 1.590 rad
+       （由 2.0mm/3.0um 焦距与 102deg 对角视场反推，单目 fx=fy≈667 px）
+     - 光轴沿 +x，平视
+     模型名必须保持 x500_mono_cam，PX4 的 gz_x500_mono_cam 目标按此名生成。
+     原始单目定义备份在同目录 model.sdf.orig_single_cam。 -->
+<sdf version='1.9'>
+  <model name='x500_mono_cam'>
+    <self_collide>false</self_collide>
+
+    <include merge='true'>
+      <uri>x500</uri>
+    </include>
+
+    <link name="cam_left_link">
+      <pose relative_to="base_link">0.12 0.025 0.242 0 0 0</pose>
+      <inertial>
+        <mass>0.010</mass>
+        <inertia><ixx>1e-6</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1e-6</iyy><iyz>0</iyz><izz>1e-6</izz></inertia>
+      </inertial>
+      <visual name="housing">
+        <geometry><box><size>0.02 0.02 0.025</size></box></geometry>
+        <material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.08 0.08 0.08 1</diffuse></material>
+      </visual>
+      <sensor name="cam_left" type="camera">
+        <gz_frame_id>cam_left_link</gz_frame_id>
+        <pose>0 0 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.590</horizontal_fov>
+          <image><width>1360</width><height>960</height></image>
+          <clip><near>0.05</near><far>300</far></clip>
+          <noise><type>gaussian</type><mean>0.0</mean><stddev>0.003</stddev></noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+    </link>
+
+    <link name="cam_right_link">
+      <pose relative_to="base_link">0.12 -0.025 0.242 0 0 0</pose>
+      <inertial>
+        <mass>0.010</mass>
+        <inertia><ixx>1e-6</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1e-6</iyy><iyz>0</iyz><izz>1e-6</izz></inertia>
+      </inertial>
+      <visual name="housing">
+        <geometry><box><size>0.02 0.02 0.025</size></box></geometry>
+        <material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.08 0.08 0.08 1</diffuse></material>
+      </visual>
+      <sensor name="cam_right" type="camera">
+        <gz_frame_id>cam_right_link</gz_frame_id>
+        <pose>0 0 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.590</horizontal_fov>
+          <image><width>1360</width><height>960</height></image>
+          <clip><near>0.05</near><far>300</far></clip>
+          <noise><type>gaussian</type><mean>0.0</mean><stddev>0.003</stddev></noise>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+    </link>
+
+    <joint name="cam_left_joint" type="fixed">
+      <parent>base_link</parent><child>cam_left_link</child>
+    </joint>
+    <joint name="cam_right_joint" type="fixed">
+      <parent>base_link</parent><child>cam_right_link</child>
+    </joint>
+  </model>
+</sdf>

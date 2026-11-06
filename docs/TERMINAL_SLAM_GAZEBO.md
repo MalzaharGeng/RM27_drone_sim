@@ -393,7 +393,7 @@ PX4 的 gz 机型在 `PX4-Autopilot/Tools/simulation/gz/models/`，常用的有�
 | make 目标 | 传感器 |
 |---|---|
 | `gz_x500` | 基础 IMU/气压/磁罗盘/GPS |
-| `gz_x500_mono_cam` | 单目相机（1280×960，HFOV 1.74 rad） |
+| `gz_x500_mono_cam` | 单目相机（PX4 默认 1280×960 / HFOV 1.74 rad）；本项目已覆盖为双目 1360×960 / HFOV 1.590 / 50 mm 基线 |
 | `gz_x500_depth` | RGB 1920×1080 + 深度 640×480（OakD-Lite） |
 | `gz_x500_lidar_2d` | 2D 激光（1080 线，±135°） |
 | `gz_x500_lidar_front` | 前向单点/短距激光 |
@@ -511,7 +511,8 @@ k1, k2, p1, p2, k3 = 0        # Gazebo 相机默认无镜头畸变
 
 | 机型 | 分辨率 | HFOV | fx≈ |
 |---|---|---|---|
-| `x500_mono_cam` | 1280×960 | 1.74 rad | 538.7 |
+| `x500_mono_cam`（本项目覆盖后） | 1360×960 | 1.590 rad | 667.0 |
+| `x500_mono_cam`（PX4 默认） | 1280×960 | 1.74 rad | 538.7 |
 | `x500_depth` RGB | 1920×1080 | 1.204 rad | 1397.0 |
 | `x500_depth` 深度 | 640×480 | 1.274 rad | 431.9 |
 
