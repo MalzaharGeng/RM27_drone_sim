@@ -48,10 +48,24 @@
         </material>
       </visual>
 
-      <visual name="arena_beige">
+      <visual name="arena_beige_a">
         <geometry>
           <mesh>
-            <uri>meshes/color_beige.stl</uri>
+            <uri>meshes/color_beige_a.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.310 0.295 0.235 1</ambient>
+          <diffuse>0.620 0.590 0.470 1</diffuse>
+          <specular>0.030 0.030 0.030 1</specular>
+        </material>
+      </visual>
+
+      <visual name="arena_beige_b">
+        <geometry>
+          <mesh>
+            <uri>meshes/color_beige_b.stl</uri>
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
