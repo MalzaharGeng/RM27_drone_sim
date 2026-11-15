@@ -1,43 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""[NP-01 FIX20] EXCITE 高度参考在 PX4 局部 NED z 坐标系 reset 后的连续性契约。
+"""EXCITE 高度参考的 PX4 z-reset 连续性处理（FIX20）。
 
-问题（FIX19 离线定位）
-----------------------
-`sim_pilot.py:682-683` 进入 EXCITE 时把 `excite_ref[2] = height.z` 捕获一次；
-`:708-711` 用 `abs(height.z - excite_ref[2]) > excite_max_dz` 判越界。
-PX4 EKF 首次融合视觉高度时会做一次 **position reset**：`z_reset_counter`
-1→2、`delta_z = ±…`，`z` 瞬时阶跃同一个量。旧参考属于旧坐标系，直接相减
-就把「坐标系平移」误判成「飞机爬升」并 fatal（flight2 的 1.1929 m）。
+首次融合视觉高度时，PX4 可能平移局部 NED z 坐标。
+旧实现仍使用进入 EXCITE 时的参考，曾将 reset 误判为 1.1929 m 高度越界。
+ULog 和 VehicleLocalPosition.msg 核对结果：
+    z_after = z_before + delta_z + 真实运动
+因此参考按 ref_z += delta_z 同号平移，不重设为当前 z，保留真实累计运动。
 
-PX4 消息语义（已用 ULog + .msg 核实）
-------------------------------------
-`VehicleLocalPosition.msg`：
-  * `z` —— NED Down position（负高度），reset 后 `z_after = z_before + delta_z + 真实运动`
-  * `delta_z` —— "Amount of vertical shift of position estimate in latest reset [m]"，
-    **sticky**：reset 后每一帧都保持同一个值，直到下一次 reset
-  * `z_reset_counter` —— uint8，每次 z reset +1，**回绕 255→0 合法**
-  * `vz_reset_counter` —— uint8，速度 reset 计数，独立记录
+delta_z 在 reset 后保持到下一事件，不能按每帧重复使用。
+仅 (zrc_new - zrc_old) % 256 == 1 时应用一次；255→0 为合法回绕。
+差值 0 表示无新事件，2..255 表示跨事件、回退或乱序，无法恢复时失败关闭。
+进入 EXCITE 时同时捕获 z、zrc、vzrc 和 sample_us，排除进入前的历史 delta。
+vz_reset_counter 单独记录。
 
-因此契约是：
-  1. **符号**：`ref_z += delta_z`（同号平移，不是 `ref_z -= delta_z`，
-     更不是 `ref_z = 当前 z`）。后者会清掉真实累计高度偏移，属禁止行为。
-  2. **一次性**：只在 `z_reset_counter` 出现一个**可确认的新事件**时应用一次。
-     sticky `delta_z` 在后续帧不得重复平移。
-  3. **可确认的新事件**：`(zrc_new - zrc_old) % 256 == 1`。
-     `0` = 同一 counter 重复消息；`2..255` = 跨过多个事件 / 回退 / 乱序，
-     累计变换无法可靠恢复 → **失败关闭**，明确报错，不猜测、不拿最后一个
-     delta 代表全部 reset。
-  4. **首帧同时捕获 counter**：进入 EXCITE 捕获参考时必须同时记录
-     `zrc/vzrc/sample_us`，避免把进入前已存在的历史 sticky delta 误用。
-  5. **per-tick 影响面**：reset 当拍只「暂缓高度位移这一项判定」；
-     输入健康、角速度、倾角、水平位移、VIO 就绪、监督器、授权、
-     硬上限等所有其它退出条件继续生效。下一有效样本恢复正常高度包络检查。
-  6. **不重置任何状态**：不延长初始化时间、不清除安全故障、不重新开始包络、
-     不重置 `disp_xy` 参考、不重置 ready streak。
-
-本模块是纯函数（不依赖 rclpy / 不读真值 / 不读时钟），便于单测；
-`sim_pilot.py` 的 EXCITE 生产路径调用 `advance_excite_height_reference()`。
+reset 当拍只暂缓高度位移判定，下一有效样本恢复；输入健康、角速度、倾角、
+水平位移、VIO 就绪、监督器、授权和硬上限照常检查。
+初始化时间、故障状态、水平参考、包络与 ready streak 均不重置。
+本模块为纯函数，不读取真值或时钟，不依赖 rclpy。
 """
 import math
 from dataclasses import dataclass
