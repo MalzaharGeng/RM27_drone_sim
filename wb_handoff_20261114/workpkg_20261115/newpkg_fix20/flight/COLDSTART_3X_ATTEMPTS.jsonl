@@ -1,0 +1,9 @@
+{"event": "launch_started", "batch": "NP01_FIX20_COLDSTART_3X", "round": 1, "tag": "fix20_cold_r1", "wall": "2026-11-15T23:27:19+0800"}
+{"event": "launch_finished", "batch": "NP01_FIX20_COLDSTART_3X", "round": 1, "tag": "fix20_cold_r1", "launcher_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r1_20261115_232720", "wall": "2026-11-15T23:29:43+0800"}
+{"event": "graded", "batch": "NP01_FIX20_COLDSTART_3X", "round": 1, "grade_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r1_20261115_232720", "required_pass": true}
+{"event": "launch_started", "batch": "NP01_FIX20_COLDSTART_3X", "round": 2, "tag": "fix20_cold_r2", "wall": "2026-11-15T23:29:43+0800"}
+{"event": "launch_finished", "batch": "NP01_FIX20_COLDSTART_3X", "round": 2, "tag": "fix20_cold_r2", "launcher_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r2_20261115_232943", "wall": "2026-11-15T23:32:11+0800"}
+{"event": "graded", "batch": "NP01_FIX20_COLDSTART_3X", "round": 2, "grade_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r2_20261115_232943", "required_pass": true}
+{"event": "launch_started", "batch": "NP01_FIX20_COLDSTART_3X", "round": 3, "tag": "fix20_cold_r3", "wall": "2026-11-15T23:32:11+0800"}
+{"event": "launch_finished", "batch": "NP01_FIX20_COLDSTART_3X", "round": 3, "tag": "fix20_cold_r3", "launcher_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r3_20261115_233212", "wall": "2026-11-15T23:34:29+0800"}
+{"event": "graded", "batch": "NP01_FIX20_COLDSTART_3X", "round": 3, "grade_rc": 0, "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r3_20261115_233212", "required_pass": true}

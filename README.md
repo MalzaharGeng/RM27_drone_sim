@@ -6,9 +6,17 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 
 ![RMUC 2027 场地在 Gazebo 中的实体渲染](docs/images/arena_gazebo_20261107.png)
 
-场地不使用贴图：官方 `RMUC2027_V1.0.0.stp` 经 OCCT 三角化，按 XCAF 的逐面颜色
+场地主体使用官方 CAD 实体网格；当前视觉定位实验另外叠加地面纹理。官方 `RMUC2027_V1.0.0.stp` 经 OCCT 三角化，按 XCAF 的逐面颜色
 分成 9 组网格，颜色和布局都来自原始 CAD，构建流程见
 [tools/step_to_arena/](tools/step_to_arena/)。
+
+## 当前进展（2026-11-16）
+
+新增真实双目/IMU VIO 闭环：ORB-SLAM3 → PX4 EV → Position/Offboard → 5 m → 接回降落。FIX20 修复 EXCITE 高度参考随 z-reset 同号平移，新版本独立冷启动 **3/3 正常任务通过**。中断专项 **B / UNVERIFIED**，因共享进程运行后证据缺失未判 C；原场地可靠性、延迟性能、Nano 实机未验证。
+
+新闭环及验收边界见 [阶段状态与入口](docs/NP01_STATUS_20261116.md)、[完整中断审计](docs/verification/20261116/INTERRUPTION_AUDIT_REPORT.md)。[算法主线](https://github.com/MalzaharGeng/ORB_SLAM3) 与本仓库分别维护；ROS 输入节点源码在 `ros2/rm27_slam/`。旧 A* 演示和新 VIO 闭环的证据分别记录。
+
+本仓库的“飞行记录”均为仿真记录，不代表真机飞行。历史中断实验脚本默认会启动仿真，使用前必须获得明确运行授权。
 
 配套文档：
 
@@ -37,7 +45,9 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 PX4 官方只认证到 24.04，26.04 靠 ROS 的 gz vendor 包对齐版本，所以 PX4 必须
 锁 v1.17.0（上游在 #25521 里才支持 Jetty）。
 
-## 已验证
+## 历史场地与规划演示
+
+以下为早期场地加载和规划演示记录，不作为当前 VIO 原场地可靠性验收。
 
 有日志或运行输出支撑的部分：
 

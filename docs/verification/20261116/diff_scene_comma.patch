@@ -1,0 +1,11 @@
+--- /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/launch_run_wide_fix19.sh.before
++++ /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/launch_run_wide_fix19.sh
+@@ -171,7 +171,7 @@
+   echo "  \"supervisor_md5\": \"$(md5sum "$ROOT/scripts/np01_truth_supervisor.py" | cut -d' ' -f1)\","
+   echo "  \"gate_cfg_md5\": \"$(md5sum "$ORB_ROOT/config/px4_vio_sim_transport.yaml" | cut -d' ' -f1)\","
+   echo "  \"check_run_md5\": \"$(md5sum "$ROOT/scripts/check_run.py" | cut -d' ' -f1)\","
+-  echo "  \"lifecycle\": {\"owner\": \"run_profile_fix18.sh (whole-round runner)\", \"bridge_owned_by\": \"runner\", \"launcher_mode\": \"--no-bridge --topics-file\", \"cleanup_rule\": \"registry identity (pid+starttime) AND sid == round sid\", \"uses_pkill\": false}"
++  echo "  \"lifecycle\": {\"owner\": \"run_profile_fix18.sh (whole-round runner)\", \"bridge_owned_by\": \"runner\", \"launcher_mode\": \"--no-bridge --topics-file\", \"cleanup_rule\": \"registry identity (pid+starttime) AND sid == round sid\", \"uses_pkill\": false},"
+   echo "  \"runenv\": {\"run_profile_fix18_md5\": \"$(md5sum "$NP01_RUNNER" | cut -d' ' -f1)\", \"launcher_fix18_md5\": \"$(md5sum "$FIX18_RUNENV/run_stereo_inertial_sim_fix18.sh" | cut -d' ' -f1)\", \"np01_lifecycle_md5\": \"$(md5sum "$NP01_LIFECYCLE" | cut -d' ' -f1)\", \"run_wrapper_fix18_md5\": \"$(md5sum "$NP01_RUN_WRAPPER" | cut -d' ' -f1)\", \"vio_obs_counter_md5\": \"$(md5sum "$FIX18_RUNENV/vio_obs_counter.py" | cut -d' ' -f1)\"}",
+   echo "  \"record_revision\": {\"name\": \"fix19\", \"scope\": \"evidence layer only\", \"algorithm_reference\": \"FIX18 frozen node bfa646c84be62c15b1fcfaa5743dbd43\", \"normal_5m_reference_run\": \"vio_closed_loop_fix18_func5m_20261115_222616 (PASS 16/0/1)\", \"does_not_repeat_normal_5m\": true, \"does_not_overwrite_history\": true},"
+   echo "  \"frozen_fix17_reference\": {\"run_profile_md5\": \"b1a2c121518eb46ace35dd908de34fc2\", \"launcher_md5\": \"15bd61820b8dfa37cebf64aa31f4accf\", \"note\": \"FIX17 artifacts untouched; the ACC03 3/3 result was produced by that frozen set, NOT by this run environment\"}",

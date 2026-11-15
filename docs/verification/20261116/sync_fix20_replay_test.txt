@@ -1,0 +1,51 @@
+test_07_boundary_matrix (test_excite_height_production.TestBoundaryMatrix.test_07_boundary_matrix) ... ok
+test_08_reset_tick_other_checks_still_active (test_excite_height_production.TestBoundaryMatrix.test_08_reset_tick_other_checks_still_active) ... ok
+test_09_next_valid_sample_resumes_envelope (test_excite_height_production.TestBoundaryMatrix.test_09_next_valid_sample_resumes_envelope) ... ok
+test_10_reset_near_envelope_boundary (test_excite_height_production.TestBoundaryMatrix.test_10_reset_near_envelope_boundary) ... ok
+test_11_unrecoverable_reset_fails_closed_in_production (test_excite_height_production.TestBoundaryMatrix.test_11_unrecoverable_reset_fails_closed_in_production) ... ok
+test_01_old_implementation_reproduces_1_1929 (test_excite_height_production.TestProductionPath.test_01_old_implementation_reproduces_1_1929) ... /home/gengyinghao/github_sync_20261116/RM27_drone_sim/tests/test_excite_height_production.py:136: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/gengyinghao/github_sync_20261116/RM27_drone_sim/tests/fixtures/fix20/flight2/pilot.csv' mode='r' encoding='UTF-8'>
+  allrows = list(csv.DictReader(open(rd + "/pilot.csv", newline="",
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_02_translation_yields_about_0_0373 (test_excite_height_production.TestProductionPath.test_02_translation_yields_about_0_0373) ... ok
+test_03_flight1_normal_flow_unchanged (test_excite_height_production.TestProductionPath.test_03_flight1_normal_flow_unchanged) ... /home/gengyinghao/github_sync_20261116/RM27_drone_sim/tests/test_excite_height_production.py:136: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/gengyinghao/github_sync_20261116/RM27_drone_sim/tests/fixtures/fix20/flight1/pilot.csv' mode='r' encoding='UTF-8'>
+  allrows = list(csv.DictReader(open(rd + "/pilot.csv", newline="",
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_04_sticky_delta_applied_once (test_excite_height_production.TestProductionPath.test_04_sticky_delta_applied_once) ... ok
+test_05_real_climb_over_1m_still_triggers (test_excite_height_production.TestProductionPath.test_05_real_climb_over_1m_still_triggers) ... ok
+test_06_reset_plus_real_motion_not_erased (test_excite_height_production.TestProductionPath.test_06_reset_plus_real_motion_not_erased) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.022s
+
+OK
+TESTED sim_pilot from: /home/gengyinghao/github_sync_20261116/RM27_drone_sim/scripts/sim_pilot.py
+  T7 boundary matrix:
+     no_reset_normal            exp=none      got=none      no_new_reset OK
+     positive_reset             exp=translate got=translate height_reference_translated OK
+     negative_reset             exp=translate got=translate height_reference_translated OK
+     same_counter_repeated      exp=translate got=translate height_reference_translated OK
+     uint8_wrap_255_to_0        exp=translate got=translate height_reference_translated OK
+     multi_event_step2          exp=fail      got=fail      unrecoverable_reset_step_2 OK
+     counter_backwards          exp=fail      got=fail      unrecoverable_reset_step_255 OK
+     non_finite_delta           exp=fail      got=fail      non_finite_input OK
+     non_finite_delta           exp=fail      got=fail      non_finite_input OK
+     missing_delta              exp=fail      got=fail      missing_reset_delta OK
+     delta_out_of_bounds        exp=fail      got=fail      reset_delta_out_of_bounds OK
+     stale_feedback             exp=fail      got=fail      stale_or_clock_anomaly OK
+     out_of_order               exp=fail      got=fail      out_of_order_sample OK
+     z_invalid                  exp=fail      got=fail      z_invalid OK
+     same_counter_sticky        exp=none      got=none      no_new_reset OK
+     reference_not_captured     exp=fail      got=fail      reference_not_captured OK
+  T8 reset tick angular_rate still fires: envelope:angular_rate(400.0>300.0deg/s)
+  T8 reset tick tilt still fires: envelope:tilt(30.0>25.0deg)
+  T9 next sample resumes -> envelope:delta_z(1.04>1.00m)
+  T10 boundary preserved -> envelope:delta_z(1.05>1.00m)
+  T11 fail-closed -> height_reset_unrecoverable:unrecoverable_reset_step_2
+  T1 old max=1.1929 first={'t': 14.406, 'delta_z': 1.1929, 'zrc': 2}
+  T2 translate={'event': 'reference_translated', 'reason': 'height_reference_translated', 'delta_z': -1.1556, 'ref_z_before': -1.0125, 'ref_z_after': -2.1681, 'zrc_before': 1, 'zrc_after': 2, 'vzrc_before': 1, 'vzrc_after': 2, 'sample_us': 1794753059624491, 'z_at_event': -2.2054, 'wall_us': 1794762442115073} max_delta=0.1246 decision={'t': 14.406, 'zrc': 2, 'dz': -1.1556, 'ref': -2.1681, 'delta': 0.0373, 'fatal': False, 'reason': ''}
+  T3 flight1 stop=vio_ready_stable max_delta=0.1117 translations=1
+  T4 sticky applied once, ref=-2.1681
+  T5 real climb -> envelope:delta_z(1.20>1.00m)
+  T6 real 0.30 m preserved, later 1.10 m -> envelope:delta_z(1.10>1.00m)

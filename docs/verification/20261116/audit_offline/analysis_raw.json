@@ -1,0 +1,988 @@
+{
+  "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320",
+  "generated_by": "offline audit (read-only)",
+  "notes": [],
+  "criteria_md5": "6e5adef1bf208011f5979885b1b53a62",
+  "criteria_ids": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10"
+  ],
+  "verdict_rule": {
+    "A": "C1 或 C2 不成立，未发送信号 —— 注入未执行（不得计为响应通过）",
+    "B": "C2 成立且已发送信号，但 C3–C9 任一不成立 —— 注入执行但响应未通过",
+    "C": "C1–C9 全部成立 —— 注入与响应全部满足专项要求",
+    "note": "C10 是交付约束，不参与 A/B/C 判定；普通任务评估器的 FAIL 永远保留"
+  },
+  "clock": {
+    "injection_signal_requested_wall_us": 1794758692800393,
+    "injection_signal_requested_mono_us": 49966440720,
+    "injection_signal_sent_mono_us": 49966440807,
+    "signal_delta_requested_to_sent_us": 87,
+    "offset_epoch_minus_mono_us_from_signal_record": 1794708726359673,
+    "offset_epoch_minus_mono_us_median_telemetry": 1794708726359692.0,
+    "interruption_log_inject_mono": "1794758692.587296955",
+    "interruption_log_inject_epoch": "1794758692.593313497",
+    "interruption_log_mono_minus_epoch_s": -0.00601649284362793,
+    "supervisor_trace_t_wall_us_domain": "CLOCK_MONOTONIC us (time.monotonic_ns()//1000), NOT epoch; verified in np01_truth_supervisor.py:57,133,202",
+    "proc_watch_t_wall_us_domain": "epoch us (from first row 1794758624056030)",
+    "vio_obs_counter_t_wall_us_domain": "epoch us (time.time()*1e6); t_mono_s is relative monotonic"
+  },
+  "timeline": {
+    "navigate_epoch_s": 1794758686.324199,
+    "navigate_line": "[INFO] [1794758686.324199036] [sim_pilot]: state -> NAVIGATE",
+    "state_transitions": [
+      [
+        1794758644.8891761,
+        "PREFLIGHT"
+      ],
+      [
+        1794758656.892279,
+        "ARM"
+      ],
+      [
+        1794758657.8859394,
+        "TAKEOFF"
+      ],
+      [
+        1794758667.6838546,
+        "TAKEOFF_SETTLE"
+      ],
+      [
+        1794758669.1860807,
+        "EXCITE"
+      ],
+      [
+        1794758675.6058044,
+        "INIT_SETTLE"
+      ],
+      [
+        1794758676.1111116,
+        "POSITION"
+      ],
+      [
+        1794758685.5178943,
+        "OFFBOARD_ARMED"
+      ],
+      [
+        1794758686.324199,
+        "NAVIGATE"
+      ],
+      [
+        1794758693.4235237,
+        "TAKEOVER"
+      ],
+      [
+        1794758695.4252286,
+        "LAND"
+      ],
+      [
+        1794758701.9263186,
+        "LANDED"
+      ],
+      [
+        1794758703.9271684,
+        "DONE"
+      ]
+    ],
+    "bt_events": [
+      {
+        "event": "offboard_ready",
+        "reason": "",
+        "wall_us": 1794758678658276,
+        "wall_s": 1794758678.658276,
+        "rel_to_navigate_s": -7.6659228801727295
+      },
+      {
+        "event": "offboard_ready",
+        "reason": "",
+        "wall_us": 1794758684764613,
+        "wall_s": 1794758684.764613,
+        "rel_to_navigate_s": -1.5595860481262207
+      },
+      {
+        "event": "task_started",
+        "reason": "",
+        "wall_us": 1794758686412829,
+        "wall_s": 1794758686.412829,
+        "rel_to_navigate_s": 0.08862996101379395
+      },
+      {
+        "event": "task_revoked",
+        "reason": "stale_health",
+        "wall_us": 1794758693429069,
+        "wall_s": 1794758693.429069,
+        "rel_to_navigate_s": 7.104870080947876
+      }
+    ],
+    "bt_log_revoked": [
+      "[WARN] [1794758693.418996323] [px4_pilot_navigation]: Task revoked: stale_health; PX4/pilot own recovery; restart and cycle selector for a new task"
+    ],
+    "readiness_checked_wall_us": 1794758692464177,
+    "identity_recorded_wall_us": 1794758692669756,
+    "signal_requested_wall_us": 1794758692800393,
+    "signal_sent_wall_us_derived": 1794758692800480,
+    "signal_sent_mono_us": 49966440807,
+    "cleanup_started_wall_us": 1794758705627475,
+    "cleanup_finished_wall_us": 1794758707078789,
+    "biases_s": {
+      "signal_requested_minus_NAVIGATE": 6.476194143295288,
+      "signal_requested_minus_DROP_AFTER_6s": 0.4761941432952881,
+      "readiness_minus_NAVIGATE": 6.139977931976318,
+      "identity_minus_NAVIGATE": 6.345556974411011,
+      "interruption_log_inject_epoch_minus_NAVIGATE": 6.2691144943237305,
+      "signal_minus_interruption_log_inject_epoch": 0.20707964897155762,
+      "revoked_minus_signal_s": 0.6286759376525879
+    }
+  },
+  "C1": {
+    "navigate_epoch_s": 1794758686.324199,
+    "plus6_epoch_s": 1794758692.324199,
+    "signal_epoch_s": 1794758692.800393,
+    "pilot_row_at_plus6": {
+      "wall_us": "1794758692313288",
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "bt_reason": "pilot_authorized",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1",
+      "armed": "True",
+      "ex_stop_reason": "vio_ready_stable"
+    },
+    "pilot_row_at_plus6_delta_s": 0.010910987854003906,
+    "pilot_row_at_signal": {
+      "wall_us": "1794758692789577",
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "bt_reason": "pilot_authorized",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1",
+      "armed": "True",
+      "ex_stop_reason": "vio_ready_stable"
+    },
+    "pilot_row_at_signal_delta_s": 0.010816097259521484,
+    "first_task_completed_event": null,
+    "first_task_revoked_event": {
+      "wall_us": 1794758693429069,
+      "schema_version": 1,
+      "instance_id": "1794758628951326687",
+      "timestamp_us": 1794758693418522,
+      "sequence": 4,
+      "event": "task_revoked",
+      "reason": "stale_health"
+    },
+    "task_revoked_reason": "stale_health",
+    "bt_phase_counts": {
+      "WAIT_PILOT": 763,
+      "NAVIGATE": 118,
+      "REVOKED": 189
+    },
+    "FAULT_in_pilot_states": [],
+    "navigate_window_row_count": 122,
+    "state_counts": {
+      "INIT": 53,
+      "PREFLIGHT": 214,
+      "ARM": 18,
+      "TAKEOFF": 166,
+      "TAKEOFF_SETTLE": 24,
+      "EXCITE": 103,
+      "INIT_SETTLE": 8,
+      "POSITION": 159,
+      "OFFBOARD_ARMED": 14,
+      "NAVIGATE": 122,
+      "TAKEOVER": 36,
+      "LAND": 116,
+      "LANDED": 36,
+      "DONE": 1
+    }
+  },
+  "C2": {
+    "node_pid_json": {
+      "pid": 337397,
+      "starttime_s_boot": 4990088,
+      "exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+      "is_only_vio_publisher": true,
+      "written_at": "2026-11-16T00:03:47+0800"
+    },
+    "injection_readiness_ready": true,
+    "candidate_pids": [
+      337397
+    ],
+    "unique_vio_node": 337397,
+    "target_identity": {
+      "cmdline": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15 --ros-args -p left_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image -p right_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_right_link/sensor/cam_right/image -p imu_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/base_link/sensor/imu",
+      "exe_realpath": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+      "pid": 337397,
+      "sha256": "0a1045f46e73e8c8216530ea7cbe4ef722007d8cb548e9fe90cc99c73d8316b1",
+      "sid": 336330,
+      "starttime_s_boot": 4990088
+    },
+    "frozen_node_sha256": "0a1045f46e73e8c8216530ea7cbe4ef722007d8cb548e9fe90cc99c73d8316b1",
+    "problems": [],
+    "excluded_count": 15,
+    "excluded_roles_launcher_runner_bridge": [
+      {
+        "alive": true,
+        "exe_realpath": "/usr/bin/python3.14",
+        "pid": 337152,
+        "role": "bridge"
+      },
+      {
+        "alive": true,
+        "exe_realpath": "/usr/bin/bash",
+        "pid": 337312,
+        "role": "launcher"
+      },
+      {
+        "alive": true,
+        "exe_realpath": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge",
+        "pid": 337238,
+        "role": "bridge"
+      }
+    ],
+    "registry_node_entries": [
+      {
+        "cmdline": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15 --ros-args -p left_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image -p right_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_right_link/sensor/cam_right/image -p imu_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/base_link/sensor/imu",
+        "exe_realpath": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+        "note": "launcher:4990088",
+        "pid": 337397,
+        "recorded_mono_us": 49900939249,
+        "recorded_wall_us": 1794758627298937,
+        "role": "node",
+        "sid": 336330,
+        "starttime_s_boot": 4990088
+      }
+    ],
+    "registry_bridge_entries": [
+      {
+        "pid": 337152,
+        "starttime": 4989598,
+        "exe": "/usr/bin/python3.14"
+      },
+      {
+        "pid": 337238,
+        "starttime": 4989672,
+        "exe": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge"
+      }
+    ],
+    "identity_exe_hash": {
+      "available": true,
+      "md5": "bfa646c84be62c15b1fcfaa5743dbd43",
+      "sha256": "0a1045f46e73e8c8216530ea7cbe4ef722007d8cb548e9fe90cc99c73d8316b1",
+      "size_bytes": 6164768
+    },
+    "identity_expect_hash": {
+      "available": true,
+      "md5": "bfa646c84be62c15b1fcfaa5743dbd43",
+      "sha256": "0a1045f46e73e8c8216530ea7cbe4ef722007d8cb548e9fe90cc99c73d8316b1",
+      "size_bytes": 6164768
+    },
+    "identity_hash_match": true,
+    "identity_is_only_vio_publisher": true,
+    "identity_exe_note": "path only; binary contents are NEVER read as a field"
+  },
+  "C3": {
+    "injection_signal": {
+      "exe_match": true,
+      "expect_exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+      "identity": {
+        "cmdline": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15 --ros-args -p left_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image -p right_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_right_link/sensor/cam_right/image -p imu_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/base_link/sensor/imu_sensor/imu -p clock_topic:=/clock -p vocab_file:=/home/gengyinghao/ORB_SLAM3/Vocabulary/ORBvoc.txt -p settings_file:=/home/gengyinghao/ORB_SLAM3/config/RM27_Sim_IMU_Stereo_baseline.yaml -p px4_config:=/home/gengyinghao/ORB_SLAM3/config/px4_vio_sim_transport.yaml -p use_viewer:=false -p sync_tolerance:=0.005 -p latency_csv:=/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320/latency.csv -p trace_csv:=/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320/latency_time_trace.csv -p init_gate:=airborne -p init_gate_airborne_hold:=0.50 -p init_gate_health_window:=1.00 -p init_gate_min_img_hz:=15.0 -p sim_nav_guard:=false",
+        "exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+        "exe_realpath": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+        "pgrp": 336330,
+        "pid": 337397,
+        "ppid": 337312,
+        "sid": 336330,
+        "starttime_s_boot": 4990088,
+        "state": "S"
+      },
+      "requested_mono_us": 49966440720,
+      "requested_wall_us": 1794758692800393,
+      "result": "sent",
+      "sent_mono_us": 49966440807,
+      "signal": "TERM",
+      "starttime_match": true,
+      "target_pid": 337397
+    },
+    "interruption_log": {
+      "verdict": "PENDING（收尾后由专项判据判定）",
+      "scenario": "NP01_FIX19_REAL_VIO_INTERRUPTION",
+      "drop_after_s": "6.0",
+      "pilot_state_at_inject": "NAVIGATE",
+      "inject_mono": "1794758692.587296955",
+      "inject_epoch": "1794758692.593313497",
+      "target_pid": "337397",
+      "target_starttime_s_boot": "4990088",
+      "target_exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+      "signal": "SIGTERM",
+      "signal_rc": "0",
+      "node_exited_within_5s": "1",
+      "bridge_pid": "337152",
+      "bridge_after": "alive",
+      "publish_rows_before": "452",
+      "publish_rows_after": "460"
+    },
+    "INJECTION_MARKER_exists": true,
+    "INJECTION_MARKER_size": 0,
+    "signal_stdout": "{\"requested_wall_us\": 1794758692800393, \"requested_mono_us\": 49966440720, \"target_pid\": 337397, \"expect_exe\": \"/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15\", \"signal\": \"TERM\", \"identity\": {\"pid\": 337397, \"ppid\": 337312, \"pgrp\": 336330, \"sid\": 336330, \"state\": \"S\", \"starttime_s_boot\": 4990088, \"exe\": \"/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15\", \"exe_realpath\": \"/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15\", \"cmdline\": \"/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15 --ros-args -p left_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image -p right_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_right_link/sensor/cam_right/image -p imu_topic:=/world/rm27_wide_world/model/x500_mono_cam_0/link/base_link/sensor/imu_sensor/imu -p clock_topic:=/clock -p vocab_file:=/home/gengyinghao/ORB_SLAM3/Vocabulary/ORBvoc.txt -p settings_file:=/home/gengyinghao/ORB_SLAM3/config/RM27_Sim_IMU_Stereo_baseline.yaml -p px4_config:=/home/gengyinghao/ORB_SLAM3/config/px4_vio_sim_transport.yaml -p use_viewer:=false -p sync_tolerance:=0.005 -p latency_csv:=/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320/latency.csv -p trace_csv:=/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320/latency_time_trace.csv -p init_gate:=airborne -p init_gate_airborne_hold:=0.50 -p init_gate_health_window:=1.00 -p init_gate_min_img_hz:=15.0 -p sim_nav_guard:=false\"}, \"exe_match\": true, \"starttime_match\": true, \"result\": \"sent\", \"sent_mono_us\": 49966440807}\n",
+    "injector_console_launcher_rc": [
+      "READINESS_RC=0\n",
+      "LAUNCHER_RC=0\n"
+    ]
+  },
+  "C4": {
+    "launcher_exit": {
+      "written_at": "2026-11-16T00:04:53+0800",
+      "launcher_rc": 0,
+      "node_pid": 337397,
+      "node_exit_code": 0,
+      "node_starttime_s_boot": 4990088,
+      "bridge_pid": null,
+      "bridge_owned_by_launcher": false,
+      "bridge_starttime_s_boot": null,
+      "topics_file": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320/bridge_topics.json",
+      "topics": {
+        "left": "/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image",
+        "right": "/world/rm27_wide_world/model/x500_mono_cam_0/link/cam_right_link/sensor/cam_right/image",
+        "imu": "/world/rm27_wide_world/model/x500_mono_cam_0/link/base_link/sensor/imu_sensor/imu"
+      },
+      "note": "this script only ever reclaims the node and a bridge it started itself; a runner-owned bridge is left running"
+    },
+    "proc_watch_node_rows_first": [
+      {
+        "t_mono_s": "4.005",
+        "t_wall_us": "1794758628060732",
+        "role": "node",
+        "pid": "337397",
+        "alive": "1",
+        "state": "R",
+        "starttime_match": "1",
+        "exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15"
+      },
+      {
+        "t_mono_s": "5.006",
+        "t_wall_us": "1794758629062036",
+        "role": "node",
+        "pid": "337397",
+        "alive": "1",
+        "state": "R",
+        "starttime_match": "1",
+        "exe": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/bin/stereo_inertial_sim_node.fix15"
+      }
+    ],
+    "proc_watch_node_rows_last": [
+      {
+        "t_mono_s": "79.133",
+        "t_wall_us": "1794758703189168",
+        "role": "node",
+        "pid": "337397",
+        "alive": "0",
+        "state": "-",
+        "starttime_match": "0",
+        "exe": "-"
+      },
+      {
+        "t_mono_s": "80.135",
+        "t_wall_us": "1794758704191031",
+        "role": "node",
+        "pid": "337397",
+        "alive": "0",
+        "state": "-",
+        "starttime_match": "0",
+        "exe": "-"
+      },
+      {
+        "t_mono_s": "81.136",
+        "t_wall_us": "1794758705192376",
+        "role": "node",
+        "pid": "337397",
+        "alive": "0",
+        "state": "-",
+        "starttime_match": "0",
+        "exe": "-"
+      },
+      {
+        "t_mono_s": "82.138",
+        "t_wall_us": "1794758706193454",
+        "role": "node",
+        "pid": "337397",
+        "alive": "0",
+        "state": "-",
+        "starttime_match": "0",
+        "exe": "-"
+      }
+    ],
+    "proc_watch_node_alive_last": "0",
+    "proc_watch_node_last_wall_us": "1794758706193454"
+  },
+  "C5": {
+    "obs_rows_total": 154,
+    "obs_last_row": {
+      "t_mono_s": "77.026",
+      "t_wall_us": "1794758705918897",
+      "health_count": "315",
+      "health_last_rx_wall_us": "1794758692817653",
+      "odo_count": "460",
+      "odo_last_rx_wall_us": "1794758692818580",
+      "odo_last_stamp_us": "1794758692818129"
+    },
+    "odo_final_count": 460.0,
+    "health_final_count": 315.0,
+    "odo_last_rx_wall_us_max": 1794758692818580.0,
+    "health_last_rx_wall_us_max": 1794758692817653.0,
+    "odo_last_rx_relative_to_signal_s": 0.018187,
+    "health_last_rx_relative_to_signal_s": 0.01726,
+    "obs_rows_after_signal": 27,
+    "odo_count_growth_after_signal": 0.0,
+    "health_count_growth_after_signal": 0.0,
+    "publish_rows_total": 460,
+    "publish_rows_at_or_before_signal": 459,
+    "publish_rows_after_signal": 1,
+    "publish_last_system_us": 1794758692818222.0,
+    "publish_last_relative_to_signal_s": 0.017829,
+    "publish_seq_452_system_us": 1794758692462264.0,
+    "publish_seq_452_relative_to_signal_s": -0.338129,
+    "publish_seq_460_system_us": 1794758692818222.0,
+    "publish_seq_460_relative_to_signal_s": 0.017829,
+    "interruption_log_publish_rows_before": "452",
+    "interruption_log_publish_rows_after": "460",
+    "runtime_status_bridge_publish_rows": 460,
+    "after_snapshot_timing_note": "PUB_AFTER is sampled AFTER the up-to-5s node-exit wait loop, not at the instant of the signal; the 452->460 delta spans the pre-signal in-flight window plus the exit wait.",
+    "publish_after_signal_rows": [
+      {
+        "system_us": 1794758692818222.0,
+        "sent": 460.0,
+        "rel_s": 0.017829
+      }
+    ],
+    "publish_tail_12": [
+      {
+        "system_us": 1794758692337860.0,
+        "sent": 449.0,
+        "rel_s": -0.462533
+      },
+      {
+        "system_us": 1794758692374113.0,
+        "sent": 450.0,
+        "rel_s": -0.42628
+      },
+      {
+        "system_us": 1794758692415393.0,
+        "sent": 451.0,
+        "rel_s": -0.385
+      },
+      {
+        "system_us": 1794758692462264.0,
+        "sent": 452.0,
+        "rel_s": -0.338129
+      },
+      {
+        "system_us": 1794758692503407.0,
+        "sent": 453.0,
+        "rel_s": -0.296986
+      },
+      {
+        "system_us": 1794758692546845.0,
+        "sent": 454.0,
+        "rel_s": -0.253548
+      },
+      {
+        "system_us": 1794758692596637.0,
+        "sent": 455.0,
+        "rel_s": -0.203756
+      },
+      {
+        "system_us": 1794758692638659.0,
+        "sent": 456.0,
+        "rel_s": -0.161734
+      },
+      {
+        "system_us": 1794758692689175.0,
+        "sent": 457.0,
+        "rel_s": -0.111218
+      },
+      {
+        "system_us": 1794758692743985.0,
+        "sent": 458.0,
+        "rel_s": -0.056408
+      },
+      {
+        "system_us": 1794758692780026.0,
+        "sent": 459.0,
+        "rel_s": -0.020367
+      },
+      {
+        "system_us": 1794758692818222.0,
+        "sent": 460.0,
+        "rel_s": 0.017829
+      }
+    ],
+    "obs_tail_6": [
+      {
+        "t_wall_us": "1794758703419088",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      },
+      {
+        "t_wall_us": "1794758703919289",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      },
+      {
+        "t_wall_us": "1794758704419260",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      },
+      {
+        "t_wall_us": "1794758704919248",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      },
+      {
+        "t_wall_us": "1794758705418976",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      },
+      {
+        "t_wall_us": "1794758705918897",
+        "health_count": "315",
+        "health_last_rx_wall_us": "1794758692817653",
+        "odo_count": "460",
+        "odo_last_rx_wall_us": "1794758692818580"
+      }
+    ]
+  },
+  "C6": {
+    "task_revoked_event": {
+      "wall_us": 1794758693429069,
+      "schema_version": 1,
+      "instance_id": "1794758628951326687",
+      "timestamp_us": 1794758693418522,
+      "sequence": 4,
+      "event": "task_revoked",
+      "reason": "stale_health"
+    },
+    "bt_log_revoked_lines": [
+      "[WARN] [1794758693.418996323] [px4_pilot_navigation]: Task revoked: stale_health; PX4/pilot own recovery; restart and cycle selector for a new task"
+    ],
+    "pilot_log_revoked_lines": [
+      "[INFO] [1794758693.423291730] [sim_pilot]: cycling RC selector back to Position (cycle 1/6) bt_reason=stale_health",
+      "[INFO] [1794758693.429426722] [sim_pilot]: BT EVENT {\"schema_version\": 1, \"instance_id\": \"1794758628951326687\", \"timestamp_us\": 1794758693418522, \"sequence\": 4, \"event\": \"task_revoked\", \"reason\": \"stale_health\"}"
+    ],
+    "state_transitions_after_signal": [
+      [
+        1794758693.4235237,
+        "TAKEOVER"
+      ],
+      [
+        1794758695.4252286,
+        "LAND"
+      ],
+      [
+        1794758701.9263186,
+        "LANDED"
+      ],
+      [
+        1794758703.9271684,
+        "DONE"
+      ]
+    ],
+    "control_active_after_signal": {
+      "True": 11,
+      "False": 189
+    },
+    "navigate_rows_after_signal": 11
+  },
+  "C7": {
+    "bridge_owner_record": {
+      "pid": 337152,
+      "starttime_s_boot": 4989598,
+      "child_parameter_bridge_pids": [],
+      "loaded_ros_gz_bridge_so": [],
+      "owner": "run_profile_fix19.sh (whole-round runner)",
+      "state": "D",
+      "recorded_wall_us": 1794758622435771
+    },
+    "bridge_pid_from_registry": [
+      "337152",
+      "337238"
+    ],
+    "bridge_proc_watch": {
+      "337152": {
+        "count": 83,
+        "first": {
+          "t_mono_s": "0.000",
+          "t_wall_us": "1794758624056030",
+          "role": "bridge",
+          "pid": "337152",
+          "alive": "1",
+          "state": "S",
+          "starttime_match": "1",
+          "exe": "/usr/bin/python3.14"
+        },
+        "last": {
+          "t_mono_s": "82.137",
+          "t_wall_us": "1794758706193324",
+          "role": "bridge",
+          "pid": "337152",
+          "alive": "0",
+          "state": "-",
+          "starttime_match": "0",
+          "exe": "-"
+        },
+        "alive_after_signal": [
+          {
+            "t_mono_s": "69.121",
+            "t_wall_us": "1794758693176413",
+            "role": "bridge",
+            "pid": "337152",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/usr/bin/python3.14"
+          },
+          {
+            "t_mono_s": "70.122",
+            "t_wall_us": "1794758694177589",
+            "role": "bridge",
+            "pid": "337152",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/usr/bin/python3.14"
+          },
+          {
+            "t_mono_s": "71.123",
+            "t_wall_us": "1794758695178918",
+            "role": "bridge",
+            "pid": "337152",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/usr/bin/python3.14"
+          }
+        ],
+        "last_alive_wall_us": 1794758705192060.0
+      },
+      "337238": {
+        "count": 82,
+        "first": {
+          "t_mono_s": "1.001",
+          "t_wall_us": "1794758625056751",
+          "role": "bridge",
+          "pid": "337238",
+          "alive": "1",
+          "state": "S",
+          "starttime_match": "1",
+          "exe": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge"
+        },
+        "last": {
+          "t_mono_s": "82.137",
+          "t_wall_us": "1794758706193332",
+          "role": "bridge",
+          "pid": "337238",
+          "alive": "0",
+          "state": "-",
+          "starttime_match": "0",
+          "exe": "-"
+        },
+        "alive_after_signal": [
+          {
+            "t_mono_s": "69.121",
+            "t_wall_us": "1794758693176462",
+            "role": "bridge",
+            "pid": "337238",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge"
+          },
+          {
+            "t_mono_s": "70.122",
+            "t_wall_us": "1794758694177641",
+            "role": "bridge",
+            "pid": "337238",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge"
+          },
+          {
+            "t_mono_s": "71.123",
+            "t_wall_us": "1794758695178978",
+            "role": "bridge",
+            "pid": "337238",
+            "alive": "1",
+            "state": "S",
+            "starttime_match": "1",
+            "exe": "/opt/ros/lyrical/lib/ros_gz_bridge/parameter_bridge"
+          }
+        ],
+        "last_alive_wall_us": 1794758705192123.0
+      }
+    },
+    "supervisor_pid": "337734",
+    "supervisor_proc_watch": {
+      "count": 66,
+      "first": {
+        "t_mono_s": "17.025",
+        "t_wall_us": "1794758641080842",
+        "role": "supervisor",
+        "pid": "337734",
+        "alive": "1",
+        "state": "S",
+        "starttime_match": "1",
+        "exe": "/usr/bin/python3.14"
+      },
+      "last": {
+        "t_mono_s": "82.138",
+        "t_wall_us": "1794758706193474",
+        "role": "supervisor",
+        "pid": "337734",
+        "alive": "0",
+        "state": "-",
+        "starttime_match": "0",
+        "exe": "-"
+      },
+      "alive_after_signal": [
+        {
+          "t_mono_s": "69.121",
+          "t_wall_us": "1794758693176909",
+          "role": "supervisor",
+          "pid": "337734",
+          "alive": "1",
+          "state": "S",
+          "starttime_match": "1",
+          "exe": "/usr/bin/python3.14"
+        },
+        {
+          "t_mono_s": "70.122",
+          "t_wall_us": "1794758694178098",
+          "role": "supervisor",
+          "pid": "337734",
+          "alive": "1",
+          "state": "S",
+          "starttime_match": "1",
+          "exe": "/usr/bin/python3.14"
+        },
+        {
+          "t_mono_s": "71.124",
+          "t_wall_us": "1794758695179511",
+          "role": "supervisor",
+          "pid": "337734",
+          "alive": "1",
+          "state": "S",
+          "starttime_match": "1",
+          "exe": "/usr/bin/python3.14"
+        }
+      ],
+      "last_alive_wall_us": 1794758705192613.0
+    },
+    "supervisor_json": {
+      "rows_seen": 3242,
+      "lost_us_total": 0,
+      "max_rx_gap_ms": 28.394,
+      "warned": false,
+      "warn_event": null,
+      "triggered": false,
+      "stop_event": null,
+      "stop_reason": null,
+      "hard_kill": null
+    },
+    "supervisor_trace_rows": 3242,
+    "supervisor_trace_first_t_wall_us": "49915167409",
+    "supervisor_trace_last_t_wall_us": "49979258899",
+    "supervisor_trace_last_t_mono_s": "64.103109",
+    "supervisor_trace_actions": {
+      "": 3242
+    },
+    "supervisor_trace_lost_us_max": 0,
+    "truth_rows": 4128,
+    "truth_first_recv_wall_us": "1794758624197473",
+    "truth_last_recv_wall_us": "1794758705994288",
+    "truth_last_relative_to_signal_s": 13.193895,
+    "telemetry_rows": 763,
+    "telemetry_first_wall_us": "1794758629465100",
+    "telemetry_last_wall_us": "1794758705664991",
+    "telemetry_last_relative_to_signal_s": 12.864598,
+    "cleanup_finished_wall_us": 1794758707078789,
+    "truth_input_lost_markers": []
+  },
+  "C8": {
+    "exit_grade": {
+      "evidence": {
+        "pilot_final_armed": false,
+        "pilot_final_state": "DONE",
+        "pilot_stop_reason": "vio_ready_stable",
+        "pilot_task_completed": false,
+        "truth_bound_marker": false
+      },
+      "grade": "A",
+      "landing_confirmed": true,
+      "must_not_report_as_safe_exit": false,
+      "note": "Post-processing only. Truth is used for grading, never for control. Grade B must be reported as an emergency termination with an unconfirmed landing, never as a safe exit.",
+      "reasons": [],
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320",
+      "safe_exit_claim_allowed": true,
+      "subtype": "A_early"
+    },
+    "check_txt_landed_disarmed": "[PASS      ] landed_disarmed          末态=DONE armed=False 真值高度残差=0.00 m（要求<=0.35）\n",
+    "state_transitions_tail": [
+      [
+        1794758675.6058044,
+        "INIT_SETTLE"
+      ],
+      [
+        1794758676.1111116,
+        "POSITION"
+      ],
+      [
+        1794758685.5178943,
+        "OFFBOARD_ARMED"
+      ],
+      [
+        1794758686.324199,
+        "NAVIGATE"
+      ],
+      [
+        1794758693.4235237,
+        "TAKEOVER"
+      ],
+      [
+        1794758695.4252286,
+        "LAND"
+      ],
+      [
+        1794758701.9263186,
+        "LANDED"
+      ],
+      [
+        1794758703.9271684,
+        "DONE"
+      ]
+    ]
+  },
+  "C9": {
+    "process_cleanup": {
+      "reason": "injected",
+      "sid": 336330,
+      "started_wall_us": 1794758705627475,
+      "finished_wall_us": 1794758707078789,
+      "leftovers": [],
+      "verified_empty": true,
+      "ownership_rule": "registry identity (pid + starttime) AND sid == round sid; no name/cmdline matching; no pkill"
+    },
+    "cleanup_targets_count": 16,
+    "cleanup_targets_all_exited": true,
+    "cleanup_verify": {
+      "sid": 336330,
+      "alive_members": [],
+      "clean": true
+    },
+    "shared_before": [
+      {
+        "pid": 3643,
+        "exe": "/home/gengyinghao/Micro-XRCE-DDS-Agent/build3/MicroXRCEAgent",
+        "stat": "3643 (MicroXRCEAgent) S 394 3643 3643 0 -1 4194304 84603 0 27309 0 40240 39368 0 0 20 0 56 0 153671 1792917504 5313 18446744073709551615 99947701751808 99947701752281 140731692089664 0 0 0 0 6 0 0 0 0 17 28 0 0 0 0 0 99947701763448 99947701764112 99948485672960 140731692094679 140731692094753 140731692094753 140731692101563 0\n"
+      }
+    ],
+    "run_profile_returncode": 1
+  },
+  "C10": {
+    "check_txt_verdict": "VERDICT=FAIL  counts={'PASS': 14, 'FAIL': 2, 'UNVERIFIED': 1}",
+    "fail_checks": [
+      {
+        "name": "bt_task_completed",
+        "status": "FAIL",
+        "required": true,
+        "detail": "phases={'WAIT_PILOT': 1148, 'NAVIGATE': 141, 'REVOKED': 1} 到达过 HOLD=False 目标距离=5.00（指令 5.00 m）"
+      },
+      {
+        "name": "truth_distance_hold",
+        "status": "FAIL",
+        "required": true,
+        "detail": "真值最大水平位移=1.65 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=0.0s（要求>=2.0s）"
+      }
+    ],
+    "unverified_checks": [
+      {
+        "name": "latency_evidence",
+        "status": "UNVERIFIED",
+        "required": false,
+        "detail": "latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄"
+      }
+    ],
+    "pass_count": 14
+  },
+  "launch_accounting": {
+    "matching_run_dirs": [
+      "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320"
+    ],
+    "count": 1,
+    "attempts_jsonl": [
+      {
+        "event": "launch_started",
+        "wall": "2026-11-16T00:03:19.190099+08:00",
+        "mono": 49872.830441229,
+        "batch": "NP01_FIX20_INTR_RESUME_20261116",
+        "attempt": 1,
+        "max_attempts": 1,
+        "prefix": "intr_fix20_resume_20261116_r1",
+        "drop_after_s": 6.0,
+        "duration_s": 360
+      },
+      {
+        "event": "injector_finished",
+        "wall": "2026-11-16T00:05:07.927048+08:00",
+        "mono": 49981.567373204,
+        "returncode": 0,
+        "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320"
+      }
+    ],
+    "run_json": {
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320",
+      "injector_returncode": 0,
+      "actual_simulation_launches": 1
+    }
+  },
+  "provenance": {
+    "preflight_checks_mismatch": [
+      {
+        "name": "launch_run_wide_fix19.launcher.sh",
+        "path": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/launch_run_wide_fix19.sh",
+        "expected": "c217e669d448984030494a1ffac107f7",
+        "actual": "c5e6ca0a84077ba416e0223bb0b090bd",
+        "frozen_actual": "c217e669d448984030494a1ffac107f7",
+        "match": false,
+        "recording_only_exception": true
+      }
+    ],
+    "preflight_authorization_original": "User: 继续任务; one continuation interruption simulation, no retry",
+    "preflight_max_launches": 1,
+    "launcher_md5_history": {
+      "FREEZE_FIX20_expected": "c217e669d448984030494a1ffac107f7",
+      "before_scene_comma": "c4521ddc84650ab73ebe1339a666134e",
+      "record_frozen": "c5e6ca0a84077ba416e0223bb0b090bd",
+      "live_production": "c5e6ca0a84077ba416e0223bb0b090bd"
+    }
+  }
+}

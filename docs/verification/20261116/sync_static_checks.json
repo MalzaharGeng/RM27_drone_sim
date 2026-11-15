@@ -1,0 +1,25 @@
+{
+  "ORB_SLAM3": {
+    "python": 0,
+    "shell": 0,
+    "json": 1,
+    "xml": 0,
+    "files": 25
+  },
+  "RM27_drone_sim": {
+    "python": 59,
+    "shell": 28,
+    "json": 16,
+    "xml": 11,
+    "files": 151
+  },
+  "errors": [],
+  "warnings": [
+    [
+      "rm27_sim/models/x500_mono_cam/model.sdf",
+      "x500",
+      "PX4 external base model; resolved through GZ_SIM_RESOURCE_PATH"
+    ]
+  ],
+  "passed": true
+}

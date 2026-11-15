@@ -1,0 +1,22 @@
+--- /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/prechange/run_vio_interruption_fix19.before_flag_fix.sh	2026-11-15 22:54:18.718809368 +0800
++++ /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/run_vio_interruption_fix19.sh	2026-11-15 23:43:07.453989007 +0800
+@@ -84,8 +84,17 @@
+ 
+ # 6 s 后必须仍处于预定自主任务执行状态
+ STATE_AT=$(grep -a "state -> " "$RD/pilot.log" | tail -1 | sed 's/.*state -> //')
+-DONE_FLAG=$(grep -ac "task_completed" "$RD/bt.log" 2>/dev/null || echo 0)
+-REVOKED_FLAG=$(grep -ac "task_revoked" "$RD/pilot.log" 2>/dev/null || echo 0)
++# [FIX20-TOOL] grep -c 无匹配时输出 "0" 但 rc=1；旧写法 `|| echo 0` 会
++# 追加第二行，使变量变成 "0\n0" 并与 "0" 恒不等，导致注入器误判条件不满足。
++# 用函数把命令替换的退出码与数值分离，结果永远是单个十进制数。
++count_matches() {
++  local n
++  n=$(grep -ac "$1" "$2" 2>/dev/null | tr -d '\n') || n=0
++  [[ -n "$n" ]] || n=0
++  printf '%s' "$n"
++}
++DONE_FLAG=$(count_matches "task_completed" "$RD/bt.log")
++REVOKED_FLAG=$(count_matches "task_revoked" "$RD/pilot.log")
+ if [[ "$STATE_AT" != "NAVIGATE" || "$DONE_FLAG" != "0" || "$REVOKED_FLAG" != "0" ]]; then
+   echo "INJECTION_CONDITION_NOT_MET state=$STATE_AT done=$DONE_FLAG revoked=$REVOKED_FLAG"
+   { echo "verdict=A"; echo "reason=not_in_autonomous_execution_at_6s";

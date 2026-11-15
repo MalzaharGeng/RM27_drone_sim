@@ -1,0 +1,51 @@
+{
+  "batch": "NP01_FIX20",
+  "frozen_at": "2026-11-15T23:21:59+0800",
+  "batch_id": "NP01_FIX20_COLDSTART_3X",
+  "scope": "EXCITE height reference continuity across PX4 z-reset ONLY",
+  "unchanged": [
+    "excite_max_dz=1.00",
+    "Gate/LIMITS",
+    "initialisation requirements",
+    "rm27_wide_world",
+    "excitation waveform/input",
+    "evaluator check_run.py",
+    "phase4_eval.py",
+    "frozen algorithm node + libORB_SLAM3.so"
+  ],
+  "new_files": [
+    "scripts/excite_height_reference.py"
+  ],
+  "runtime": {
+    "pilot": "/home/gengyinghao/drone_sim/scripts/sim_pilot.py",
+    "runner": "newpkg_fix19/recordenv/run_profile_fix19.sh",
+    "launcher": "newpkg_fix19/recordenv/launch_run_wide_fix19.sh",
+    "vio_node_launcher": "newpkg_fix18/runenv/run_stereo_inertial_sim_fix18.sh",
+    "node_bin": "workpkg_20261115/bin/stereo_inertial_sim_node.fix15",
+    "lifecycle": "newpkg_fix18/runenv/np01_lifecycle.py",
+    "wrapper": "newpkg_fix18/runenv/run_wrapper_fix18.py",
+    "record_revision": "FIX19 (kept)"
+  },
+  "files_md5": {
+    "RM27_Sim_IMU_Stereo_baseline.yaml": "e63c460e2938f8244da77687625facd2",
+    "check_run.fix20.py": "5f7d4ff1795250fd18b83d1c91dbb261",
+    "diag_exit_policy.fix20.py": "7845e03305ae1f49a9307ee113a6cec0",
+    "excite_height_reference.fix20.py": "d7437808852fd84f0b57a9e8e0a69fc4",
+    "launch_run_wide_fix19.launcher.sh": "c217e669d448984030494a1ffac107f7",
+    "libORB_SLAM3.so": "8042d67250f5fd5f715d58848cba8a47",
+    "np01_identity_record.fix19.py": "c8f0463f310eb4a4fce02e0bfbbf5c59",
+    "np01_lifecycle.fix18.py": "f6bff2a5f7b7a90ddf6dcf6ca9b96221",
+    "phase4_eval.fix20.py": "09057681ee24062f848d4487e40e9c36",
+    "px4_vio_sim_transport.yaml": "80ce5211cf9c215a4ab2d7756c67bf9e",
+    "rm27_wide_geometry.json": "2467fe7e727f9199ba6807bd67799702",
+    "rm27_wide_world.sdf": "b3262ec77968b719af0fd43f110b214d",
+    "run_profile.fix17_frozen_reference.sh": "b1a2c121518eb46ace35dd908de34fc2",
+    "run_profile_fix19.runner.sh": "28c0974d1d504f1c6ee96dff1b6e2204",
+    "run_stereo_inertial_sim_fix18.launcher.sh": "c5c51cd872d00427af2a6f5cf24885fa",
+    "run_wrapper_fix18.py": "8aeb25a5dbc0d68e3099f28185d31d00",
+    "sim_pilot.fix20.py": "f9397861133af484bb07398b60da5e91",
+    "stereo_inertial_sim_node.fix15": "bfa646c84be62c15b1fcfaa5743dbd43",
+    "takeoff_altitude_policy.fix20.py": "bccef969bd0320c5cd19895852563483",
+    "vio_obs_counter.fix18.py": "2bca21c437394ade5a57b9ae55f0fe0d"
+  }
+}

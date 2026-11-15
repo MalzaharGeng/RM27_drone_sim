@@ -1,0 +1,132 @@
+--- /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/prechange/sim_pilot.before_fix20.py	2026-11-15 20:55:35.126358463 +0800
++++ /home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/candidate/sim_pilot_fix20.py	2026-11-15 23:21:43.046969834 +0800
+@@ -34,6 +34,10 @@
+ from takeoff_altitude_policy import (DEFAULT_CONFIG as TAKEOFF_CFG,
+                                      HeightSample, advance_takeoff,
+                                      diagnostics as height_diagnostics)
++# [NP-01 FIX20] EXCITE 高度参考在 PX4 局部 NED z-reset 后的连续性契约。
++# 纯函数、不读真值、不改任何门限；见 newpkg_fix20/excite_height_reference.py
++from excite_height_reference import (
++    capture_excite_height_ref, advance_excite_height_reference)
+ try:
+     from px4_msgs.msg import VehicleLocalPosition
+     from rclpy.qos import (DurabilityPolicy, HistoryPolicy, QoSProfile,
+@@ -231,6 +235,10 @@
+         # MAVLink ATTITUDE). No truth value is ever read by the pilot.
+         self.excite_ctl = (args.excite_controller == "bounded")
+         self.excite_ref = None
++        # [NP-01 FIX20] 与参考同时捕获的坐标系身份 + 逐帧源时间（乱序检测）
++        self.excite_height_ref = None        # ExciteHeightRef
++        self.excite_last_sample_us = None   # 上一拍 source sample_us
++        self.excite_reset_trace = []        # 仅证据，不参与判定
+         self.excite_ready_since = None
+         self.excite_ready_streak_s = 0.0
+         self.excite_ever_ready = False
+@@ -424,6 +432,9 @@
+         if state == "EXCITE" and self.excite_ctl:
+             # [NP-01 FIX12] Bounded-excite state is strictly per-entry.
+             self.excite_ref = None
++            # [NP-01 FIX20] 参考与坐标系身份同时重置（不重置计时/故障/streak）
++            self.excite_height_ref = None
++            self.excite_last_sample_us = None
+             self.excite_ready_since = None
+             self.excite_ready_streak_s = 0.0
+             self.excite_ever_ready = False
+@@ -582,6 +593,21 @@
+         except OSError as exc:
+             self.get_logger().warning("warning ACK write failed: %r" % (exc,))
+ 
++    def _emit_reset_event(self, ev):
++        """[NP-01 FIX20] 把 reset 事件原子追加到本轮目录，供离线核对。
++
++        纯证据：任何写盘失败都不影响飞行判定，也不改变任何门限。
++        """
++        self.excite_reset_trace.append(ev)
++        try:
++            path = os.path.join(os.path.dirname(os.path.abspath(self.args.log)),
++                                "excite_reset_events.jsonl")
++            with open(path, "a", encoding="utf-8") as fh:
++                fh.write(json.dumps(ev, ensure_ascii=False, sort_keys=True) + "\n")
++                fh.flush()
++        except (OSError, AttributeError, TypeError, ValueError):
++            pass
++
+     def _excite_stop(self, reason, now, elapsed, fatal):
+         """Record a bounded-excitation stop. Observation + decision only."""
+         self.excite_stop_reason = reason
+@@ -681,6 +707,20 @@
+         if self.hx is not None and self.hy is not None and self.height is not None:
+             if self.excite_ref is None:
+                 self.excite_ref = (self.hx, self.hy, self.height.z)
++                # [NP-01 FIX20] 同时捕获 counter/vzrc/sample_us：
++                # 进入 EXCITE 前已存在的历史 sticky delta 绝不能被误用。
++                self.excite_height_ref, _cap_reason = \
++                    capture_excite_height_ref(self.height)
++                self.excite_last_sample_us = self.height.sample_us
++                self._emit_reset_event({
++                    "event": "reference_captured",
++                    "reason": _cap_reason,
++                    "ref_z": self.height.z,
++                    "zrc": self.height.z_reset_counter,
++                    "vzrc": self.height.vz_reset_counter,
++                    "sample_us": self.height.sample_us,
++                    "wall_us": time.time_ns() // 1000,
++                })
+             self.excite_disp_xy_m = math.hypot(
+                 self.hx - self.excite_ref[0], self.hy - self.excite_ref[1])
+         # (3) Effective FRESH feedback: all three streams must be alive.
+@@ -697,6 +737,46 @@
+                      and self.height is not None and self.height.z_valid)
+         if not inputs_ok and elapsed >= a.excite_input_grace_s:
+             return self._excite_stop("input_stale_or_invalid", now, elapsed, True)
++        # (3b) [NP-01 FIX20] PX4 局部 NED z 坐标系 reset 的参考连续性。
++        # 严格契约（见 excite_height_reference.py）：
++        #   * 只在 (zrc_new - zrc_old) % 256 == 1 的可确认新事件上平移一次；
++        #   * ref += delta_z（同号），绝不把参考重设为当前 z（会抹掉真实累计偏移）；
++        #   * sticky delta / 相同 counter 重复帧不重复平移；
++        #   * 跨多事件、回退、乱序、delta 非有限/为零/超界 -> 失败关闭并明确报错；
++        #   * reset 当拍只暂缓「高度位移」这一项判定，输入健康/角速度/倾角/
++        #     水平位移/VIO 就绪/监督器/授权/硬上限等其它条件全部继续生效；
++        #   * 下一有效样本恢复正常高度包络检查；不重置计时、故障或 streak。
++        suspend_dz_this_tick = False
++        if self.excite_ctl and self.excite_ref is not None:
++            d = advance_excite_height_reference(
++                self.height, self.excite_height_ref, now,
++                a.excite_feedback_stale_s, TAKEOFF_CFG.max_abs_delta_z_m,
++                self.excite_last_sample_us)
++            if d.action == "fail":
++                self._emit_reset_event({
++                    "event": "reset_unrecoverable", "reason": d.reason,
++                    "zrc_before": d.zrc_before, "zrc_after": d.zrc_after,
++                    "wall_us": time.time_ns() // 1000,
++                })
++                return self._excite_stop(
++                    "height_reset_unrecoverable:" + d.reason, now, elapsed, True)
++            if d.action == "translate":
++                self.excite_height_ref = d.ref
++                self.excite_ref = (self.excite_ref[0], self.excite_ref[1], d.ref.z)
++                suspend_dz_this_tick = d.suspend_dz_this_tick
++                self._emit_reset_event({
++                    "event": "reference_translated",
++                    "reason": d.reason,
++                    "delta_z": d.applied_delta_z,
++                    "ref_z_before": d.old_ref_z, "ref_z_after": d.ref.z,
++                    "zrc_before": d.zrc_before, "zrc_after": d.zrc_after,
++                    "vzrc_before": d.vzrc_before, "vzrc_after": d.vzrc_after,
++                    "sample_us": d.ref.sample_us,
++                    "z_at_event": self.height.z,
++                    "wall_us": time.time_ns() // 1000,
++                })
++            if self.height is not None:
++                self.excite_last_sample_us = self.height.sample_us
+         # (4) Envelope from NORMAL feedback, never from truth.
+         violation = None
+         if self.excite_body_rate_dps > a.excite_max_rate_dps:
+@@ -706,6 +786,7 @@
+             violation = "tilt(%.1f>%.1fdeg)" % (
+                 self.excite_tilt_deg, a.excite_max_tilt_deg)
+         elif (self.excite_ref is not None and self.height is not None
++              and not suspend_dz_this_tick
+               and abs(self.height.z - self.excite_ref[2]) > a.excite_max_dz):
+             violation = "delta_z(%.2f>%.2fm)" % (
+                 abs(self.height.z - self.excite_ref[2]), a.excite_max_dz)

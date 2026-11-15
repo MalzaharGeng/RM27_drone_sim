@@ -1,0 +1,884 @@
+[
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/slam_pose_to_px4.py",
+    "path": "scripts/slam_pose_to_px4.py",
+    "sha256": "ca85e46c675717e239c51842043b52b897d18722d3f858bf3a18f7c885303b4c",
+    "bytes": 12840
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/sim_monitor.py",
+    "path": "scripts/sim_monitor.py",
+    "sha256": "30b2fc693ef976ef5550ec36bb2d124017503c77f3d862dfeed0210c1727fd5d",
+    "bytes": 8682
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_pilot_boot.py",
+    "path": "scripts/test_pilot_boot.py",
+    "sha256": "8b0ab55b97c434a1c99a6429b6171c41eb0d47727cfedfe8840c6a20bf362b94",
+    "bytes": 2002
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/pilot_navigation_bt.py",
+    "path": "scripts/pilot_navigation_bt.py",
+    "sha256": "f8ee8a0a6ce9f8fe7d40ab97c36bb1f6e5842fb7aa992a4a1e99d82f67e522e7",
+    "bytes": 28384
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/rm27_nav.py",
+    "path": "scripts/rm27_nav.py",
+    "sha256": "49937e3e7c05ba961cf43c5e8e6365d59c92b5fdcf12c7b9f6949805790e5375",
+    "bytes": 21542
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/obstacles_rm27_plain.json",
+    "path": "scripts/obstacles_rm27_plain.json",
+    "sha256": "ad4547b32fdd5bd7de3fb446dd9e9344b52b689c385d7d2b14f709d6cd977a0d",
+    "bytes": 941
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/diag_slam_link.sh",
+    "path": "scripts/diag_slam_link.sh",
+    "sha256": "2b13eac93373c2e75cf05d8215c3f5a9db0ba9a901d1596f5d7e1b184c768b1b",
+    "bytes": 2658
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/nudge_drone.py",
+    "path": "scripts/nudge_drone.py",
+    "sha256": "a95285d0334f923b7246a911d4d5f15cbbb688437b79a613e1c437bb593cd886",
+    "bytes": 3637
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_np01_handoff.py",
+    "path": "scripts/test_np01_handoff.py",
+    "sha256": "8820886d62c2ff91633869468e2cbe15c03050cdf624611c8e9cb1dca343b976",
+    "bytes": 3360
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/px4_square_bt.py",
+    "path": "scripts/px4_square_bt.py",
+    "sha256": "91c935a043e35f7c56269828751dd4dab7a117e2001098c777e5efb011969c8a",
+    "bytes": 202
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_link_5m.sh",
+    "path": "scripts/run_link_5m.sh",
+    "sha256": "a17a043b2acded17394a57c62093956d6bee3b5e0c22990fbca02b3071dd2383",
+    "bytes": 3928
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_pilot_navigation.sh",
+    "path": "scripts/run_pilot_navigation.sh",
+    "sha256": "94c019eabb5a47c3a3c0a0b53e46ee427825617ea846cfc722b488712994f420",
+    "bytes": 899
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_repeat_and_fault.sh",
+    "path": "scripts/run_repeat_and_fault.sh",
+    "sha256": "6040ef6fd956f2be26e87d5a71d573631de9ea8b8e85d5431ab1075c0edb7fdd",
+    "bytes": 741
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/takeoff_altitude_policy.py",
+    "path": "scripts/takeoff_altitude_policy.py",
+    "sha256": "0c3848a948b8fb5636f3f6dee7d7d599d37be2d531c7f83c9360c36012ebe903",
+    "bytes": 9147
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/link_probe.py",
+    "path": "scripts/link_probe.py",
+    "sha256": "bd82d1e39be1d9ba4ebd4e4d6f6cfc8b78008c515f703263284903aabb156f2f",
+    "bytes": 11554
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/sim_vio_health.py",
+    "path": "scripts/sim_vio_health.py",
+    "sha256": "9e880f08d785c9b6312a810593ab1944dea716f567a4440529b85f7586241bd3",
+    "bytes": 6425
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_nav_demo.sh",
+    "path": "scripts/run_nav_demo.sh",
+    "sha256": "9b439a0eba16b177b357e234740e4756c1aee2ce5306ae178b84a91a81d248dd",
+    "bytes": 2700
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/phase4_eval.py",
+    "path": "scripts/phase4_eval.py",
+    "sha256": "0a1d7cfeff111c9c30042bd832975b75fdc3f5a20f8127448f25e443d0a5a018",
+    "bytes": 24015
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_preflight_gate.py",
+    "path": "scripts/test_preflight_gate.py",
+    "sha256": "ba661589966185950c26c24ce4f692e92184b754c86bd73ed1c9c7ecdaa3b5a4",
+    "bytes": 5102
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/grab_frame.py",
+    "path": "scripts/grab_frame.py",
+    "sha256": "9505c81b9e7e795035507e2b6bbf82a72b82d318944805763f5e4d24854bf8a6",
+    "bytes": 1456
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/pilot_navigation_boot.py",
+    "path": "scripts/pilot_navigation_boot.py",
+    "sha256": "f4c181c72f83348c6ed21e9d05825900ec990d26af06a86e007b18461a7bd4f8",
+    "bytes": 3441
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/wait_ekf_sane.py",
+    "path": "scripts/wait_ekf_sane.py",
+    "sha256": "952d6d4aceee4de24b68f8de923ffb824a0c980df699824a29f719e036389d96",
+    "bytes": 3754
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/dds_selftest.sh",
+    "path": "scripts/dds_selftest.sh",
+    "sha256": "3cfe088bcd9867fee52f14dd2babfa27a268ab8d9fde9ec6148caf9e87e7d24c",
+    "bytes": 2934
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/nav_planner.py",
+    "path": "scripts/nav_planner.py",
+    "sha256": "c7663e05592cc48a7a10220f08bf6c3f339d5915ba29d8d1c2371d635baa0a43",
+    "bytes": 10302
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/start_sim.sh",
+    "path": "scripts/start_sim.sh",
+    "sha256": "fbf80b733f6b8b1db14e2500fea87bee258ea65a2e7ddefb3a79c2bc59fdb871",
+    "bytes": 3645
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_stereo_slam.sh",
+    "path": "scripts/run_stereo_slam.sh",
+    "sha256": "86b850dba43912c9e21e9ae56e8afd353ab8a842539fea7f0fb7bbae27710484",
+    "bytes": 5393
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/truth_recorder.py",
+    "path": "scripts/truth_recorder.py",
+    "sha256": "46efa279aa946d4a8502efbef8aca1e8fad15649f40d29ab306872c1d434a2de",
+    "bytes": 6722
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/truth_safety_watchdog.py",
+    "path": "scripts/truth_safety_watchdog.py",
+    "sha256": "d6de81084d7633973e5c589b3b34cd7f0cc93cb31b4b975f57a1b56756c28d6f",
+    "bytes": 12137
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/install_pangolin.sh",
+    "path": "scripts/install_pangolin.sh",
+    "sha256": "953f1239f0e5391aa55356530f000832902fbf911f8e2e9e4b87f9c3c8b91115",
+    "bytes": 1997
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_pilot_authority.py",
+    "path": "scripts/test_pilot_authority.py",
+    "sha256": "f1245b7bc4d00245b1e5024daaa82301247d4d81148db4bf8be726789a5fe074",
+    "bytes": 15895
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/obstacles_rm27.json",
+    "path": "scripts/obstacles_rm27.json",
+    "sha256": "3710dcd23ddf3deb59d7deffa8dcb044ef4950d612232e613dd3f11f0ea3cd69",
+    "bytes": 1117
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_sim_pilot_home.py",
+    "path": "scripts/test_sim_pilot_home.py",
+    "sha256": "e87aed6c33e596f86ded0bf4b0da94e4b82f9aad66cd664b20d5cb065706c775",
+    "bytes": 10381
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/make_run_summary.py",
+    "path": "scripts/make_run_summary.py",
+    "sha256": "a7a659f9e2664bf8f397e35cc84600a327788cb92417eaa7814dbea5846616b0",
+    "bytes": 7567
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_navigation_accuracy.py",
+    "path": "scripts/test_navigation_accuracy.py",
+    "sha256": "80838c7cb292811e408b64a2dd681b05aade33388cc29607aa259b9f86907382",
+    "bytes": 2597
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_profile.sh",
+    "path": "scripts/run_profile.sh",
+    "sha256": "5f494efd5c726cddf34055056b0042b07d7e863ead454b69316e2654ab029660",
+    "bytes": 17540
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/sim_truth_tf.py",
+    "path": "scripts/sim_truth_tf.py",
+    "sha256": "84c03b097a4fcaa8a52481eb595ae32f4dd774c790979bdf753332e85e2391e6",
+    "bytes": 2020
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/build_orbslam3.sh",
+    "path": "scripts/build_orbslam3.sh",
+    "sha256": "2ef3ef9946664b72ee8bceacf3c52e048730440c2a45447cbec7556d04bb2012",
+    "bytes": 2928
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/gcs_heartbeat.py",
+    "path": "scripts/gcs_heartbeat.py",
+    "sha256": "24130cb7c4d621e5519cd409b2c1c0f7c5c042cbd6ae4fd04406209ad02cba63",
+    "bytes": 1976
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/vio_truth_bridge.py",
+    "path": "scripts/vio_truth_bridge.py",
+    "sha256": "efb9c0c347df74d4be2d0782af7f0643c216037d7c4d2b96fd39dfd7ed99f02c",
+    "bytes": 7554
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/read_ekf_flags.py",
+    "path": "scripts/read_ekf_flags.py",
+    "sha256": "07013bf19891a5bdb6b304e1e3bf1c674a948dab3a0a7388860ba1d63a87f1ab",
+    "bytes": 1923
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_navigation_entrypoints.py",
+    "path": "scripts/test_navigation_entrypoints.py",
+    "sha256": "a2e4979dc363c61a6652181a1274f451ebbcdb448c73402eeae40723446785f8",
+    "bytes": 1780
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/fastdds_local.xml",
+    "path": "scripts/fastdds_local.xml",
+    "sha256": "3126078ea973b51fa6fc2cbdf3e9b645cc11733f43158cc465e774558145e534",
+    "bytes": 1579
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/grab_one_frame.sh",
+    "path": "scripts/grab_one_frame.sh",
+    "sha256": "12e2893153319ceab51a12de4f24daab89225031b091d67a86a156cd0db83159",
+    "bytes": 1200
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/telemetry.py",
+    "path": "scripts/telemetry.py",
+    "sha256": "750d211f16d9735cb9c3df4b0c22d35f0d7e7bb44eb4f503f4b6ca71539be9e1",
+    "bytes": 7931
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/probe_static.sh",
+    "path": "scripts/probe_static.sh",
+    "sha256": "4b80698d2fd2dabf08fcdbacb99134e9f9dc8db54e0c88c8f6df1fd80579b066",
+    "bytes": 1617
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_fault_injection.sh",
+    "path": "scripts/run_fault_injection.sh",
+    "sha256": "8180025eeadbdda8f38f09df1db7b48be1d2062c1a95b3e7f9667152f66a6444",
+    "bytes": 1897
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/write_manifest.py",
+    "path": "scripts/write_manifest.py",
+    "sha256": "5f84eb828afa4c4c7af19d5dae7623efcea85c59407f8f82ba8afc53d8df60c4",
+    "bytes": 8065
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/truth_gz_node.py",
+    "path": "scripts/truth_gz_node.py",
+    "sha256": "755eb42a4e274cd0f9730b4aa47041a46fc016742b371affd796e93df6752a48",
+    "bytes": 5535
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/fmu_mavlink_bridge.py",
+    "path": "scripts/fmu_mavlink_bridge.py",
+    "sha256": "6461f36084cd1c578ce6b82cd6bdc0e9188538e6b55fbd934dfaae19c0909789",
+    "bytes": 17898
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/sim_pilot.py",
+    "path": "scripts/sim_pilot.py",
+    "sha256": "4481342945ccd9b9397a35062c7bb1b1531f8b4597230e6d664d37198401155c",
+    "bytes": 82965
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/diag_pose_topics.sh",
+    "path": "scripts/diag_pose_topics.sh",
+    "sha256": "85be96fda9225f86178781023396ada4d556b2db61ccda47fe2967b70e226c56",
+    "bytes": 809
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_nav_planner.py",
+    "path": "scripts/test_nav_planner.py",
+    "sha256": "7cf962d507b22daa705068319bb65b3abd14f8957e24aad9fae582e448e05cae",
+    "bytes": 5497
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_vio_offboard_sim.sh",
+    "path": "scripts/run_vio_offboard_sim.sh",
+    "sha256": "754ac922ee6a512970fc60c95252aef76aa92fa1212bb406e96b8e0595ed08e4",
+    "bytes": 2671
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/read_ekf_params.py",
+    "path": "scripts/read_ekf_params.py",
+    "sha256": "e9bb397ef3fdbd357819d1eb9176e006411d5fc4cd1e703bef06c85158a650fb",
+    "bytes": 1482
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_takeoff_altitude_policy.py",
+    "path": "scripts/test_takeoff_altitude_policy.py",
+    "sha256": "7a35d5fb66a88d17a278e1e59edfec9f0e665f2966af93d99aec206d03cb57d6",
+    "bytes": 7411
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/diag_exit_policy.py",
+    "path": "scripts/diag_exit_policy.py",
+    "sha256": "d60ac5c7d95ea1786e23261edc96db788705a958177c014ce7c8cc91985c8c95",
+    "bytes": 1371
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/excite_height_reference.py",
+    "path": "scripts/excite_height_reference.py",
+    "sha256": "df4ba4b56db4e2adb60fed31acaa08b04dc287617b788dd820c859db81d34b89",
+    "bytes": 8358
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/cyclonedds_local.xml",
+    "path": "scripts/cyclonedds_local.xml",
+    "sha256": "9bd5d277f179a5970737230546603b760c42056b1972b43ceee4c4e0ddb82d4f",
+    "bytes": 752
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/navigation_accuracy.py",
+    "path": "scripts/navigation_accuracy.py",
+    "sha256": "294d47602be4fedf7239d310b6faa849e3146944d0e2fd4d376866c638e7ba85",
+    "bytes": 5792
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/start_truth_bridge.sh",
+    "path": "scripts/start_truth_bridge.sh",
+    "sha256": "718f47d3026dc04496dc8ac0fc7d8da30f4aa8b80c599ec5cc80dabb763084e0",
+    "bytes": 1240
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/pilot_authority.py",
+    "path": "scripts/pilot_authority.py",
+    "sha256": "4eb06d37f03c675adcb580f7b055e5f8d8d3e5b9ea9c589c4d6246788cc1942e",
+    "bytes": 17446
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/rm27_waypoints.py",
+    "path": "scripts/rm27_waypoints.py",
+    "sha256": "9c495e2ad8f673d01eab060e398ee77a32e30c80b155ffb2017700eeb242caaf",
+    "bytes": 4343
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/check_run.py",
+    "path": "scripts/check_run.py",
+    "sha256": "b85d63047207f8d6146ee1464faa2f4f2f685dd25c62c4588dcba04e78ef54d5",
+    "bytes": 24151
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/log_cap.py",
+    "path": "scripts/log_cap.py",
+    "sha256": "cf7b8c1b51acdadb398bd3a125ca3a5df4f18f883605f10459f8fa94a6506285",
+    "bytes": 2212
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_pilot_navigation_ros.py",
+    "path": "scripts/test_pilot_navigation_ros.py",
+    "sha256": "8d71de76692a86e0e7085fcdd864409ac94f75f70f86ff44254e50552c1fce31",
+    "bytes": 13468
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_stereo_inertial_sim.sh",
+    "path": "scripts/run_stereo_inertial_sim.sh",
+    "sha256": "bef1597df9d043186d8d48236d2246d057f9ac738042dda4f92f2a58896ba910",
+    "bytes": 8488
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/test_takeoff_state_replay.py",
+    "path": "scripts/test_takeoff_state_replay.py",
+    "sha256": "419a6a32b2e1e98923e2abef8b9166899317e5b61698af1fdefefeda26458a5b",
+    "bytes": 8448
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/prune_sim_runs.sh",
+    "path": "scripts/prune_sim_runs.sh",
+    "sha256": "c3de49da151d7c9d0d11c5596f8efbfdb267b6315b9fa3ea454e8d60d5fd4faa",
+    "bytes": 2404
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/run_stereo_5m.sh",
+    "path": "scripts/run_stereo_5m.sh",
+    "sha256": "0ca9b98e67a7d3d064fce7ca783d9cd6713ea6c55dab3ac788ff4ae16fbe588e",
+    "bytes": 5484
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/np01_truth_supervisor.py",
+    "path": "scripts/np01_truth_supervisor.py",
+    "sha256": "f97c4ae85b59605abb2d3fcb10a5c9e121e1b8e93cfc35359f6b280ff98de9c5",
+    "bytes": 28422
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/make_floor_texture.py",
+    "path": "scripts/make_floor_texture.py",
+    "sha256": "a92d270c79205566e4a876d54c9f8dc59ff37ddba9d496658cb40bd50a71198a",
+    "bytes": 2778
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/scripts/ros_dds_local.sh",
+    "path": "scripts/ros_dds_local.sh",
+    "sha256": "b77570e5e9032779d752d8a447abaa0a0cb98b8ea1f9515aa231f5fa63de6d36",
+    "bytes": 976
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/env.sh",
+    "path": "env.sh",
+    "sha256": "53a6ea421946fdc668b316862ccdad6f0d6f12b6603f564921e3b733bc9dcb1c",
+    "bytes": 1306
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/start_rm27_px4.sh",
+    "path": "start_rm27_px4.sh",
+    "sha256": "54b971f9570268ac89ad6e9e8ac0ad446074ecde0d0cf1dd7745f620afe90aa0",
+    "bytes": 5172
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/stop_sim.sh",
+    "path": "stop_sim.sh",
+    "sha256": "2f48b04a79442838d923e3f5ec091eaba721b3f4d7a05530b461b5c733c658bb",
+    "bytes": 412
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/start_px4_direct.sh",
+    "path": "start_px4_direct.sh",
+    "sha256": "159e41da14818591c6e7c420fe646a29bac32cd03b18c913e06eca90d54df7eb",
+    "bytes": 2308
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/fix_ground_contact.py",
+    "path": "fix_ground_contact.py",
+    "sha256": "1bc6733b657fec8fbcf7bb145f4b450e81ea7bc60e7e737b24c8073026fe76e9",
+    "bytes": 3178
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/config/pilot_navigation_sim_5m.json",
+    "path": "config/pilot_navigation_sim_5m.json",
+    "sha256": "b6deb8fe2b5159de566f87890d2109f38c00508fafdb7c03a68684b236a35ef8",
+    "bytes": 221
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/config/pilot_navigation_link_5m.json",
+    "path": "config/pilot_navigation_link_5m.json",
+    "sha256": "1017ac9952f580df3423290046383e37a1645d68ebad11a25ee7b0a9fdf379c7",
+    "bytes": 222
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/docs/REAL_ALGO_SIM_PLATFORM_20261111.md",
+    "path": "docs/REAL_ALGO_SIM_PLATFORM_20261111.md",
+    "sha256": "33afce6d14c406cba39e456223fe5065563800675c9f21107811e72d394f96e1",
+    "bytes": 11095
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/docs/PILOT_NAVIGATION_20261107.md",
+    "path": "docs/PILOT_NAVIGATION_20261107.md",
+    "sha256": "f7793fe658cfe3cea4e49f0f1bed532f2dac259730a42dc885879cd074aebaba",
+    "bytes": 12788
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/docs/TERMINAL_SLAM_GAZEBO.md",
+    "path": "docs/TERMINAL_SLAM_GAZEBO.md",
+    "sha256": "b2224efbc262968c3cd622cd2756945a5b4a2f1a9a6a72b3e6e6cb1452cb3273",
+    "bytes": 31255
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/docs/plans/2026-11-08-sitl-lease-fix.md",
+    "path": "docs/plans/2026-11-08-sitl-lease-fix.md",
+    "sha256": "460fe009a8d7ab1b36c667f6b4a47d6ad72e9db49c9c997a0c2f2617bf3a6ffd",
+    "bytes": 2650
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/docs/rc_switch_dds.patch",
+    "path": "docs/rc_switch_dds.patch",
+    "sha256": "1664c2a95916aabfa5da2ff52dc663c0979ddff90fcdb4c6e4e7c60fc1966ebb",
+    "bytes": 500
+  },
+  {
+    "source": "/home/gengyinghao/ORB_SLAM3/docs/plans/2026-11-07-pilot-authority.md",
+    "path": "docs/plans/2026-11-07-pilot-authority.md",
+    "sha256": "661f973e9ee3480f707879ee1495ace582376ce1da38801b325f8e59199f0324",
+    "bytes": 4033
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/run_rm27.sh",
+    "path": "rm27_sim/run_rm27.sh",
+    "sha256": "e2a7fd2ac2ab8d9df885def73da2002351bc819bbe5f5851b4545d1aee8424a7",
+    "bytes": 1913
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/start_rm27.ps1",
+    "path": "rm27_sim/start_rm27.ps1",
+    "sha256": "f31f2c0cba48c62853794ad62b072e7bc700007c3ca29cc8ce8048b39c90c981",
+    "bytes": 3507
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/stop_stack.py",
+    "path": "rm27_sim/stop_stack.py",
+    "sha256": "5b05db8b12f4ff7b8a3c73d26ea4fb41ced2a22b46914f779781f52741f4df94",
+    "bytes": 1641
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/worlds/rm27_world.sdf",
+    "path": "rm27_sim/worlds/rm27_world.sdf",
+    "sha256": "6e2096e99247797b07c80eba594b7db531d42a0260fee48dad3e34e798dc2373",
+    "bytes": 5130
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/worlds/rm27_nav_world.sdf",
+    "path": "rm27_sim/worlds/rm27_nav_world.sdf",
+    "sha256": "736279b6d9510dbc8b31333211cd7ebfb5c86c07fdc0172bc0ba9788dab99b67",
+    "bytes": 5036
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/worlds/rm27_wide_world.sdf",
+    "path": "rm27_sim/worlds/rm27_wide_world.sdf",
+    "sha256": "25a3b8dc1f450ff4831bfcb7a97ad26025ad5d16e15226ba9b7dd17370a958eb",
+    "bytes": 4693
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/worlds/rm27_wide_geometry.json",
+    "path": "rm27_sim/worlds/rm27_wide_geometry.json",
+    "sha256": "dc1352965e45fceef1ddb1e9b3a127ebc567a96ebb34d8358bba3602564b38bc",
+    "bytes": 1345
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/x500_mono_cam/model.sdf",
+    "path": "rm27_sim/models/x500_mono_cam/model.sdf",
+    "sha256": "68eec8b8865dc40ded5fc1cb17b61da8dc902a2f33cfb66c860875cfec7905e1",
+    "bytes": 3188
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/model.config",
+    "path": "rm27_sim/models/arena_texture_patches/model.config",
+    "sha256": "7b8ab7a7463fbdee76521fbffc2b7a5a702192628f895f9abc900465b67cc06e",
+    "bytes": 259
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/model.sdf",
+    "path": "rm27_sim/models/arena_texture_patches/model.sdf",
+    "sha256": "ace4835f0d7091f381d7a076d65b24deb2400e64baa8ced3b9fb84d1f45bf2ad",
+    "bytes": 1570
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/floor_detail.obj",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/floor_detail.obj",
+    "sha256": "838536fc01541d384242dc791f9143f5e4329b54512c58524b49a039c6bb58ee",
+    "bytes": 254
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/floor_detail.mtl",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/floor_detail.mtl",
+    "sha256": "8470d4f5ac6e14ff42eac9a62cbfd75be7dae54e5720eb5f0c047d71c091e454",
+    "bytes": 83
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/arena_patch.obj",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/arena_patch.obj",
+    "sha256": "27b2fc2edd58a0f74eccfc04439031c8b5148e384661a3f39a29197b626a38b3",
+    "bytes": 221
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/floor_detail.png",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/floor_detail.png",
+    "sha256": "a68391d0d706f5bc3dc7a58660366a5f4c7730f7fde08d666a5642cdfebb466b",
+    "bytes": 1998601
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/arena_patch.png",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/arena_patch.png",
+    "sha256": "c1df5aa2b0ea523a574d67e46444a2d030c4d5b25502050af6ccc7d0fe40be08",
+    "bytes": 198595
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/meshes/arena_patch.mtl",
+    "path": "rm27_sim/models/arena_texture_patches/meshes/arena_patch.mtl",
+    "sha256": "fcf3b4586a8fec4ebaa4b423e38e2fb33cc6a985031043c779a6c5877098ac78",
+    "bytes": 75
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/arena_texture_patches/materials/textures/floor_detail.png",
+    "path": "rm27_sim/models/arena_texture_patches/materials/textures/floor_detail.png",
+    "sha256": "a68391d0d706f5bc3dc7a58660366a5f4c7730f7fde08d666a5642cdfebb466b",
+    "bytes": 1998601
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/rm27_wide_floor/model.config",
+    "path": "rm27_sim/models/rm27_wide_floor/model.config",
+    "sha256": "c04d56d7be28e28fa1644a734c57daf84bbdd6d0b2918e496b00a1ed97c0fccd",
+    "bytes": 333
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/rm27_wide_floor/model.sdf",
+    "path": "rm27_sim/models/rm27_wide_floor/model.sdf",
+    "sha256": "d8311e11a59fbb611fb6c4a1316672ac07515a68aef8dcabb497f3d4a15fa4e9",
+    "bytes": 453
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/rm27_wide_floor/meshes/floor_detail.png",
+    "path": "rm27_sim/models/rm27_wide_floor/meshes/floor_detail.png",
+    "sha256": "a68391d0d706f5bc3dc7a58660366a5f4c7730f7fde08d666a5642cdfebb466b",
+    "bytes": 1998601
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/rm27_wide_floor/meshes/wide_floor.obj",
+    "path": "rm27_sim/models/rm27_wide_floor/meshes/wide_floor.obj",
+    "sha256": "080bc7553414af1c72de09c025eb67d91c035bc8b1b524f81a97ba399fa031be",
+    "bytes": 398
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/rm27_sim/models/rm27_wide_floor/meshes/wide_floor.mtl",
+    "path": "rm27_sim/models/rm27_wide_floor/meshes/wide_floor.mtl",
+    "sha256": "7621e10748e65a7c043321f604f22ea6db21a9ee70f7bf94c524c19a2d9d2a9e",
+    "bytes": 81
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/CMakeLists.txt",
+    "path": "ros2/rm27_slam/CMakeLists.txt",
+    "sha256": "c50f62a0356a1607b3570bb76be7a5389fd3eec86d82a0a4537ea8a18711acb8",
+    "bytes": 8222
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/package.xml",
+    "path": "ros2/rm27_slam/package.xml",
+    "sha256": "a33fc723a04e8d9530b4e7873d1a81f6401bf7cfbf387dc93675597246c011c0",
+    "bytes": 797
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/src/stereo_inertial_sim_node.cpp",
+    "path": "ros2/rm27_slam/src/stereo_inertial_sim_node.cpp",
+    "sha256": "5148b552e4a45694daa10f69f1f0726889e5cfecf58285bdc80ad0f60acd33a6",
+    "bytes": 57909
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/src/time_trace.hpp",
+    "path": "ros2/rm27_slam/src/time_trace.hpp",
+    "sha256": "def9ca3bddd83610800dd7a556770b729e30d42af14025920aef63dab20384c2",
+    "bytes": 6823
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/src/stereo_slam_node.cpp",
+    "path": "ros2/rm27_slam/src/stereo_slam_node.cpp",
+    "sha256": "91f32f0fd5798321a293f665568a41a38757782709dcc6612d935724c6514a50",
+    "bytes": 11598
+  },
+  {
+    "source": "/home/gengyinghao/px4_ws_201/src/rm27_slam/src/truth_odom_node.cpp",
+    "path": "ros2/rm27_slam/src/truth_odom_node.cpp",
+    "sha256": "2fda508d13f046cbee0e9a23307fc545781288482314ee2f7c1adf4c0d109723",
+    "bytes": 7259
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/audit/runtime_tools.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/audit/runtime_tools.py",
+    "sha256": "4ef5d48000e33b30ca68fdf5f9a270edccff6ddfcf7b1a89a962fc2cf2ac59fb",
+    "bytes": 10853
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/np01_lifecycle.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/np01_lifecycle.py",
+    "sha256": "55d2a1d6a8da07191fddfeac13754a532e1cd1af8b17dacef685f1fb0fa63994",
+    "bytes": 20363
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/run_stereo_inertial_sim_fix18.sh",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/run_stereo_inertial_sim_fix18.sh",
+    "sha256": "9cc242080234af24029e068b3e4bf614078d01ba62e40c07dedf4baf94f13e01",
+    "bytes": 14273
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/run_wrapper_fix18.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/run_wrapper_fix18.py",
+    "sha256": "ce6f79504c39b013926e6a20d7e695ab31fd59f233ef2d49034c63a6cac364b0",
+    "bytes": 12462
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/vio_obs_counter.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix18/runenv/vio_obs_counter.py",
+    "sha256": "3526af3f056506c79fdf6cd931b4b38809841ecdc902769ba8dd407e8271b5f2",
+    "bytes": 5701
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/run_profile_fix19.sh",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/run_profile_fix19.sh",
+    "sha256": "646fff609e23f93bf931839a559f46201100a70689481961aefb4b302c670046",
+    "bytes": 24499
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/launch_run_wide_fix19.sh",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/launch_run_wide_fix19.sh",
+    "sha256": "46c2b85fa96adb499062034338a95cab5d1abd81de0ef655c7c118b2a4cdf5de",
+    "bytes": 11151
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/run_vio_interruption_fix19.sh",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/run_vio_interruption_fix19.sh",
+    "sha256": "54fec209849a3d256b5d5a1d37321faa5463fb5223af3a3d9011488318f0300d",
+    "bytes": 6908
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/injection_readiness.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/injection_readiness.py",
+    "sha256": "ca5137bd2ad2a0ab16ee8bcc120a15f2e767f4b029af3b2b7a34367583c099b9",
+    "bytes": 12573
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/np01_identity_record.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/recordenv/np01_identity_record.py",
+    "sha256": "ea0d98d94e40e0dce0aa605333472df7b44fe480930f3ed32593f30c7956e0e4",
+    "bytes": 14762
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix19/FROZEN_INTERRUPTION_CRITERIA.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix19/FROZEN_INTERRUPTION_CRITERIA.json",
+    "sha256": "8f2c911b6e1e1eb6370ef8d462c7c3d4e2d89fa69dc59f20eae2e3aa98deb5db",
+    "bytes": 4944
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_20261115/tools/np01_exit_grade.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_20261115/tools/np01_exit_grade.py",
+    "sha256": "3404b251d5e75ac0569ee8bdc23811e47eff4c8dd4b11433acab2d266eb3a2e5",
+    "bytes": 5395
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/FREEZE_FIX20.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/FREEZE_FIX20.json",
+    "sha256": "ac19f8b9841a94f101588b4306c15623591ae9485bfdb5fbb9493bdecd129dd5",
+    "bytes": 2449
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/NP01_FIX20_REPORT.md",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/NP01_FIX20_REPORT.md",
+    "sha256": "acd96a51aeab912ebe9423ceb77bed8d1b170510c695f505a72f1c5cb00f0bbe",
+    "bytes": 14660
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/tests/test_excite_height_production.py",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/tests/test_excite_height_production.py",
+    "sha256": "02a854f1dbb06c5069aa65e07000bbe0becd9b7a68d747fc9441ca0dd2884615",
+    "bytes": 21025
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/flight/COLDSTART_3X_ATTEMPTS.jsonl",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/flight/COLDSTART_3X_ATTEMPTS.jsonl",
+    "sha256": "3e90361d99a72435cbd0337451774887c74000b5136c5012d6086e17d09d2221",
+    "bytes": 1749
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/flight/COLDSTART_3X_RESULT.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/flight/COLDSTART_3X_RESULT.json",
+    "sha256": "74870003582032b37740f0bfd951079841d734bdb6ff620a9839005bebb2040e",
+    "bytes": 67
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/production_test_results.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/production_test_results.json",
+    "sha256": "c8801c7546270383a6b43cc1d34bd4bd0a76a6268a8ed21458af185d4f34c92d",
+    "bytes": 71
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/production_test_output.txt",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/production_test_output.txt",
+    "sha256": "dd63e4d9e69b0f67ebc01d9d2305c7ed5b2db3590969eaa5f4c7935440c93f22",
+    "bytes": 3966
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/run1_verification.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/run1_verification.json",
+    "sha256": "c826756617e1956e4ed86cc18417c5c45315fb0831d2029bcdc5d02e42cef64f",
+    "bytes": 1950
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/all_runs_summary.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/all_runs_summary.json",
+    "sha256": "f3925215c7a2caa2ff5e5c2c8fe323c47c2831c39171dc1b04e42afb50916b32",
+    "bytes": 10228
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/intr_precise_diagnosis.json",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/intr_precise_diagnosis.json",
+    "sha256": "5128d5e4eae7685cafc11f67ac9ab4bbbd631e19b1fe5693e8d85ebeffb27b35",
+    "bytes": 4105
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/diff_sim_pilot_fix20.patch",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/diff_sim_pilot_fix20.patch",
+    "sha256": "72dcc5ca06f8380f22b156bde443d804cca0dac8fa7229ec622df2e73099861d",
+    "bytes": 7678
+  },
+  {
+    "source": "/home/gengyinghao/drone_sim/wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/diff_injector_flag_fix.patch",
+    "path": "wb_handoff_20261114/workpkg_20261115/newpkg_fix20/evidence/diff_injector_flag_fix.patch",
+    "sha256": "01051a14bc1a886241eaa14fc3bde591c595e913d114625b5e9bd6ade489e299",
+    "bytes": 1442
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/INTERRUPTION_AUDIT_REPORT.md",
+    "path": "docs/verification/20261116/INTERRUPTION_AUDIT_REPORT.md",
+    "sha256": "11e850ba3db52a6ffe8708dcc3640de3ba27a6d8c7c1ea675963c5f03463591f",
+    "bytes": 21146
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/interruption_audit.json",
+    "path": "docs/verification/20261116/interruption_audit.json",
+    "sha256": "65256aa6cfc4bd564a6cd882e2f62e0acd521d9d11edc713dfa55aaf0680111b",
+    "bytes": 59087
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/EXECUTION_SCOPE_CORRECTION.md",
+    "path": "docs/verification/20261116/EXECUTION_SCOPE_CORRECTION.md",
+    "sha256": "f2e5a22d4461971950831a5766acc9ba96cd967beaedc603a7be529830069a80",
+    "bytes": 5454
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/FROZEN_INTERRUPTION_CRITERIA.json",
+    "path": "docs/verification/20261116/FROZEN_INTERRUPTION_CRITERIA.json",
+    "sha256": "8f2c911b6e1e1eb6370ef8d462c7c3d4e2d89fa69dc59f20eae2e3aa98deb5db",
+    "bytes": 4944
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/diff_scene_comma.patch",
+    "path": "docs/verification/20261116/diff_scene_comma.patch",
+    "sha256": "15452952d2dcd4f741cb44bb9b1840b957aa1990a9a37505544072c8e01c2892",
+    "bytes": 2171
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/audit_offline_20261116/analysis_detail.json",
+    "path": "docs/verification/20261116/audit_offline/analysis_detail.json",
+    "sha256": "c2abd90bad3a3021f035417ecc830eb28e7081bf243439d07698bb207d034ffe",
+    "bytes": 8537
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/audit_offline_20261116/analysis_raw.json",
+    "path": "docs/verification/20261116/audit_offline/analysis_raw.json",
+    "sha256": "0172b9b5c1587f5cd272b19bb5075dc57e9a30dab62e4b9955f17c2f7fdf2349",
+    "bytes": 34440
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/audit_offline_20261116/analyze_detail.py",
+    "path": "docs/verification/20261116/audit_offline/analyze_detail.py",
+    "sha256": "9db9f34258994cc8e67f2fa8fdd93e440cbe871d1e4532f322f0b2fd67d691d4",
+    "bytes": 7102
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/audit_offline_20261116/analyze_offline.py",
+    "path": "docs/verification/20261116/audit_offline/analyze_offline.py",
+    "sha256": "10f516ab5cd0b2619eb90440b0fb5aa1d7e0ca7fe1ffce12ad1d4f9fef787d85",
+    "bytes": 19848
+  },
+  {
+    "source": "/mnt/c/Users/46292/Desktop/飞机/intr_resume_20261116/audit_offline_20261116/build_audit_json.py",
+    "path": "docs/verification/20261116/audit_offline/build_audit_json.py",
+    "sha256": "db2df44c0b80bd77aa0fb8b3eb7a5ab0198eb3b74be37aa2713ccf1d32ee7568",
+    "bytes": 36254
+  }
+]

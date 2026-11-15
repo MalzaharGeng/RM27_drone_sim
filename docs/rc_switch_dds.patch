@@ -1,0 +1,13 @@
+diff --git a/src/modules/uxrce_dds_client/dds_topics.yaml b/src/modules/uxrce_dds_client/dds_topics.yaml
+--- a/src/modules/uxrce_dds_client/dds_topics.yaml
++++ b/src/modules/uxrce_dds_client/dds_topics.yaml
+@@ -36,6 +36,9 @@ publications:
+     type: px4_msgs::msg::ManualControlSetpoint
+     rate_limit: 25.
+ 
++  - topic: /fmu/out/manual_control_switches
++    type: px4_msgs::msg::ManualControlSwitches
++
+   - topic: /fmu/out/message_format_response
+     type: px4_msgs::msg::MessageFormatResponse
+ 

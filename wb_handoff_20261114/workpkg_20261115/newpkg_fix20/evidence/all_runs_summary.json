@@ -1,0 +1,345 @@
+{
+  "batch": "NP01_FIX20",
+  "runs": [
+    {
+      "key": "normal_5m",
+      "label": "正常 5 m 回归",
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_func5m_20261115_232210",
+      "actually_launched": true,
+      "verdict": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 0,
+        "UNVERIFIED": 1,
+        "required_non_pass": []
+      },
+      "rmse_m": "0.0141",
+      "truth_distance_m": "5.04",
+      "hold_s": "14.0",
+      "nav_ready_s": "61.90",
+      "ekf_ev_pos": "100",
+      "exit": {
+        "grade": "A",
+        "subtype": "A_complete",
+        "landing_confirmed": true,
+        "final_armed": false
+      },
+      "cleanup": {
+        "reason": "normal",
+        "verified_empty": true,
+        "targets": 16,
+        "leftovers": []
+      },
+      "reset_events": [
+        {
+          "event": "reference_captured",
+          "reason": "captured",
+          "ref_z": -0.9663293957710266,
+          "sample_us": 1794756199233637,
+          "vzrc": 1,
+          "wall_us": 1794756199304022,
+          "zrc": 1
+        },
+        {
+          "delta_z": 0.23543846607208252,
+          "event": "reference_translated",
+          "reason": "height_reference_translated",
+          "ref_z_after": -0.7308909296989441,
+          "ref_z_before": -0.9663293957710266,
+          "sample_us": 1794756204931348,
+          "vzrc_after": 2,
+          "vzrc_before": 1,
+          "wall_us": 1794756205008936,
+          "z_at_event": -0.7705492377281189,
+          "zrc_after": 2,
+          "zrc_before": 1
+        }
+      ],
+      "reset_delta_z": [
+        0.23543846607208252
+      ],
+      "reset_sticky_applied_once": true,
+      "record_revision_files": {
+        "bridge_owner.fix19.json": true,
+        "supervisor_pid.fix19.json": true
+      }
+    },
+    {
+      "key": "cold_r1",
+      "label": "冷启动 r1",
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r1_20261115_232720",
+      "actually_launched": true,
+      "verdict": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 0,
+        "UNVERIFIED": 1,
+        "required_non_pass": []
+      },
+      "rmse_m": "0.0178",
+      "truth_distance_m": "5.04",
+      "hold_s": "14.0",
+      "nav_ready_s": "55.50",
+      "ekf_ev_pos": "100",
+      "exit": {
+        "grade": "A",
+        "subtype": "A_complete",
+        "landing_confirmed": true,
+        "final_armed": false
+      },
+      "cleanup": {
+        "reason": "normal",
+        "verified_empty": true,
+        "targets": 16,
+        "leftovers": []
+      },
+      "reset_events": [
+        {
+          "event": "reference_captured",
+          "reason": "captured",
+          "ref_z": -1.0982481241226196,
+          "sample_us": 1794756508968968,
+          "vzrc": 1,
+          "wall_us": 1794756509065815,
+          "zrc": 1
+        },
+        {
+          "delta_z": -0.3694723844528198,
+          "event": "reference_translated",
+          "reason": "height_reference_translated",
+          "ref_z_after": -1.4677205085754395,
+          "ref_z_before": -1.0982481241226196,
+          "sample_us": 1794756521316275,
+          "vzrc_after": 2,
+          "vzrc_before": 1,
+          "wall_us": 1794756521387131,
+          "z_at_event": -1.5120104551315308,
+          "zrc_after": 2,
+          "zrc_before": 1
+        }
+      ],
+      "reset_delta_z": [
+        -0.3694723844528198
+      ],
+      "reset_sticky_applied_once": true,
+      "record_revision_files": {
+        "bridge_owner.fix19.json": true,
+        "supervisor_pid.fix19.json": true
+      }
+    },
+    {
+      "key": "cold_r2",
+      "label": "冷启动 r2",
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r2_20261115_232943",
+      "actually_launched": true,
+      "verdict": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 0,
+        "UNVERIFIED": 1,
+        "required_non_pass": []
+      },
+      "rmse_m": "0.0273",
+      "truth_distance_m": "5.04",
+      "hold_s": "14.0",
+      "nav_ready_s": "62.60",
+      "ekf_ev_pos": "100",
+      "exit": {
+        "grade": "A",
+        "subtype": "A_complete",
+        "landing_confirmed": true,
+        "final_armed": false
+      },
+      "cleanup": {
+        "reason": "normal",
+        "verified_empty": true,
+        "targets": 15,
+        "leftovers": []
+      },
+      "reset_events": [
+        {
+          "event": "reference_captured",
+          "reason": "captured",
+          "ref_z": -1.142395257949829,
+          "sample_us": 1794756652093770,
+          "vzrc": 1,
+          "wall_us": 1794756652173077,
+          "zrc": 1
+        },
+        {
+          "delta_z": -0.7095801830291748,
+          "event": "reference_translated",
+          "reason": "height_reference_translated",
+          "ref_z_after": -1.851975440979004,
+          "ref_z_before": -1.142395257949829,
+          "sample_us": 1794756666438083,
+          "vzrc_after": 2,
+          "vzrc_before": 1,
+          "wall_us": 1794756666505138,
+          "z_at_event": -1.880785346031189,
+          "zrc_after": 2,
+          "zrc_before": 1
+        }
+      ],
+      "reset_delta_z": [
+        -0.7095801830291748
+      ],
+      "reset_sticky_applied_once": true,
+      "record_revision_files": {
+        "bridge_owner.fix19.json": true,
+        "supervisor_pid.fix19.json": true
+      }
+    },
+    {
+      "key": "cold_r3",
+      "label": "冷启动 r3",
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_cold_r3_20261115_233212",
+      "actually_launched": true,
+      "verdict": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 0,
+        "UNVERIFIED": 1,
+        "required_non_pass": []
+      },
+      "rmse_m": "0.0240",
+      "truth_distance_m": "5.07",
+      "hold_s": "14.1",
+      "nav_ready_s": "54.10",
+      "ekf_ev_pos": "100",
+      "exit": {
+        "grade": "A",
+        "subtype": "A_complete",
+        "landing_confirmed": true,
+        "final_armed": false
+      },
+      "cleanup": {
+        "reason": "normal",
+        "verified_empty": true,
+        "targets": 16,
+        "leftovers": []
+      },
+      "reset_events": [
+        {
+          "event": "reference_captured",
+          "reason": "captured",
+          "ref_z": -1.0947493314743042,
+          "sample_us": 1794756800316620,
+          "vzrc": 1,
+          "wall_us": 1794756800364806,
+          "zrc": 1
+        },
+        {
+          "delta_z": -0.47508275508880615,
+          "event": "reference_translated",
+          "reason": "height_reference_translated",
+          "ref_z_after": -1.5698320865631104,
+          "ref_z_before": -1.0947493314743042,
+          "sample_us": 1794756812723071,
+          "vzrc_after": 2,
+          "vzrc_before": 1,
+          "wall_us": 1794756812753631,
+          "z_at_event": -1.6004430055618286,
+          "zrc_after": 2,
+          "zrc_before": 1
+        }
+      ],
+      "reset_delta_z": [
+        -0.47508275508880615
+      ],
+      "reset_sticky_applied_once": true,
+      "record_revision_files": {
+        "bridge_owner.fix19.json": true,
+        "supervisor_pid.fix19.json": true
+      }
+    },
+    {
+      "key": "intr",
+      "label": "中断回归",
+      "run_dir": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_r1_20261115_233636",
+      "actually_launched": true,
+      "verdict": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 0,
+        "UNVERIFIED": 1,
+        "required_non_pass": []
+      },
+      "rmse_m": "0.0418",
+      "truth_distance_m": "5.05",
+      "hold_s": "13.9",
+      "nav_ready_s": "53.70",
+      "ekf_ev_pos": "100",
+      "exit": {
+        "grade": "A",
+        "subtype": "A_complete",
+        "landing_confirmed": true,
+        "final_armed": false
+      },
+      "cleanup": {
+        "reason": "normal",
+        "verified_empty": true,
+        "targets": 16,
+        "leftovers": []
+      },
+      "reset_events": [
+        {
+          "event": "reference_captured",
+          "reason": "captured",
+          "ref_z": -1.0620166063308716,
+          "sample_us": 1794757063625077,
+          "vzrc": 1,
+          "wall_us": 1794757063719604,
+          "zrc": 1
+        },
+        {
+          "delta_z": 0.18427777290344238,
+          "event": "reference_translated",
+          "reason": "height_reference_translated",
+          "ref_z_after": -0.8777388334274292,
+          "ref_z_before": -1.0620166063308716,
+          "sample_us": 1794757069667022,
+          "vzrc_after": 2,
+          "vzrc_before": 1,
+          "wall_us": 1794757069740025,
+          "z_at_event": -0.9451925158500671,
+          "zrc_after": 2,
+          "zrc_before": 1
+        }
+      ],
+      "reset_delta_z": [
+        0.18427777290344238
+      ],
+      "reset_sticky_applied_once": true,
+      "record_revision_files": {
+        "bridge_owner.fix19.json": true,
+        "supervisor_pid.fix19.json": true
+      },
+      "injection": {
+        "interruption.log": false,
+        "injection_signal.json": false,
+        "injection_readiness.json": false,
+        "INJECTION_MARKER": false,
+        "injection_target_identity.json": false,
+        "injection_verdict.txt": true
+      },
+      "injection_verdict_file": "verdict=A\nreason=not_in_autonomous_execution_at_6s\nstate=NAVIGATE\nsignal_sent=no\n"
+    }
+  ],
+  "summary": {
+    "normal_regression": "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+    "coldstart_batch": "NP01_FIX20_COLDSTART_3X",
+    "coldstart_rounds": [
+      "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}",
+      "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}"
+    ],
+    "coldstart_3_of_3": true,
+    "interruption_verdict": "A（注入未执行）",
+    "interruption_root_cause": "注入器条件判断的字符串比较缺陷（grep -c 无匹配时 || echo 0 追加第二行），离线证明注入条件实际满足",
+    "flights_authorized": 5,
+    "flights_actually_launched": 5,
+    "auto_retry": false,
+    "new_interruption_quota_added": false
+  }
+}

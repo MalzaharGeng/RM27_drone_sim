@@ -1,0 +1,78 @@
+{
+  "run": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_fix20_func5m_20261115_232210",
+  "verdict": [
+    "VERDICT=PASS  counts={'PASS': 16, 'UNVERIFIED': 1}"
+  ],
+  "first_ev_height_fusion_reset": {
+    "captured": {
+      "ref_z": -0.9663293957710266,
+      "zrc": 1,
+      "vzrc": 1,
+      "wall_us": 1794756199304022
+    },
+    "translated": [
+      {
+        "delta_z": 0.23543846607208252,
+        "ref_z_before": -0.9663293957710266,
+        "ref_z_after": -0.7308909296989441,
+        "z_at_event": -0.7705492377281189,
+        "zrc_before": 1,
+        "zrc_after": 2,
+        "vzrc_before": 1,
+        "vzrc_after": 2
+      }
+    ],
+    "unrecoverable_events": [],
+    "sticky_applied_once": true,
+    "calculation": "ref_z_after - ref_z_before = 0.235438 = delta_z"
+  },
+  "height_continuity": {
+    "excite_rows": 104,
+    "max_abs_relative_height_m": 0.1168,
+    "excite_max_dz_threshold_m": 1.0,
+    "within_envelope": true,
+    "decision_frame": {
+      "state": "INIT_SETTLE",
+      "h_z": -0.7729,
+      "h_zrc": "2",
+      "h_delta_z": "0.2354",
+      "relative_height_m": 0.042,
+      "ex_stop_reason": "vio_ready_stable"
+    },
+    "truth_z_range_during_excite": [
+      1.051544991,
+      1.168312592
+    ],
+    "truth_z_change_m": 0.11676760099999983,
+    "no_reset_fault": true
+  },
+  "bridge": {
+    "pid": 303053,
+    "exe_realpath": "/usr/bin/python3.14",
+    "child_pids": [],
+    "publish_rows": 1801
+  },
+  "supervisor": {
+    "pid": 303511,
+    "exe_realpath": "/usr/bin/python3.14"
+  },
+  "cleanup": {
+    "reason": "normal",
+    "verified_empty": true,
+    "targets": 16,
+    "leftovers": [],
+    "verify": {
+      "sid": 302317,
+      "alive_members": [],
+      "clean": true
+    }
+  },
+  "files_present": {
+    "bridge_owner.fix19.json": true,
+    "supervisor_pid.fix19.json": true,
+    "excite_reset_events.jsonl": true,
+    "check.txt": true,
+    "exit_grade.json": true,
+    "process_cleanup.json": true
+  }
+}

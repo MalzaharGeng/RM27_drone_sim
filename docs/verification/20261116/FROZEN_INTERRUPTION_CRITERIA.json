@@ -1,0 +1,99 @@
+{
+  "frozen_at_before_any_launch": true,
+  "written_before_this_round_decision": true,
+  "purpose": "预先定义中断响应专项判据；不依赖本轮结果，不事后把未完成任务解释成全部通过",
+  "scenario": "NP-01 FIX19 真实 VIO 中断回归（本指令授权 1 次飞行）",
+  "fixed_injection_plan": {
+    "trigger": "pilot 实际进入 NAVIGATE 后 6.0 s",
+    "additional_condition": "届时仍处于预定自主任务执行状态（pilot state=NAVIGATE、BT 未 task_completed、未 TAKEOVER、未 FAULT）",
+    "signal": "SIGTERM 只发给唯一 VIO 发布节点",
+    "forbidden": [
+      "不因观察结果提前/推迟注入",
+      "不改成 HOLD 注入",
+      "不调节激励、等待时间或包络来争取进入任务",
+      "未达到注入点时不发送任何信号，按现有保护退出",
+      "不自动重飞"
+    ]
+  },
+  "criteria": [
+    {
+      "id": "C1",
+      "name": "注入前置条件",
+      "pass_when": "pilot.log 出现 state -> NAVIGATE，且 6.0 s 后 pilot 仍在 NAVIGATE、BT 无 task_completed/REVOKED、无 FAULT",
+      "evidence": ["pilot.log", "bt.log", "pilot.csv"],
+      "if_false": "A 注入未执行"
+    },
+    {
+      "id": "C2",
+      "name": "唯一节点身份与就绪检查",
+      "pass_when": "恰好 1 个进程 exe == 冻结 node bin；PID、starttime_s_boot、exe_realpath、sha256 与 node_pid.json 及登记表一致；launcher/整轮运行器/桥均被显式排除且未被当作节点",
+      "evidence": ["proc_registry.jsonl", "node_pid.json", "injection_readiness.json"],
+      "if_false": "不得注入，记为 A 或 B"
+    },
+    {
+      "id": "C3",
+      "name": "信号",
+      "pass_when": "SIGTERM 仅发给 C2 确认的那个 PID；记录主机单调时间、目标身份、发送结果；注入器退出不触发整轮无条件 cleanup",
+      "evidence": ["injection_signal.json", "interruption.log", "injection_readiness.json"]
+    },
+    {
+      "id": "C4",
+      "name": "进程实际退出",
+      "pass_when": "注入后该 PID 从 /proc 消失（或为 Z/X），且 launcher_exit.json 记录 node_exit_code；文件 mtime 只作辅助",
+      "evidence": ["launcher_exit.json", "proc_watch.csv", "process_cleanup.json"]
+    },
+    {
+      "id": "C5",
+      "name": "消息通路停止",
+      "pass_when": "vio_obs_counter.csv 的 odo_count 与 health_count 在注入后不再增长、最近接收时间冻结；bridge_telemetry.csv 无新 publish 行（文件仅辅助）",
+      "evidence": ["vio_obs_counter.csv", "telemetry.csv", "bridge_telemetry.csv"]
+    },
+    {
+      "id": "C6",
+      "name": "授权撤销与任务停止",
+      "pass_when": "BT task_revoked 或等价撤销事件，记录原因与时刻；pilot 离开 NAVIGATE 且不再下发任务指令",
+      "evidence": ["pilot.log", "bt.log", "pilot.csv"]
+    },
+    {
+      "id": "C7",
+      "name": "桥、监督器、真值与遥测持续",
+      "pass_when": "桥两个 PID 与监督器 PID 注入后仍存活；supervisor_trace.csv 行数继续增长；无 truth_input_lost、无 stop_event；truth.csv 与 telemetry.csv 持续写入到收尾",
+      "evidence": ["bridge_owner.fix19.json", "supervisor_pid.fix19.json", "proc_watch.csv", "supervisor.json", "supervisor_trace.csv", "truth.csv", "telemetry.csv"]
+    },
+    {
+      "id": "C8",
+      "name": "接回与落地",
+      "pass_when": "TAKEOVER -> LAND -> LANDED -> DONE，pilot_final_armed=false，disarm 确认",
+      "evidence": ["pilot.log", "exit_grade.json", "check.txt"]
+    },
+    {
+      "id": "C9",
+      "name": "整轮清理",
+      "pass_when": "process_cleanup.json 全部目标已退出且 lifecycle verify clean=true；无孤儿；共享进程（MicroXRCEAgent）未被触碰",
+      "evidence": ["process_cleanup.json", "cleanup_verify.json", "preflight_orphans.json"]
+    },
+    {
+      "id": "C10",
+      "name": "原始评估结果与专项结论分离",
+      "pass_when": "check.txt 原始结果原样保留（主动撤销导致任务未完成，普通评估器 FAIL 不改成 PASS）；另出专项结论",
+      "evidence": ["check.txt", "interruption_result.json", "FIX19_REPORT.md"]
+    }
+  ],
+  "verdict_rule": {
+    "A": "C1 或 C2 不成立，未发送信号 —— 注入未执行（不得计为响应通过）",
+    "B": "C2 成立且已发送信号，但 C3–C9 任一不成立 —— 注入执行但响应未通过",
+    "C": "C1–C9 全部成立 —— 注入与响应全部满足专项要求",
+    "note": "C10 是交付约束，不参与 A/B/C 判定；普通任务评估器的 FAIL 永远保留"
+  },
+  "success_scope_limit": [
+    "扩大场景下原冻结版本 3/3 正常任务通过",
+    "FIX18 生命周期修复后正常 5 m 回归通过",
+    "本次最终运行环境下的 VIO 中断响应通过"
+  ],
+  "no_extrapolation_to": [
+    "原场地可靠性",
+    "全部故障类型",
+    "额外延迟性能达标",
+    "Nano 实机放行"
+  ]
+}

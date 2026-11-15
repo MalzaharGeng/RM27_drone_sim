@@ -1,0 +1,291 @@
+{
+  "truth_disp": {
+    "rows": 4128,
+    "first_wall_us": 1794758624197473.0,
+    "last_wall_us": 1794758705994288.0,
+    "peak_disp_m": 5.384685373322072,
+    "peak_at_wall_us": 1794758684458501.0,
+    "peak_relative_to_signal_s": -8.341892,
+    "peak_at_x_y": [
+      0.193522831,
+      -5.381206694
+    ],
+    "disp_at_signal": 5.222525520592753,
+    "disp_at_revoke": 5.255357106685812,
+    "task_window_s": [
+      1794758686.366,
+      1794758693.463
+    ]
+  },
+  "proc_spans": {
+    "bridge_337152": {
+      "rows": 83,
+      "alive_rows": 82,
+      "first_alive_wall_us": 1794758624056030.0,
+      "last_alive_wall_us": 1794758705192060.0,
+      "alive_rows_after_signal": 13,
+      "last_alive_relative_to_signal_s": 12.391667,
+      "first_dead_wall_us": 1794758706193324.0
+    },
+    "bridge_337238": {
+      "rows": 82,
+      "alive_rows": 81,
+      "first_alive_wall_us": 1794758625056751.0,
+      "last_alive_wall_us": 1794758705192123.0,
+      "alive_rows_after_signal": 13,
+      "last_alive_relative_to_signal_s": 12.39173,
+      "first_dead_wall_us": 1794758706193332.0
+    },
+    "supervisor_337734": {
+      "rows": 66,
+      "alive_rows": 65,
+      "first_alive_wall_us": 1794758641080842.0,
+      "last_alive_wall_us": 1794758705192613.0,
+      "alive_rows_after_signal": 13,
+      "last_alive_relative_to_signal_s": 12.39222,
+      "first_dead_wall_us": 1794758706193474.0
+    },
+    "node_337397": {
+      "rows": 79,
+      "alive_rows": 65,
+      "first_alive_wall_us": 1794758628060732.0,
+      "last_alive_wall_us": 1794758692175452.0,
+      "alive_rows_after_signal": 0,
+      "last_alive_relative_to_signal_s": -0.624941,
+      "first_dead_wall_us": 1794758693176683.0
+    },
+    "pilot_337732": {
+      "rows": 66,
+      "alive_rows": 63,
+      "first_alive_wall_us": 1794758641080777.0,
+      "last_alive_wall_us": 1794758703189365.0,
+      "alive_rows_after_signal": 11,
+      "last_alive_relative_to_signal_s": 10.388972,
+      "first_dead_wall_us": 1794758704191145.0
+    }
+  },
+  "supervisor_mono_domain": {
+    "domain": "CLOCK_MONOTONIC us",
+    "first_t_wall_us_is_mono": 49915167409.0,
+    "last_t_wall_us_is_mono": 49979258899.0,
+    "signal_sent_mono_us": 49966440807,
+    "trace_last_minus_signal_mono_s": 12.818092,
+    "trace_first_minus_signal_mono_s": -51.273398,
+    "mono_to_epoch_offset_us": 1794708726359673,
+    "trace_last_epoch_us_if_mapped": 1794758705618572.0,
+    "trace_last_epoch_relative_to_signal_s": 12.818179,
+    "trace_rows_after_signal_mono": 643,
+    "trace_rows_total": 3242,
+    "first_pose_mono_s_from_supervisor_json": 0.011618999999999999
+  },
+  "fail_detail": {
+    "bt_task_completed": {
+      "name": "bt_task_completed",
+      "status": "FAIL",
+      "required": true,
+      "detail": "phases={'WAIT_PILOT': 1148, 'NAVIGATE': 141, 'REVOKED': 1} 到达过 HOLD=False 目标距离=5.00（指令 5.00 m）"
+    },
+    "truth_distance_hold": {
+      "name": "truth_distance_hold",
+      "status": "FAIL",
+      "required": true,
+      "detail": "真值最大水平位移=1.65 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=0.0s（要求>=2.0s）"
+    },
+    "latency_evidence": {
+      "name": "latency_evidence",
+      "status": "UNVERIFIED",
+      "required": false,
+      "detail": "latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄"
+    }
+  },
+  "pass_names": [
+    "no_bypass_env",
+    "time_sync_profile",
+    "px4_bridge_start",
+    "offboard_accepted",
+    "nav_ready_continuous",
+    "no_airborne_fault",
+    "ekf_using_ev",
+    "takeover_position",
+    "landed_disarmed",
+    "imu_stereo_viba",
+    "vio_published",
+    "vio_tracking_health",
+    "gate_attitude_continuity",
+    "vio_vs_truth"
+  ],
+  "check_txt_first_lines": [
+    "==============================================================================",
+    "run=/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_resume_20261116_r1_20261116_000320 profile=vio_closed_loop distance=5.00m evaluator=phase4-v2",
+    "任务窗口: 1794758686.366..1794758693.463  truth 延迟: {'n': 4128, 'offset_s': 1794758613.144678, 'offset_drift_ms': 123.57}",
+    "------------------------------------------------------------------------------",
+    "[PASS      ] no_bypass_env            forbidden_env=[] bt_probe_mentioned=False",
+    "[PASS      ] time_sync_profile        vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收"
+  ],
+  "cleanup": {
+    "targets": [
+      {
+        "role": "pilot",
+        "pid": 337732,
+        "exited": true,
+        "signal": "ALREADY_GONE",
+        "exit_state": "gone"
+      },
+      {
+        "role": "supervisor",
+        "pid": 337734,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "telemetry",
+        "pid": 337477,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "obs_counter",
+        "pid": 337484,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "recorder",
+        "pid": 337308,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "node",
+        "pid": 337397,
+        "exited": true,
+        "signal": "ALREADY_GONE",
+        "exit_state": "gone"
+      },
+      {
+        "role": "launcher",
+        "pid": 337312,
+        "exited": true,
+        "signal": "ALREADY_GONE",
+        "exit_state": "gone"
+      },
+      {
+        "role": "bridge",
+        "pid": 337152,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "bridge",
+        "pid": 337238,
+        "exited": true,
+        "signal": "NOOP:gone",
+        "exit_state": "gone"
+      },
+      {
+        "role": "px4",
+        "pid": 336400,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "gz",
+        "pid": 336631,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "session_member",
+        "pid": 336387,
+        "exited": true,
+        "signal": "NOOP:gone",
+        "exit_state": "gone"
+      },
+      {
+        "role": "session_member",
+        "pid": 336388,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "session_member",
+        "pid": 337304,
+        "exited": true,
+        "signal": "SIGTERM",
+        "exit_state": "gone"
+      },
+      {
+        "role": "session_member",
+        "pid": 337318,
+        "exited": true,
+        "signal": "ALREADY_GONE",
+        "exit_state": "gone"
+      },
+      {
+        "role": "session_member",
+        "pid": 337319,
+        "exited": true,
+        "signal": "NOOP:gone",
+        "exit_state": "gone"
+      }
+    ],
+    "leftovers": [],
+    "verified_empty": true,
+    "shared_agent_pid": 3643,
+    "shared_agent_in_targets": false,
+    "self_excluded": [
+      2,
+      336218,
+      336220,
+      336224,
+      336225,
+      336227,
+      336329,
+      336330,
+      340062
+    ],
+    "ownership_rule": "registry identity (pid + starttime) AND sid == round sid; no name/cmdline matching; no pkill",
+    "reason": "injected"
+  },
+  "C1_window": {
+    "rows": 17,
+    "states": {
+      "NAVIGATE": 17
+    },
+    "bt_phases": {
+      "NAVIGATE": 17
+    },
+    "task_completed": {
+      "False": 17
+    },
+    "control_active": {
+      "True": 17
+    },
+    "bt_reasons": {
+      "pilot_authorized": 17
+    },
+    "first_wall_us": "1794758691846145",
+    "last_wall_us": "1794758692789577"
+  },
+  "injector_vs_cleanup": {
+    "injector_finished_wall": "2026-11-16T00:05:07.927048+08:00",
+    "cleanup_started_wall_us": 1794758705627475,
+    "cleanup_finished_wall_us": 1794758707078789,
+    "run_log_cleanup_line": "00:05:05.585567822 清理开始 reason=injected sid=336330",
+    "run_log_done_line": "00:05:04.569442628 飞手流程结束 DONE",
+    "note": "round cleanup is triggered by the whole-round runner after pilot DONE, not by injector exit; injector waits on the launcher (wait $L) and exits after round finished"
+  },
+  "launch_accounting_extra": {
+    "LAUNCH_ONCE_lock": "336224",
+    "ATTEMPTS_lines": 2,
+    "matching_run_dirs_1": true
+  }
+}

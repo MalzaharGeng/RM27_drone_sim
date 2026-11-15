@@ -1,0 +1,149 @@
+{
+  "run": "/home/gengyinghao/drone_sim/logs/vio_closed_loop_intr_fix20_r1_20261115_233636",
+  "navigate_epoch_s": 1794757081.0315115,
+  "planned_injection_epoch_s": 1794757087.0315115,
+  "state_at_injection": "NAVIGATE",
+  "pilot_csv_window": [
+    {
+      "t_rel_nav": 5.701,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 5.757,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 5.816,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 5.873,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 5.931,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 5.988,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.046,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.104,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.161,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.219,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.275,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    },
+    {
+      "t_rel_nav": 6.345,
+      "state": "NAVIGATE",
+      "bt_phase": "NAVIGATE",
+      "task_completed": "False",
+      "control_active": "True",
+      "vio_ready": "1"
+    }
+  ],
+  "task_completed_events_before_injection": [],
+  "task_revoked_events_before_injection": [],
+  "first_task_completed_after_injection_t_rel_nav_s": [
+    22.891
+  ],
+  "first_task_revoked_after_injection_t_rel_nav_s": [
+    31.079
+  ],
+  "injection_condition_actually_met": true,
+  "injector_buggy_lines": [
+    {
+      "line": 87,
+      "text": "DONE_FLAG=$(grep -ac \"task_completed\" \"$RD/bt.log\" 2>/dev/null || echo 0)"
+    },
+    {
+      "line": 88,
+      "text": "REVOKED_FLAG=$(grep -ac \"task_revoked\" \"$RD/pilot.log\" 2>/dev/null || echo 0)"
+    },
+    {
+      "line": 90,
+      "text": "echo \"INJECTION_CONDITION_NOT_MET state=$STATE_AT done=$DONE_FLAG revoked=$REVOKED_FLAG\""
+    }
+  ],
+  "shell_variable_reproduction": {
+    "DONE_FLAG": {
+      "value_repr": "'0\\n0\\n'",
+      "rc": 0,
+      "equals_zero_string": false
+    },
+    "REVOKED_FLAG": {
+      "value_repr": "'1\\n'",
+      "rc": 0,
+      "equals_zero_string": false
+    }
+  },
+  "root_cause": "grep -ac 在无匹配时打印 '0' 但退出码为 1；`|| echo 0` 又打印一行 '0'，使 DONE_FLAG / REVOKED_FLAG 变成两行 '0\\n0'，与字符串 '0' 比较恒不等，注入器误判为『不在自主执行段』而放弃发送信号。这是注入器工具缺陷，不是注入前功能失败、不是控制/高度问题、不是运气。",
+  "signal_evidence": {
+    "interruption.log": false,
+    "injection_signal.json": false,
+    "injection_readiness.json": false,
+    "INJECTION_MARKER": false,
+    "injection_target_identity.json": false
+  },
+  "verdict": "A 注入未执行（注入器条件判断缺陷导致漏发信号）",
+  "no_auto_retry": true
+}
