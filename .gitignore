@@ -30,3 +30,22 @@ Thumbs.db
 #   git lfs install
 #   git lfs track "*.obj" "*.stl" "*.png"
 #   git add .gitattributes
+
+# 本机工作区、构建及诊断产物（必要历史证据以显式路径纳入）
+.pytest_cache/
+build/
+install/
+log/
+*.ulg
+*.so
+*.a
+*.o
+*.bak_*
+*.bak_before_*
+*.fix14pre
+scripts/px4_telemetry*.csv
+/px4_telemetry*.csv
+wb_handoff_*/**/bin/
+wb_handoff_*/**/frozen/
+wb_handoff_*/**/candidate/
+wb_handoff_*/**/prechange/
