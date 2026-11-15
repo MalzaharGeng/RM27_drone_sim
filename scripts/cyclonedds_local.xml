@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- CycloneDDS 配置：只用 loopback，且完全禁用组播，改走单播对端发现。
+     适用于组播被禁 / 多网卡干扰 / WSL 环境。
+     注意：新版 CycloneDDS 已弃用 NetworkInterfaceAddress，要用 <Interfaces>。 -->
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain Id="any">
+    <General>
+      <Interfaces>
+        <NetworkInterface name="lo" priority="default" multicast="false"/>
+      </Interfaces>
+      <!-- 不依赖任何组播 -->
+      <AllowMulticast>false</AllowMulticast>
+    </General>
+    <Discovery>
+      <ParticipantIndex>none</ParticipantIndex>
+      <Peers>
+        <Peer address="127.0.0.1"/>
+      </Peers>
+    </Discovery>
+  </Domain>
+</CycloneDDS>

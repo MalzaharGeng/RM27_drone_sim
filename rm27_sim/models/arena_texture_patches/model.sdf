@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="arena_texture_patches">
+    <static>true</static>
+    <!-- VISUAL ONLY: no <collision>, no physics, no changes to rmuc_2027.
+         Thin field-marking panels that give ORB-SLAM3 corners while keeping
+         the arena's light-grey look and its original geometry intact. -->
+    <link name="decals">
+      <visual name="near_south">
+        <pose>10.5 2.8 0.72 0 0 0</pose>
+        <geometry><mesh><uri>meshes/arena_patch.obj</uri></mesh></geometry>
+      </visual>
+      <visual name="near_north">
+        <pose>10.5 9.2 0.72 0 0 0</pose>
+        <geometry><mesh><uri>meshes/arena_patch.obj</uri></mesh></geometry>
+      </visual>
+      <visual name="mid_south">
+        <pose>16.0 3.6 0.75 0 0 0</pose>
+        <geometry><mesh><uri>meshes/arena_patch.obj</uri></mesh></geometry>
+      </visual>
+      <visual name="mid_north">
+        <pose>16.0 8.4 0.75 0 0 0</pose>
+        <geometry><mesh><uri>meshes/arena_patch.obj</uri></mesh></geometry>
+      </visual>
+      <!-- 场地地胶纹理：按场地实尺寸 1:1 铺在视觉地面上方 1 cm。
+           只加视觉，不动碰撞；给 ORB-SLAM3 近处地面提供角点。
+           原场地只用纯色 mesh，近处地面无纹理，是跟踪成功率低的直接原因。
+           备份：model.sdf.bak_before_floor -->
+      <visual name="floor_detail">
+        <pose>14.15 8.065 0.276 0 0 0</pose>
+        <geometry>
+          <mesh><uri>meshes/floor_detail.obj</uri></mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -2,7 +2,7 @@
 # Source this before launching PX4/Gazebo:  source ~/drone_sim/env.sh
 
 # Keep Windows/MSYS paths out of the toolchain search path.
-export PATH="/opt/ros/lyrical/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/wsl/lib"
+export PATH="/opt/ros/lyrical/bin:/home/gengyinghao/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/wsl/lib"
 
 set +u
 if [[ -f /opt/ros/lyrical/setup.bash ]]; then
@@ -23,4 +23,5 @@ export GZ_SIM_RESOURCE_PATH="$HOME/drone_sim/rm27_sim/models:$HOME/drone_sim/rm2
 
 # PX4 SITL selects the RM27 world and a start pose inside the arena.
 export PX4_GZ_WORLD="${PX4_GZ_WORLD:-rm27_world}"
-export PX4_GZ_MODEL_POSE="${PX4_GZ_MODEL_POSE:-5,6,0.5,0,0,0}"
+# [NP01_CENTER_START] 中央净空出生点：arena 内净空中心 (14.149, 8.065)，地面 z=0.019。
+export PX4_GZ_MODEL_POSE="${PX4_GZ_MODEL_POSE:-14.149,8.065,0.019,0,0,0}"

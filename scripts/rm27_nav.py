@@ -9,8 +9,8 @@ MIN_CLEARANCE_M to an obstacle.
 
 Usage:
     python3 ~/drone_sim/scripts/rm27_nav.py --dry-run        # plan only, no sim
-    python3 ~/drone_sim/scripts/rm27_nav.py                  # fly the mission
-    python3 ~/drone_sim/scripts/rm27_nav.py --enemy-base     # straight to far base
+    python3 ~/drone_sim/scripts/rm27_nav.py --simulation-auto  # legacy simulator auto-flight
+    python3 ~/drone_sim/scripts/px4_square_bt.py               # real-flight pilot authorization
 
 Requires PX4 SITL started with the nav world:
     PX4_GZ_WORLD=rm27_nav_world ~/drone_sim/start_rm27_px4.sh
@@ -323,7 +323,10 @@ async def mission(
     log_path,
     hold_s=0.0,
     final_hover_alt_m=FINAL_HOVER_ALT_M,
+    simulation_auto=False,
 ):
+    if not simulation_auto:
+        raise RuntimeError("Automatic MAVSDK flight is simulation-only; use px4_square_bt.py for pilot-authorized real flights")
     print("connecting to PX4 on udp 14540 (Ctrl-C to abort) ...")
     try:
         drone = await asyncio.wait_for(_connect_and_wait(), CONNECT_TIMEOUT_S)
@@ -488,6 +491,8 @@ def _parse_world_xy(text: str) -> tuple[float, float]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--simulation-auto", action="store_true",
+                        help="explicitly enable legacy simulator auto-arm/takeoff/mode/land; never use on aircraft")
     parser.add_argument("--map", type=pathlib.Path, default=DEFAULT_MAP)
     parser.add_argument("--log", type=pathlib.Path, default=DEFAULT_LOG)
     parser.add_argument("--altitude", type=float, default=None)
@@ -573,6 +578,11 @@ def main() -> int:
         print("dry run: nothing was flown")
         return 0
 
+    if not args.simulation_auto:
+        print("Live auto-flight is disabled. For real flights use px4_square_bt.py (pilot priority). "
+              "Legacy simulation requires --simulation-auto.", file=sys.stderr)
+        return 2
+
     if not HAVE_MAVSDK:
         print(
             "mavsdk_grpc is not installed; pip install mavsdk-grpc "
@@ -591,6 +601,7 @@ def main() -> int:
                 args.log,
                 hold_s=args.hold,
                 final_hover_alt_m=args.final_hover_altitude,
+                simulation_auto=args.simulation_auto,
             )
         )
     except (ActionError, OffboardError, RuntimeError) as exc:

@@ -2,8 +2,8 @@
 <!-- 覆盖 PX4 自带的 x500_mono_cam：改为「前视双目」，规格对齐 2026-11-06 在用的
      USB3.0 模组（德创信，2720x960 双目拼接）
      - 基线 50 mm（沿用上一版仿真假设；实机基线未测，标定后同步）
-     - 两路 1360x960@30，水平 FOV 91.1deg = 1.590 rad
-       （由 2.0mm/3.0um 焦距与 102deg 对角视场反推，单目 fx=fy≈667 px）
+     - 两路 960x720@30（对齐 nano 处理分辨率），水平 FOV 91.1deg = 1.590 rad（内参按 1.590 重算）
+       （由水平 FOV 1.590 rad 在 960x720 下反推，单目 fx=fy≈470.87 px）
      - 光轴沿 +x，平视
      模型名必须保持 x500_mono_cam，PX4 的 gz_x500_mono_cam 目标按此名生成。
      原始单目定义备份在同目录 model.sdf.orig_single_cam。 -->
@@ -30,7 +30,7 @@
         <pose>0 0 0 0 0 0</pose>
         <camera>
           <horizontal_fov>1.590</horizontal_fov>
-          <image><width>1360</width><height>960</height></image>
+          <image><width>960</width><height>720</height></image>
           <clip><near>0.05</near><far>300</far></clip>
           <noise><type>gaussian</type><mean>0.0</mean><stddev>0.003</stddev></noise>
         </camera>
@@ -55,7 +55,7 @@
         <pose>0 0 0 0 0 0</pose>
         <camera>
           <horizontal_fov>1.590</horizontal_fov>
-          <image><width>1360</width><height>960</height></image>
+          <image><width>960</width><height>720</height></image>
           <clip><near>0.05</near><far>300</far></clip>
           <noise><type>gaussian</type><mean>0.0</mean><stddev>0.003</stddev></noise>
         </camera>

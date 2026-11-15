@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-shot demo: start the sim, fly the mission, stop the sim.
+# Simulation-only demo. Auto-flight requires explicit --simulation-auto.
 #
 #   ./scripts/run_nav_demo.sh                                   # 四段避障演示
 #   ./scripts/run_nav_demo.sh --enemy-base --hold 5             # 直接飞到敌方基地
@@ -12,6 +12,15 @@ set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+SIMULATION_AUTHORIZED=0
+for NAV_ARGUMENT in "$@"; do
+  if [[ "$NAV_ARGUMENT" == --simulation-auto ]]; then SIMULATION_AUTHORIZED=1; fi
+done
+if [[ "$SIMULATION_AUTHORIZED" != 1 ]]; then
+  echo '自动仿真演示需显式传 --simulation-auto；实机使用 scripts/px4_square_bt.py（遥控器优先）。' >&2
+  echo '只规划无需启动仿真：python3 scripts/rm27_nav.py --dry-run' >&2
+  exit 2
+fi
 export PX4_GZ_WORLD="${PX4_GZ_WORLD:-rm27_nav_world}"
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"

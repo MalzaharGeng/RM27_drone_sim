@@ -1,0 +1,16 @@
+# [NP-01 FIX17] wide visual floor: 128.0 x 128.0 m, UV repeat 4.5714 x 8.1013
+# one texture repeat = 28.0 x 15.8 m  (same physical density as the
+# original arena floor quad, 91.8 x 90.0 px/m)
+mtllib wide_floor.mtl
+v -64.0 -64.0 0.0
+v 64.0 -64.0 0.0
+v 64.0 64.0 0.0
+v -64.0 64.0 0.0
+vt 0 0
+vt 4.5714 0
+vt 4.5714 8.1013
+vt 0 8.1013
+vn 0 0 1
+usemtl wide_floor
+f 1/1/1 2/2/1 3/3/1
+f 1/1/1 3/3/1 4/4/1

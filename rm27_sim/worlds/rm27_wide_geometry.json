@@ -1,0 +1,59 @@
+{
+  "world": "rm27_wide_world",
+  "generated_by": "make_wide_world.py",
+  "spawn": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.019,
+    "yaw_deg": 0.0
+  },
+  "walls_inner_faces": {
+    "west": -62.0,
+    "east": 62.0,
+    "south": -62.0,
+    "north": 62.0
+  },
+  "wall_thickness_m": 0.2,
+  "wall_height_m": 3.8,
+  "ground_top_z": 0.019,
+  "visual_floor_z": 0.021,
+  "rotor_envelope_m": 0.385971,
+  "clearance_at_spawn": {
+    "wall_clearance_m": 62.0,
+    "wall_clearance_net_m": 61.614029
+  },
+  "floor": {
+    "extent_m": 128.0,
+    "texture_repeat": {
+      "x": 4.571429,
+      "y": 8.101266
+    },
+    "texture_m_per_repeat": {
+      "x": 28.0,
+      "y": 15.8
+    },
+    "texture_px": {
+      "x": 2570,
+      "y": 1422
+    },
+    "texture_px_per_m": {
+      "x": 91.79,
+      "y": 90.0
+    }
+  },
+  "sizing_derivation": {
+    "worst_init_to_position_s": 31.4,
+    "worst_unforced_accel_m_s2": 0.093,
+    "free_drift_m": 45.85,
+    "required_half_extent_m": 48.23,
+    "chosen_half_extent_m": 62.0,
+    "margin_ratio": 1.285,
+    "note": "bounded, not a claim of unlimited waiting or fail-safe behaviour"
+  },
+  "hashes": {
+    "world": "b3262ec77968b719af0fd43f110b214d",
+    "world_copy_px4": "b3262ec77968b719af0fd43f110b214d",
+    "floor_obj": "e0d2ea27d38d63d2e9b03bd60cbde12c",
+    "floor_png": "643d92609da275fd9565c2937cda3a8f"
+  }
+}

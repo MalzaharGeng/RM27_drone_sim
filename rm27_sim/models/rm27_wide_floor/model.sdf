@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="rm27_wide_floor">
+    <static>true</static>
+    <link name="visuals">
+      <!-- VISUAL ONLY: no collision, no physics. The physics floor is the
+           arena_ground plane in the world at z=0.019. -->
+      <visual name="wide_floor">
+        <pose>0 0 0.021 0 0 0</pose>
+        <geometry><mesh><uri>meshes/wide_floor.obj</uri></mesh></geometry>
+      </visual>
+
+    </link>
+  </model>
+</sdf>

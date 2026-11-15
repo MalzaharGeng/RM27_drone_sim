@@ -1,0 +1,16 @@
+[
+  {
+    "fixture": "tests/fixtures/fix20/flight1/pilot.csv",
+    "source_run": "vio_closed_loop_fix18_func5m_20261115_222616",
+    "source_sha256": "03a982060314546e358f120ae11930336e23c8403c1107e2af597bb5043d18b1",
+    "rows": 212,
+    "selection": "All EXCITE rows plus first following decision row; field values unmodified"
+  },
+  {
+    "fixture": "tests/fixtures/fix20/flight2/pilot.csv",
+    "source_run": "vio_closed_loop_intr_fix18_r1_20261115_222938",
+    "source_sha256": "341e817dafeee38bd848d8686fa96cdda9c5c75a11e6ae7a650eb47828e8718e",
+    "rows": 250,
+    "selection": "All EXCITE rows plus first following decision row; field values unmodified"
+  }
+]

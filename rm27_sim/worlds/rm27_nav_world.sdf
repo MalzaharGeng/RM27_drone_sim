@@ -108,5 +108,31 @@
       <name>rmuc_2027</name>
       <pose>0 0 0 0 0 0</pose>
     </include>
+    <!-- Visual texture decals for ORB-SLAM3 feature extraction.
+         Purely visual (no collision), does NOT modify rmuc_2027 or any
+         existing model/geometry. Delete this whole block to revert;
+         backup: <world>.sdf.bak_before_texture_20261111 -->
+    <include>
+      <uri>model://arena_texture_patches</uri>
+      <name>arena_texture_patches</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Landing-gear contact pad: COLLISION ONLY, no visual.
+         The visible arena floor along the launch/landing corridor is z~0.265,
+         but arena_ground's collision plane is z=0.019, so the gear used to
+         sink ~0.25 m into the floor. This raises the physical contact surface
+         to the visible floor without changing any mesh or appearance.
+         Delete this block to revert; backup: *.bak_before_ground_fix_20261111 -->
+    <model name="launch_ground_pad">
+      <static>true</static>
+      <pose>7.5 6.0 0.13 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>9.0 6.0 0.27</size></box></geometry>
+        </collision>
+      </link>
+    </model>
+
   </world>
 </sdf>

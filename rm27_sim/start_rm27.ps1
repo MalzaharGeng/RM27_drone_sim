@@ -27,9 +27,8 @@ if ($Iterations -gt 0 -and -not $ServerOnly) {
 $modelXml = [xml]([IO.File]::ReadAllText($modelPath))
 $worldXml = [xml]([IO.File]::ReadAllText($worldPath))
 $configXml = [xml]([IO.File]::ReadAllText($configPath))
-$arenaModel = $worldXml.sdf.world.model | Where-Object { $_.name -eq 'arena_textured' }
-if (-not $arenaModel) {
-    throw 'rm27_world.sdf has no arena_textured model; the arena would render untextured.'
+if ($worldXml.sdf.world.include.uri -ne 'model://rmuc_2027') {
+    throw 'Unexpected arena include URI in rm27_world.sdf.'
 }
 
 $previousResourcePath = $env:GZ_SIM_RESOURCE_PATH
@@ -52,9 +51,9 @@ try {
             Write-Output "World XML: $($worldXml.sdf.world.name)"
             Write-Output "Resource path: $env:GZ_SIM_RESOURCE_PATH"
             Write-Output "Mesh scale: $($modelXml.sdf.model.link.visual.geometry.mesh.scale)"
-            Write-Output "Arena mesh: $($arenaModel.link.visual.geometry.mesh.uri)"
+            Write-Output "Arena pose: $($worldXml.sdf.world.include.pose)"
             Write-Output "Original STL SHA256: $((Get-FileHash -LiteralPath $meshPath -Algorithm SHA256).Hash)"
-            Write-Output 'Static checks passed. Use a normal launch to verify rendering.'
+            Write-Output 'Static checks passed. Use a normal launch to verify rendering; collision is not configured.'
         }
         else {
             $launchArguments = @('run', '--locked', 'gz', 'sim', '-v', '4')

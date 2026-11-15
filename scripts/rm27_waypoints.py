@@ -2,20 +2,23 @@
 """Fly a rectangular offboard waypoint path inside the RM27 arena.
 
 Usage:
-    python3 ~/drone_sim/scripts/rm27_waypoints.py
+    python3 ~/drone_sim/scripts/rm27_waypoints.py --simulation-auto
 
 Requires PX4 SITL to be running (start_rm27_px4.sh). MAVSDK listens on
 udp://:14540 and writes a position log to ~/drone_sim/logs/.
 """
 
 import asyncio
+import argparse
 import csv
 import os
 import time
 
-from mavsdk_grpc import System
-from mavsdk_grpc.offboard import OffboardError, PositionNedYaw
-from mavsdk_grpc.telemetry import PositionNed
+try:
+    from mavsdk_grpc import System
+    from mavsdk_grpc.offboard import OffboardError, PositionNedYaw
+except ImportError:
+    System = None
 
 TAKEOFF_ALT_M = 2.0
 # (north_m, east_m, down_m) relative to the arming position; down is negative up.
@@ -45,7 +48,11 @@ async def current_ned(drone):
     return None
 
 
-async def main():
+async def main(simulation_auto=False):
+    if not simulation_auto:
+        raise RuntimeError("Legacy waypoint flight is simulation-only; use px4_square_bt.py for pilot-authorized flight")
+    if System is None:
+        raise RuntimeError("mavsdk-grpc is required for the explicit simulation demo")
     log_dir = os.path.expanduser("~/drone_sim/logs")
     os.makedirs(log_dir, exist_ok=True)
     log_path = os.path.join(log_dir, "offboard_positions.csv")
@@ -112,4 +119,9 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--simulation-auto", action="store_true")
+    args = parser.parse_args()
+    if not args.simulation_auto:
+        parser.error("simulation-only: explicit --simulation-auto is required; aircraft use px4_square_bt.py")
+    asyncio.run(main(simulation_auto=args.simulation_auto))
