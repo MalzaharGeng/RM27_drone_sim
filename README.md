@@ -12,11 +12,11 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 
 ## 当前进展（2026-11-16）
 
-新增真实双目/IMU VIO 闭环：ORB-SLAM3 → PX4 EV → Position/Offboard → 5 m → 接回降落。FIX20 修复 EXCITE 高度参考随 z-reset 同号平移，新版本独立冷启动 **3/3 正常任务通过**。中断专项 **B / UNVERIFIED**，因共享进程运行后证据缺失未判 C；原场地可靠性、延迟性能、Nano 实机未验证。
+双目/IMU VIO 仿真联调流程：ORB-SLAM3 → PX4 EV → Position/Offboard → 5 m → 接回降落。FIX20 修复 EXCITE 高度参考随 z-reset 同号平移，新版本独立冷启动 **3/3 正常任务通过**。中断专项 **B / UNVERIFIED**，因共享进程运行后证据缺失未判 C；原场地可靠性、延迟性能、Nano 实机未验证。
 
-新闭环及验收边界见 [阶段状态与入口](docs/NP01_STATUS_20261116.md)、[完整中断审计](docs/verification/20261116/INTERRUPTION_AUDIT_REPORT.md)。[算法主线](https://github.com/MalzaharGeng/ORB_SLAM3) 与本仓库分别维护；ROS 输入节点源码在 `ros2/rm27_slam/`。旧 A* 演示和新 VIO 闭环的证据分别记录。
+当前状态、运行入口和验收范围见 [阶段记录](docs/NP01_STATUS_20261116.md)、[完整中断审计](docs/verification/20261116/INTERRUPTION_AUDIT_REPORT.md)。[算法主线](https://github.com/MalzaharGeng/ORB_SLAM3) 与本仓库分别维护；ROS 输入节点源码在 `ros2/rm27_slam/`。旧 A* 演示和新 VIO 闭环的证据分别记录。
 
-本仓库的“飞行记录”均为仿真记录，不代表真机飞行。历史中断实验脚本默认会启动仿真，使用前必须获得明确运行授权。
+本仓库飞行记录均来自仿真，实机尚未验收。中断实验脚本默认启动仿真，运行前需单独确认授权范围和次数。
 
 配套文档：
 

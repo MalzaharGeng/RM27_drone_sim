@@ -1,18 +1,21 @@
-# SITL findings: publication leases and pilot feedback
+# SITL 消息有效期与任务反馈修正计划
 
-User supplied logs/bt_sitl_20261108. Scope: fix normal PX4 message timing and completion feedback in the existing manually launched navigation task. Autonomous takeoff/VIO bootstrap is not established by this GPS + health-stub test and is outside this regression fix.
+依据 logs/bt_sitl_20261108，修正手动启动导航任务中的 PX4 正常消息节拍和任务完成反馈。该轮使用 GPS 与健康状态桩，不能验证自主起飞、VIO 初始化或实体飞机。
 
-Evidence: rc_update republishes unchanged input after 300ms; ManualControl republishes timestamp with the selected timestamp_sample unchanged. Status at 2Hz, land at 1Hz make the prior 0.5s leases insufficient. Preserve baseline in logs/bt_fix_20261108/baseline.
+## 问题记录
 
-Chosen design: separate publication and sample clocks; permit repeated sample timestamps within an independent sample-age bound. Exact publication duplicates do not renew leases; backwards/conflicting timestamps invalidate. Both source age and monotonic receipt age count toward deadlines. Fixed bounded jitter margins cover normal cadence; do not add an unbounded retry or extra grace beyond these deadlines. Reject confirmed faults and takeover immediately.
+rc_update 在输入不变时约 300 ms 重发；ManualControl 更新发布 timestamp，但选中的 timestamp_sample 不变。状态约 2 Hz、着陆约 1 Hz，原 0.5 s 有效期短于正常消息周期。基线保存在 logs/bt_fix_20261108/baseline。
 
-Alternatives: increasing all leases to 1.5–3s hides loss of fast position/health streams; ignore sample age indefinitely would permit frozen RC input. Neither is selected.
+发布时钟与采样时钟分开处理：重复采样时间可在独立样本年龄限制内接受；完全重复的发布不续期，时间回退或冲突使状态失效。源样本年龄和单调接收年龄共同计入截止时间。采用固定有界抖动余量，不增加无限重试或额外宽限；已确认故障和飞手接管立即生效。
 
-Steps:
-1. Add failing timing tests for measured cadence, constant sticks, source-age + receipt-age budget, frozen samples, duplicate/reversed publication, fault/takeover without new samples.
-2. Update PilotAuthority dual timestamp ingestion, bounded TTLs and diagnostic ages. Preserve reference identity and physical RC requirements.
-3. Make ROS callbacks pass timestamp + timestamp_sample independently; add reliable status topic with readiness, prestream duration, task completion and revocation. Hold keeps controlling after completion; never terminate the hold by silently cutting off valid Offboard.
-4. Require >1s continuous eligible heartbeat before acquisition; advertise ready and require physical selector cycle if selected too soon. Maintain heartbeat through the normal selector-to-commander transition after readiness, with bounded wait.
-5. Test the node using actual 2/5/1Hz cadence and repeated samples, mixed with immediate override/invalid/frozen inputs; extend flight geometry and completion tests.
-6. Run a new PX4/Gazebo SITL task with constant RC (no artificial jitter), original evidence preserved, explicit simulation-only health stub. Record navigation, completion, selector takeover and shutdown. If environment prevents it, report the exact gap.
-7. Document new deadlines, measured results, and limits: GPS SITL does not verify ORB-SLAM3 initialization, relocation accuracy, or physical RC latency.
+不采用统一增大到 1.5–3 s 的有效期，这会掩盖快速位置/health 流的停更；也不无限忽略采样年龄，以免冻结 RC 输入持续有效。
+
+## 实施步骤
+
+1. 增加节拍、恒定摇杆、源/接收年龄预算、冻结采样、重复/倒序发布，以及无新样本时故障和接管的测试。
+2. 调整 PilotAuthority 的双时间戳处理、有界 TTL 和年龄诊断，保留参考身份及物理 RC 条件。
+3. ROS 回调独立传入 timestamp 与 timestamp_sample；增加可靠状态话题，报告就绪、预发送时长、任务完成和撤销。完成后继续保持，不以停发有效 Offboard 的方式结束保持。
+4. 授权前要求连续有效心跳 >1 s。过早选中开关时先报告 ready，并要求重新拨档；就绪后的正常开关至 commander 转换期间保持心跳，等待有界。
+5. 按实际 2/5/1 Hz 节拍及重复样本测试，加入立即接管、无效和冻结输入，扩展航线几何与完成判定测试。
+6. 在单独授权后，以恒定 RC（不加人为抖动）执行 PX4/Gazebo SITL 复测，保留原始证据并标记 simulation-only 健康桩。记录导航、完成、拨档接管和退出；环境不满足时记录具体缺口。
+7. 记录新有效期、测量结果及限制。GPS SITL 不验证 ORB-SLAM3 初始化、重定位精度或物理 RC 延迟。
