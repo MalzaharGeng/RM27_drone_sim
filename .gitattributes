@@ -1,0 +1,2 @@
+# Preserve the upstream PX4 snapshot formatting byte-for-byte.
+PX4-Autopilot/** -whitespace

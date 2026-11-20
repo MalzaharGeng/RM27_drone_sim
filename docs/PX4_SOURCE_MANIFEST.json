@@ -1,0 +1,153 @@
+{
+  "source_commit": "8313a4a342374d867518e8b4de97cfdabecfe7c0",
+  "base_flip_commit": "60889745af001515a62872420de2d32fb602803b",
+  "upstream_version": "v1.17.0",
+  "upstream_commit": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+  "submodules": [
+    {
+      "path": "src/modules/mavlink/mavlink",
+      "sha": "33af200d25ec6f0925b49b1ba82bbf1294ea5f72",
+      "url": "https://github.com/mavlink/mavlink.git"
+    },
+    {
+      "path": "Tools/simulation/jmavsim/jMAVSim",
+      "sha": "66b764ada522893c05224950aa6268c809f8e48a",
+      "url": "https://github.com/PX4/jMAVSim.git"
+    },
+    {
+      "path": "Tools/simulation/gazebo-classic/sitl_gazebo-classic",
+      "sha": "6697ab169ceab512dc706acea63df4c882662c60",
+      "url": "https://github.com/PX4/PX4-SITL_gazebo-classic.git"
+    },
+    {
+      "path": "src/drivers/gps/devices",
+      "sha": "0b9695881bd1e8f830ab4538ab3acc0050019eba",
+      "url": "https://github.com/PX4/PX4-GPSDrivers.git"
+    },
+    {
+      "path": "platforms/nuttx/NuttX/nuttx",
+      "sha": "fb2fadf6f599c1406f052db013efd00a2518e72c",
+      "url": "https://github.com/PX4/NuttX.git"
+    },
+    {
+      "path": "platforms/nuttx/NuttX/apps",
+      "sha": "e37940d8535f603a16b8f6f21c21edaf584218aa",
+      "url": "https://github.com/PX4/NuttX-apps.git"
+    },
+    {
+      "path": "Tools/simulation/flightgear/flightgear_bridge",
+      "sha": "f47ce7b5fbbb3aa43d33d2be1f6cd3746b13d5bf",
+      "url": "https://github.com/PX4/PX4-FlightGear-Bridge.git"
+    },
+    {
+      "path": "Tools/simulation/jsbsim/jsbsim_bridge",
+      "sha": "f37ec259bd7a43565fe0ff4722465b7a303200f6",
+      "url": "https://github.com/PX4/px4-jsbsim-bridge.git"
+    },
+    {
+      "path": "src/drivers/cyphal/libcanard",
+      "sha": "5c69d451ab0787a81dcb615692d707f2a286f5e5",
+      "url": "https://github.com/opencyphal/libcanard.git"
+    },
+    {
+      "path": "src/drivers/cyphal/public_regulated_data_types",
+      "sha": "d0bd6516dac8ff61287fe49a9f2c75e7d4dc1b8e",
+      "url": "https://github.com/opencyphal/public_regulated_data_types.git"
+    },
+    {
+      "path": "src/drivers/cyphal/legacy_data_types",
+      "sha": "36a01e428b110ff84c8babe5b65667b5e3037d5e",
+      "url": "https://github.com/PX4/public_regulated_data_types.git"
+    },
+    {
+      "path": "src/lib/crypto/monocypher",
+      "sha": "baca5d31259c598540e4d1284bc8d8f793abf83a",
+      "url": "https://github.com/PX4/Monocypher.git"
+    },
+    {
+      "path": "src/lib/events/libevents",
+      "sha": "9ef591c447fe0386d698bf6fb9a6d27e43988ee4",
+      "url": "https://github.com/mavlink/libevents.git"
+    },
+    {
+      "path": "src/lib/crypto/libtomcrypt",
+      "sha": "673f5ce29015a9bba3c96792920a10601b5b0718",
+      "url": "https://github.com/PX4/libtomcrypt.git"
+    },
+    {
+      "path": "src/lib/crypto/libtommath",
+      "sha": "fd73d7630b9d3ed5a79d613ff680a549e9780de7",
+      "url": "https://github.com/PX4/libtommath.git"
+    },
+    {
+      "path": "src/modules/uxrce_dds_client/Micro-XRCE-DDS-Client",
+      "sha": "711aef423edd1820347b866d1e4164832df35d04",
+      "url": "https://github.com/PX4/Micro-XRCE-DDS-Client.git"
+    },
+    {
+      "path": "src/lib/cdrstream/cyclonedds",
+      "sha": "314887ca403c2fb0a0316add22672102936ed36c",
+      "url": "https://github.com/px4/cyclonedds"
+    },
+    {
+      "path": "src/lib/cdrstream/rosidl",
+      "sha": "bf5682e4747843d1d5133b9a2b54ce6f12f166c7",
+      "url": "https://github.com/px4/rosidl"
+    },
+    {
+      "path": "src/modules/zenoh/zenoh-pico",
+      "sha": "6ec4dc1995f185330e4f6faa8c719eb86f180deb",
+      "url": "https://github.com/px4/zenoh-pico"
+    },
+    {
+      "path": "src/lib/heatshrink/heatshrink",
+      "sha": "052e6de72f67f1777198bce98f3de62f7f3c16a0",
+      "url": "https://github.com/PX4/heatshrink.git"
+    },
+    {
+      "path": "Tools/simulation/gz",
+      "sha": "b6127f4ec20de867e215fb5f78ae88b80f371909",
+      "url": "https://github.com/PX4/PX4-gazebo-models.git"
+    },
+    {
+      "path": "boards/modalai/voxl2/libfc-sensor-api",
+      "sha": "85151aaf6ba8b24ce82b387e088452c63f7e2096",
+      "url": "https://gitlab.com/voxl-public/voxl-sdk/core-libs/libfc-sensor-api.git"
+    },
+    {
+      "path": "src/drivers/actuators/vertiq_io/iq-module-communication-cpp",
+      "sha": "c488af4e8807de80739aa48efd2ea51614dd8195",
+      "url": "https://github.com/PX4/iq-module-communication-cpp.git"
+    },
+    {
+      "path": "src/drivers/uavcan/libdronecan/dsdl",
+      "sha": "993be80a62ec957c01fb41115b83663959a49f46",
+      "url": "https://github.com/PX4/DSDL.git"
+    },
+    {
+      "path": "src/drivers/uavcan/libdronecan/libuavcan/dsdl_compiler/pydronecan",
+      "sha": "19fdf2e5b383243ccdb1094edae0603cf11469e8",
+      "url": "https://github.com/dronecan/pydronecan"
+    },
+    {
+      "path": "test/fuzztest",
+      "sha": "1e47f9d7437de5c3ee4cb0ac860d5ec875478059",
+      "url": "https://github.com/google/fuzztest.git"
+    },
+    {
+      "path": "src/lib/tensorflow_lite_micro/tflite_micro",
+      "sha": "3c0b1e3091e4ea423e1bf9da89d41d09517eb0c9",
+      "url": "https://github.com/PX4/tflite-micro.git"
+    },
+    {
+      "path": "src/drivers/ins/microstrain/mip_sdk",
+      "sha": "35596994b60ba89fe02f71ce5127baa5e7ff2bbf",
+      "url": "https://github.com/PX4/LORD-MicroStrain_mip_sdk.git"
+    },
+    {
+      "path": "src/drivers/ins/sbgecom/sbgECom",
+      "sha": "80b121c7714083cc4868c0fdb8c41623c7ef9c93",
+      "url": "https://github.com/PX4/sbgECom.git"
+    }
+  ]
+}

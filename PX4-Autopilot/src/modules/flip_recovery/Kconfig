@@ -1,0 +1,5 @@
+menuconfig MODULES_FLIP_RECOVERY
+	bool "flip_recovery"
+	default n
+	---help---
+		Enable the tilt flip recovery module (auto righting from 60-180 deg tilt).

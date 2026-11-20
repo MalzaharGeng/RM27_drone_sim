@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# board specific extras init
+#------------------------------------------------------------------------------
+
+# enable onboard OSD chip
+# atxxxx start -s
+
+# 倾角翻正：模块常驻（20ms 周期，开销可忽略）。
+# 是否真出力由 FLIP_EN 和 FLIP_RECOVERY 模式共同决定：
+#   FLIP_EN=0        -> 拨进模式也不转桨，只报状态
+#   FLIP_EN=1 + 模式 -> 按倾角自动翻正
+flip_recovery start
