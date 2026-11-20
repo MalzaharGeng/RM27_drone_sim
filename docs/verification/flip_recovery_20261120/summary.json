@@ -1,0 +1,29 @@
+[
+  {
+    "run": "torque070",
+    "classification": "SETUP_ONLY",
+    "max_tilt": 0.0,
+    "final_tilt": 0.0,
+    "entered_flip": true,
+    "max_motor": 0.0,
+    "cleanup": true
+  },
+  {
+    "run": "torque400",
+    "classification": "SETUP_ONLY",
+    "max_tilt": 5.296501214730611,
+    "final_tilt": 8.748576518413899e-06,
+    "entered_flip": true,
+    "max_motor": 0.0,
+    "cleanup": true
+  },
+  {
+    "run": "torque600",
+    "classification": "FAIL_NO_RECOVERY",
+    "max_tilt": 176.1644514502396,
+    "final_tilt": 79.92424364212508,
+    "entered_flip": true,
+    "max_motor": 0.0,
+    "cleanup": true
+  }
+]

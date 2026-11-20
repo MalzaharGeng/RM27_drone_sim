@@ -1,0 +1,114 @@
+[
+  {
+    "t": 0.0015,
+    "event": "gz_started",
+    "pid": 165443,
+    "partition": "flip_check_165404"
+  },
+  {
+    "t": 2.921,
+    "event": "spawn_upright"
+  },
+  {
+    "t": 2.9224,
+    "event": "px4_started",
+    "pid": 165518
+  },
+  {
+    "t": 7.8442,
+    "event": "heartbeat",
+    "system": 8,
+    "mode": 50593792
+  },
+  {
+    "t": 25.8472,
+    "event": "console",
+    "command": "flip_recovery status"
+  },
+  {
+    "t": 25.8473,
+    "event": "console",
+    "command": "listener vehicle_attitude -n 1"
+  },
+  {
+    "t": 25.8473,
+    "event": "console",
+    "command": "listener vehicle_land_detected -n 1"
+  },
+  {
+    "t": 26.8495,
+    "event": "console",
+    "command": "param set FLIP_EN 0"
+  },
+  {
+    "t": 27.6542,
+    "event": "setup_torque_on",
+    "torque": 0.7,
+    "tilt": 0.0
+  },
+  {
+    "t": 27.8765,
+    "event": "setup_torque_off",
+    "tilt": 0.0
+  },
+  {
+    "t": 32.8805,
+    "event": "settled_setup",
+    "pose": {
+      "tilt": 0.0,
+      "z": -0.013000186793839519,
+      "t": 32.86442840699965
+    },
+    "max_tilt": 0.0
+  },
+  {
+    "t": 32.8806,
+    "event": "console",
+    "command": "param set FLIP_EN 1"
+  },
+  {
+    "t": 32.8806,
+    "event": "console",
+    "command": "commander mode flip"
+  },
+  {
+    "t": 33.8835,
+    "event": "console",
+    "command": "listener flip_recovery_control -n 160 -r 20"
+  },
+  {
+    "t": 43.8859,
+    "event": "console",
+    "command": "flip_recovery status"
+  },
+  {
+    "t": 43.886,
+    "event": "console",
+    "command": "listener flip_recovery_status -n 5 -r 10"
+  },
+  {
+    "t": 43.886,
+    "event": "console",
+    "command": "listener vehicle_attitude -n 1"
+  },
+  {
+    "t": 43.886,
+    "event": "console",
+    "command": "listener vehicle_land_detected -n 1"
+  },
+  {
+    "t": 46.8876,
+    "event": "console",
+    "command": "commander mode manual"
+  },
+  {
+    "t": 47.8961,
+    "event": "console",
+    "command": "param set FLIP_EN 0"
+  },
+  {
+    "t": 47.8961,
+    "event": "console",
+    "command": "commander mode manual"
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "partition": "flip_check_165404",
+  "source_commit": "8313a4a342374d867518e8b4de97cfdabecfe7c0",
+  "setup_end_s": 32.880126865999046,
+  "recovery_start_s": 33.88341953700001,
+  "setup_tilt_deg": 0.0,
+  "entered_flip": true,
+  "max_truth_tilt_deg": 0.0,
+  "final_truth_tilt_deg": 0.0,
+  "motor_messages": 497,
+  "max_motor_command": 0.0,
+  "truth_samples": 2224,
+  "cleanup": {
+    "pids": [
+      165443,
+      165518
+    ],
+    "all_exited": true
+  },
+  "ulog": {
+    "flip_recovery_control": {
+      "logged": false
+    },
+    "flip_recovery_status": {
+      "logged": false
+    },
+    "vehicle_status": {
+      "logged": true,
+      "samples": 85,
+      "nav_state_values": [
+        0,
+        4,
+        16
+      ],
+      "arming_state_values": [
+        1
+      ]
+    },
+    "vehicle_attitude": {
+      "logged": true,
+      "samples": 10354
+    },
+    "vehicle_land_detected": {
+      "logged": true,
+      "samples": 45,
+      "landed_values": [
+        1
+      ]
+    },
+    "actuator_armed": {
+      "logged": true,
+      "samples": 85,
+      "armed_values": [
+        0
+      ]
+    },
+    "actuator_motors": {
+      "logged": true,
+      "samples": 278,
+      "max_abs_control": 0.002125866711139679
+    },
+    "actuator_outputs": {
+      "logged": true,
+      "samples": 416
+    }
+  },
+  "ulog_bytes": 11035094,
+  "heartbeat_saw_flip": true,
+  "ulog_saw_flip": true,
+  "ramp_seen": false,
+  "hold_seen": false,
+  "no_progress_seen": false,
+  "classification": "SETUP_ONLY",
+  "max_motor_command_entire_run": 0.0
+}

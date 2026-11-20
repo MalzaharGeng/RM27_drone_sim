@@ -1,0 +1,118 @@
+INFO  [px4] instance: 7
+INFO  [px4] assuming working directory is rootfs, no symlinks needed.
+______  __   __    ___ 
+| ___ \ \ \ / /   /   |
+| |_/ /  \ V /   / /| |
+|  __/   /   \  / /_| |
+| |     / /^\ \ \___  |
+\_|     \/   \/     |_/
+px4 starting.
+INFO  [px4] startup script: /bin/sh /home/gengyinghao/px4_flip_recovery_20261120/buildrepo/build/px4_sitl_default/etc/init.d-p
+INFO  [init] found model autostart file as SYS_AUTOSTART=4001
+INFO  [param] selected parameter default file parameters.bson
+INFO  [param] selected parameter backup file parameters_backup.bson
+  SYS_AUTOCONFIG: curr: 0 -> new: 1
+  MAV_SYS_ID: curr: 1 -> new: 8
+  UXRCE_DDS_KEY: curr: 1 -> new: 8
+  SYS_AUTOSTART: curr: 0 -> new: 4001
+  CAL_ACC0_ID: curr: 0 -> new: 1310988
+  CAL_GYRO0_ID: curr: 0 -> new: 1310988
+  CAL_ACC1_ID: curr: 0 -> new: 1310996
+  CAL_GYRO1_ID: curr: 0 -> new: 1310996
+  CAL_ACC2_ID: curr: 0 -> new: 1311004
+  CAL_GYRO2_ID: curr: 0 -> new: 1311004
+  CAL_MAG0_ID: curr: 0 -> new: 197388
+  CAL_MAG0_PRIO: curr: -1 -> new: 50
+  CAL_MAG1_ID: curr: 0 -> new: 197644
+  CAL_MAG1_PRIO: curr: -1 -> new: 50
+  SENS_BOARD_X_OFF: curr: 0.0000 -> new: 0.0000
+  SENS_DPRES_OFF: curr: 0.0000 -> new: 0.0010
+INFO  [dataman] data manager file './dataman' size is 1208528 bytes
+INFO  [init] Gazebo simulator 10.5.0
+INFO  [init] Standalone PX4 launch, waiting for Gazebo
+INFO  [init] Gazebo world is ready
+INFO  [init] PX4_GZ_MODEL_NAME set, PX4 will attach to existing model
+INFO  [lockstep_scheduler] setting initial absolute time to 3352000 us
+INFO  [gz_bridge] world: default, model: x500_check
+INFO  [commander] LED: open /dev/led0 failed (22)
+WARN  [health_and_arming_checks] Preflight Fail: ekf2 missing data
+WARN  [health_and_arming_checks] Preflight Fail: system power unavailable
+WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+0
+INFO  [uxrce_dds_client] init UDP agent IP:127.0.0.1, port:8888
+INFO  [mavlink] mode: Normal, data rate: 4000000 B/s on udp port 18577 remote port 14550
+INFO  [mavlink] mode: Onboard, data rate: 4000000 B/s on udp port 14587 remote port 14547
+INFO  [mavlink] mode: Onboard, data rate: 4000 B/s on udp port 14287 remote port 14037
+INFO  [mavlink] mode: Gimbal, data rate: 400000 B/s on udp port 13037 remote port 13287
+INFO  [logger] logger started (mode=all)
+INFO  [logger] Start file log (type: full)
+INFO  [logger] [logger] ./log/2026-11-20/05_13_54.ulg	
+INFO  [logger] Opened full log file: ./log/2026-11-20/05_13_54.ulg
+INFO  [mavlink] MAVLink only on localhost (set param MAV_{i}_BROADCAST = 1 to enable network)
+INFO  [mavlink] MAVLink only on localhost (set param MAV_{i}_BROADCAST = 1 to enable network)
+INFO  [px4] Startup script returned successfully
+WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+INFO  [flip_recovery] enabled: no, mode active: no, state 0: idle
+INFO  [flip_recovery] tilt: 0.0 deg, entry 75.0, stop 60.0, strategy 0 (flip over)
+INFO  [flip_recovery] throttle: high 0.20, low 0.10 (mode 0), slew 0.50/s, drive time 3.0 s
+INFO  [flip_recovery] masks: fwd 0x00, rev 0x00, zone 0
+INFO  [flip_recovery] safety: OK, RC confirm: ch 0 no RC, layout: 4 rotors
+INFO  [flip_recovery] exit mode param: 2
+INFO  [flip_recovery] Motor 1: PX=0.130 PY=0.220
+INFO  [flip_recovery] Motor 2: PX=-0.130 PY=-0.200
+INFO  [flip_recovery] Motor 3: PX=0.130 PY=-0.220
+INFO  [flip_recovery] Motor 4: PX=-0.130 PY=0.200
+TOPIC: vehicle_attitude
+ vehicle_attitude
+    timestamp: 23028000 (0.000000 seconds ago)
+    timestamp_sample: 23028000 (0 us before timestamp)
+    q: [0.66907, -0.00009, -0.00003, 0.74320] (Roll: -0.0 deg, Pitch: 0.0 deg, Yaw: 96.0 deg)
+    delta_q_reset: [0.66938, -0.00000, -0.00000, 0.74292]
+    quat_reset_counter: 1
+TOPIC: vehicle_land_detected
+ vehicle_land_detected
+    timestamp: 22292000 (0.736000 seconds ago)
+    freefall: False
+    ground_contact: True
+    maybe_landed: True
+    landed: True
+    in_ground_effect: True
+    in_descend: True
+    has_low_throttle: True
+    vertical_movement: False
+    horizontal_movement: False
+    rotational_movement: False
+    close_to_ground_or_skipped_check: True
+    at_rest: True
+  FLIP_EN: curr: 0 -> new: 1
+Waited for 2.0 seconds without a message. Giving up.
+INFO  [flip_recovery] enabled: yes, mode active: yes, state 0: idle
+INFO  [flip_recovery] tilt: 0.0 deg, entry 75.0, stop 60.0, strategy 0 (flip over)
+INFO  [flip_recovery] throttle: high 0.20, low 0.10 (mode 0), slew 0.50/s, drive time 3.0 s
+INFO  [flip_recovery] masks: fwd 0x00, rev 0x00, zone 0
+INFO  [flip_recovery] safety: OK, RC confirm: ch 0 no RC, layout: 4 rotors
+INFO  [flip_recovery] exit mode param: 2
+INFO  [flip_recovery] Motor 1: PX=0.130 PY=0.220
+INFO  [flip_recovery] Motor 2: PX=-0.130 PY=-0.200
+INFO  [flip_recovery] Motor 3: PX=0.130 PY=-0.220
+INFO  [flip_recovery] Motor 4: PX=-0.130 PY=0.200
+Invalid command: istener
+type 'help' for a list of commands
+TOPIC: vehicle_land_detected
+ vehicle_land_detected
+    timestamp: 39980000 (0.988000 seconds ago)
+    freefall: False
+    ground_contact: True
+    maybe_landed: True
+    landed: True
+    in_ground_effect: False
+    in_descend: False
+    has_low_throttle: True
+    vertical_movement: False
+    horizontal_movement: False
+    rotational_movement: False
+    close_to_ground_or_skipped_check: True
+    at_rest: True
++ FLIP_EN: curr: 1 -> new: 0
+PX4 Exiting...

@@ -1,0 +1,2 @@
+# Preserve recorded CSV delimiters and raw diagnostic logs.
+runs/** -whitespace

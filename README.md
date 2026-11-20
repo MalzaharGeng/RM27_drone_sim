@@ -10,23 +10,17 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 分成 9 组网格，颜色和布局都来自原始 CAD，构建流程见
 [tools/step_to_arena/](tools/step_to_arena/)。
 
-## 当前进展（2026-11-20）
+## 工程组成
 
-当前联调链路为双目/IMU → ORB-SLAM3 → PX4 外部视觉融合 → Position/Offboard → 5 m 航点 → 飞手接回降落。原场地已接入 Drone-Harrier 机体、官方 CAD 碰撞和中间机库出生位姿；双目为 960 × 720 @ 30 Hz、50 mm 基线，IMU 为 250 Hz。
-
-最新冻结候选在 `rm27_midhangar_n_world` 执行东向 5 m 正式验收：**T1、T2 通过，T3 失败，整组未通过**。T1/T2 的真值最大水平位移分别为 5.00/5.07 m，在目标距离带内保持 13.5/13.7 s，完成 BT HOLD、Position 接管和落地上锁。T3 未进入 NAVIGATE，交接前 `at_home` 条件未满足，随后超时退出。通过轮不能外推到原北向任务或长期可靠率。
-
-| 路径 | 内容与使用范围 |
+| 目录 | 职责 |
 |---|---|
-| `scripts/` | 既有飞手、行为树、监督器及评价器；保留历史生产入口 |
-| `experiments/vio_20261120/` | 最新隔离候选：故障退出驻留、任务方位角、独立 PX4 参数目录、Agent 身份回收及回归测试 |
-| `ros2/rm27_slam/` | 双目惯性输入节点、源时间映射、空中初始化入口、默认关闭的跟踪诊断 |
-| `rm27_sim/models/`、`rm27_sim/worlds/` | Harrier 机体、相机与惯性传感器、场地碰撞和不同出生位置 |
-| `docs/verification/20261120/` | 六次运行的台账、逐项判据及清理结果 |
+| `PX4-Autopilot/` | PX4 飞控完整源码快照：翻正模式、DShot 换向、混控与安全退出 |
+| `scripts/` | 飞手、行为树、独立监督和评价入口 |
+| `experiments/` | 按配置冻结的实验运行环境与回归 |
+| `ros2/rm27_slam/` | 双目惯性输入、源时间映射与跟踪诊断 |
+| `rm27_sim/` | Harrier 机体、传感器、CAD 场地与碰撞模型 |
 
-候选构建、运行与判读见 [原场地 VIO 联调记录](docs/VIO_HARRIER_20261120.md)；入口见 [候选运行说明](experiments/vio_20261120/README.md)。算法与相机配置由 [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3) 维护。旧 A* 规划演示、11-16 冷启动 3/3 和本轮原场地候选属于不同实验条件，分别记录；历史中断专项仍为 B / UNVERIFIED。
-
-本仓库飞行记录均来自仿真。`transport` 配置包含仿真时间传输补偿，尚无 Nano 实飞、碰撞回正或空中跨地图导航恢复的验收结论。
+构建与使用见 [PX4 源码说明](docs/PX4_SOURCE.md)、[VIO 配置与运行](experiments/vio_20261120/README.md)；运行记录与判据统一归档在 [验证资料](docs/verification/README.md)。
 
 配套文档：
 
@@ -79,7 +73,7 @@ RM27_drone_sim/
 ├── start_rm27_px4.sh              同步场景和模型，启动 PX4 SITL
 ├── start_px4_direct.sh            直接启动已构建的 SITL
 ├── stop_sim.sh                    常规仿真收尾入口
-├── PX4-Autopilot/                 v1.17.0，单独检出，不入本仓库
+├── PX4-Autopilot/                 v1.17.0 飞控源码及翻正接入
 ├── rm27_sim/
 │   ├── worlds/                    官方场地、宽场地及中间机库 world
 │   └── models/                    场地 CAD、Harrier 分色网格、传感器与碰撞
@@ -98,20 +92,19 @@ RM27_drone_sim/
 └── docs/                         接入说明、历史记录与验收证据
 ```
 
-## 安装 PX4
+## 编译 PX4
 
-仓库里不含 PX4 源码，按下面的顺序放在 `RM27_drone_sim/PX4-Autopilot`：
+仓库内的 `PX4-Autopilot/` 是已修改的飞控源码。依赖初始化、构建目录和历史仿真工作区的区别见 [PX4 源码说明](docs/PX4_SOURCE.md)。
 
 ```bash
 cd ~/drone_sim
-git clone -b v1.17.0 --recursive https://github.com/PX4/PX4-Autopilot.git PX4-Autopilot
-bash PX4-Autopilot/Tools/setup/ubuntu.sh      # 装依赖，装完重新登录一次
-cd PX4-Autopilot && make px4_sitl gz_x500     # 先确认官方例子能起飞
+python3 tools/px4/create_build_tree.py --output "$HOME/rm27_px4_source" --submodules
+cd ~/rm27_px4_source
+source /opt/ros/lyrical/setup.bash
+make px4_sitl_default
 ```
 
-第一次 `make px4_sitl` 会编十分钟左右，产物在
-`PX4-Autopilot/build/px4_sitl_default/bin/px4`。之后本项目的启动脚本直接用这个
-build 目录，不会重编。
+导出后的源码根具有 PX4 所需的独立 Git 元数据；原始源码身份仍以清单为准。常规导航脚本的 PX4 路径与参数准备见 [源码说明](docs/PX4_SOURCE.md)。
 
 ## 运行前
 
@@ -266,10 +259,3 @@ cd rm27_sim && ./run_rm27.sh
 - **offboard 必须持续发 setpoint**：停超过 1 s PX4 会退出 offboard 并悬停/降落
 - **没仿真时 `rm27_nav.py` 要等 30 秒才报错**：连接和位置估计都有超时保护，
   不会像第一版那样挂死
-
-## 待办
-
-1. 查清交接前位置保持与 `at_home` 超时，完成同一冻结候选三轮完整验收。
-2. 低开销捕获 NAVIGATE 内短时失锁，区分跟踪状态与导航快照有效性；平均输入频率不能排除逐帧同步或排队问题。
-3. 联调碰撞检测、飞控回正和参考变化后的定位恢复；现有地面重置流程尚不能直接用于空中接续导航。
-4. 多机、动态障碍和 Nano 实飞另行验证。

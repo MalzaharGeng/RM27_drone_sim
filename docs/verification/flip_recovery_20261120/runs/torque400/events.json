@@ -1,0 +1,114 @@
+[
+  {
+    "t": 0.0007,
+    "event": "gz_started",
+    "pid": 166164,
+    "partition": "flip_check_166125"
+  },
+  {
+    "t": 2.6027,
+    "event": "spawn_upright"
+  },
+  {
+    "t": 2.6035,
+    "event": "px4_started",
+    "pid": 166260
+  },
+  {
+    "t": 7.455,
+    "event": "heartbeat",
+    "system": 8,
+    "mode": 50593792
+  },
+  {
+    "t": 25.4571,
+    "event": "console",
+    "command": "flip_recovery status"
+  },
+  {
+    "t": 25.4572,
+    "event": "console",
+    "command": "listener vehicle_attitude -n 1"
+  },
+  {
+    "t": 25.4572,
+    "event": "console",
+    "command": "listener vehicle_land_detected -n 1"
+  },
+  {
+    "t": 26.4577,
+    "event": "console",
+    "command": "param set FLIP_EN 0"
+  },
+  {
+    "t": 27.2619,
+    "event": "setup_torque_on",
+    "torque": 4.0,
+    "tilt": 0.0
+  },
+  {
+    "t": 27.3868,
+    "event": "setup_torque_off",
+    "tilt": 2.77804406494147
+  },
+  {
+    "t": 32.3897,
+    "event": "settled_setup",
+    "pose": {
+      "tilt": 8.748576518413899e-06,
+      "z": -0.013000169792579841,
+      "t": 32.3714094930001
+    },
+    "max_tilt": 5.296501214730611
+  },
+  {
+    "t": 32.3898,
+    "event": "console",
+    "command": "param set FLIP_EN 1"
+  },
+  {
+    "t": 32.3898,
+    "event": "console",
+    "command": "commander mode flip"
+  },
+  {
+    "t": 33.3941,
+    "event": "console",
+    "command": "listener flip_recovery_control -n 160 -r 20"
+  },
+  {
+    "t": 43.397,
+    "event": "console",
+    "command": "flip_recovery status"
+  },
+  {
+    "t": 43.3971,
+    "event": "console",
+    "command": "listener flip_recovery_status -n 5 -r 10"
+  },
+  {
+    "t": 43.3971,
+    "event": "console",
+    "command": "listener vehicle_attitude -n 1"
+  },
+  {
+    "t": 43.3971,
+    "event": "console",
+    "command": "listener vehicle_land_detected -n 1"
+  },
+  {
+    "t": 46.3992,
+    "event": "console",
+    "command": "commander mode manual"
+  },
+  {
+    "t": 47.4053,
+    "event": "console",
+    "command": "param set FLIP_EN 0"
+  },
+  {
+    "t": 47.4053,
+    "event": "console",
+    "command": "commander mode manual"
+  }
+]
