@@ -1,0 +1,19 @@
+{
+  "scan_count": 2,
+  "alive": [
+    {
+      "kind": "gz",
+      "pid": 91804,
+      "starttime": 322733,
+      "sid": 91804,
+      "cmd": "/opt/ros/lyrical/opt/gz_sim_vendor/libexec/gz/sim10/gz-sim-main -r -s --verbose=1 /home/gengyinghao/px4_flip_recovery_20261120/buildrepo/Tools/simulation/gz/worlds/default.sdf"
+    },
+    {
+      "kind": "px4",
+      "pid": 92268,
+      "starttime": 323240,
+      "sid": 92268,
+      "cmd": "./bin/px4 -i 7 -s etc/init.d-posix/rcS"
+    }
+  ]
+}

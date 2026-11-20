@@ -1,0 +1,15 @@
+{
+  "schema": "np01_agent_registry/1",
+  "recorded_at": "2026-11-20T09:34:05+0800",
+  "started_by_us": true,
+  "round_sid": 104727,
+  "binary": "/home/gengyinghao/Micro-XRCE-DDS-Agent/build3/MicroXRCEAgent",
+  "pid": 104809,
+  "available": true,
+  "starttime": 366043,
+  "sid": 104809,
+  "ppid": 104789,
+  "state": "S",
+  "cmdline": "/home/gengyinghao/Micro-XRCE-DDS-Agent/build3/MicroXRCEAgent udp4 -p 8888",
+  "exe_realpath": "/home/gengyinghao/Micro-XRCE-DDS-Agent/build3/MicroXRCEAgent"
+}

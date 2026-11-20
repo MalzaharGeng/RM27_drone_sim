@@ -1,0 +1,120 @@
+round,item,required,verdict,detail
+LR1,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+LR1,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+LR1,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+LR1,offboard_accepted,True,PASS,NAVIGATE 共 94 行，DDS nav_state=14(Offboard) 共 54 行，首末=1795135964.9616..1795135970.261911
+LR1,nav_ready_continuous,True,PASS,最长连续 ready=16.00s（要求>=3.0s），任务窗口 5.4s，覆盖率=98%（要求>=70%）
+LR1,no_airborne_fault,True,FAIL,窗口样本=93，airborne_fault=10，gate={'airborne_fault_latched': 10}
+LR1,ekf_using_ev,True,PASS,任务窗口内 cs_ev_pos=100% hgt=100% vel=100%（pos/hgt 要求>=90%，vel>=50%）
+LR1,bt_task_completed,True,FAIL,"phases={'WAIT_PILOT': 1245, 'NAVIGATE': 106, 'REVOKED': 1} 到达过 HOLD=False 目标距离=5.00（指令 5.00 m）"
+LR1,truth_distance_hold,True,FAIL,真值最大水平位移=1.75 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=0.0s（要求>=2.0s）
+LR1,takeover_position,True,PASS,"TAKEOVER=True FAULT=False 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 90, '1.0': 31, '14.0': 1}"
+LR1,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.13 m（要求<=0.35）
+LR1,imu_stereo_viba,True,PASS,VIBA1=True VIBA2=True VIBA2 完成=True
+LR1,vio_published,True,PASS,/slam/pose 样本=1202
+LR1,vio_tracking_health,True,PASS,C 任务段帧=163 丢失帧比例=2.5%（<=20%）；时间未覆盖=2.6%（<=20%）；窗口末态=2；A 初始化=True 耗时=20.49 s；B 接管准备丢失帧比例=0.0；整轮分布仅作诊断
+LR1,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+LR1,vio_vs_truth,True,PASS,校准窗口冻结 yaw=+7.07 deg；任务窗口样本=159，水平 RMSE=0.0777 m（<=0.50） 最大=0.1565 m（<=1.50）；时间匹配 p50=4.0 ms max=12.0 ms；输出空窗=1 段/0.168 s
+LR1,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+D1,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+D1,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+D1,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+D1,offboard_accepted,True,FAIL,飞手从未进入 NAVIGATE（见 pilot.log）
+D1,nav_ready_continuous,True,UNVERIFIED,未找到任务窗口（NAVIGATE 未发生）
+D1,no_airborne_fault,True,PASS,窗口样本=502，airborne_fault=0，gate={}
+D1,ekf_using_ev,True,UNVERIFIED,缺少遥测或任务窗口
+D1,bt_task_completed,True,FAIL,phases={'WAIT_PILOT': 1032} 到达过 HOLD=False 目标距离=无（指令 5.00 m）
+D1,truth_distance_hold,True,FAIL,真值最大水平位移=3.04 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=0.0s（要求>=2.0s）
+D1,takeover_position,True,FAIL,"TAKEOVER=False FAULT=False 接管后 DDS nav_state=2(Position)=False，尾段模式={'1.0': 379, '4.0': 119, 'None': 4}"
+D1,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.02 m（要求<=0.35）
+D1,imu_stereo_viba,True,FAIL,VIBA1=True VIBA2=False VIBA2 完成=False
+D1,vio_published,True,PASS,/slam/pose 样本=331
+D1,vio_tracking_health,True,UNVERIFIED,未找到由飞手/BT 状态定义的任务窗口（NAVIGATE 未发生）；不能把整轮分布当任务段质量指标。整轮诊断：帧=624 非OK=282 丢失帧比例=0.4519，NOT_INITIALIZED=282，首次OK=True，navigation_ready=False
+D1,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+D1,vio_vs_truth,True,UNVERIFIED,无有效任务窗口或 navigation_ready 起点（m0=None m1=None ready=None）：没有冻结变换的依据
+D1,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+D2,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+D2,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+D2,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+D2,offboard_accepted,True,FAIL,飞手从未进入 NAVIGATE（见 pilot.log）
+D2,nav_ready_continuous,True,UNVERIFIED,未找到任务窗口（NAVIGATE 未发生）
+D2,no_airborne_fault,True,PASS,窗口样本=587，airborne_fault=0，gate={}
+D2,ekf_using_ev,True,UNVERIFIED,缺少遥测或任务窗口
+D2,bt_task_completed,True,FAIL,phases={'WAIT_PILOT': 1208} 到达过 HOLD=False 目标距离=无（指令 5.00 m）
+D2,truth_distance_hold,True,FAIL,真值最大水平位移=6.80 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=1.3s（要求>=2.0s）
+D2,takeover_position,True,FAIL,"TAKEOVER=False FAULT=False 接管后 DDS nav_state=2(Position)=False，尾段模式={'1.0': 455, '4.0': 129, 'None': 3}"
+D2,landed_disarmed,True,FAIL,末态=DONE armed=False 真值高度残差=0.62 m（要求<=0.35）
+D2,imu_stereo_viba,True,FAIL,VIBA1=True VIBA2=False VIBA2 完成=False
+D2,vio_published,True,PASS,/slam/pose 样本=463
+D2,vio_tracking_health,True,UNVERIFIED,未找到由飞手/BT 状态定义的任务窗口（NAVIGATE 未发生）；不能把整轮分布当任务段质量指标。整轮诊断：帧=856 非OK=393 丢失帧比例=0.4591，NOT_INITIALIZED=393，首次OK=True，navigation_ready=False
+D2,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+D2,vio_vs_truth,True,UNVERIFIED,无有效任务窗口或 navigation_ready 起点（m0=None m1=None ready=None）：没有冻结变换的依据
+D2,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+D3,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+D3,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+D3,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+D3,offboard_accepted,True,PASS,NAVIGATE 共 444 行，DDS nav_state=14(Offboard) 共 258 行，首末=1795138534.257776..1795138559.957738
+D3,nav_ready_continuous,True,PASS,最长连续 ready=48.50s（要求>=3.0s），任务窗口 25.7s，覆盖率=100%（要求>=70%）
+D3,no_airborne_fault,True,PASS,窗口样本=298，airborne_fault=0，gate={}
+D3,ekf_using_ev,True,PASS,任务窗口内 cs_ev_pos=100% hgt=100% vel=100%（pos/hgt 要求>=90%，vel>=50%）
+D3,bt_task_completed,True,PASS,"phases={'WAIT_PILOT': 1242, 'NAVIGATE': 349, 'HOLD': 165, 'REVOKED': 1} 到达过 HOLD=True 目标距离=5.00（指令 5.00 m）"
+D3,truth_distance_hold,True,PASS,真值最大水平位移=5.04 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=13.7s（要求>=2.0s）
+D3,takeover_position,True,PASS,TAKEOVER=True FAULT=False 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 118}
+D3,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.17 m（要求<=0.35）
+D3,imu_stereo_viba,True,PASS,VIBA1=True VIBA2=True VIBA2 完成=True
+D3,vio_published,True,PASS,/slam/pose 样本=1818
+D3,vio_tracking_health,True,PASS,C 任务段帧=776 丢失帧比例=0.0%（<=20%）；时间未覆盖=0.0%（<=20%）；窗口末态=2；A 初始化=True 耗时=20.73 s；B 接管准备丢失帧比例=0.0；整轮分布仅作诊断
+D3,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+D3,vio_vs_truth,True,PASS,校准窗口冻结 yaw=-0.29 deg；任务窗口样本=775，水平 RMSE=0.0390 m（<=0.50） 最大=0.0607 m（<=1.50）；时间匹配 p50=4.0 ms max=8.0 ms；输出空窗=0 段/0.000 s
+D3,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+T1,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+T1,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+T1,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+T1,offboard_accepted,True,PASS,NAVIGATE 共 446 行，DDS nav_state=14(Offboard) 共 256 行，首末=1795138782.83752..1795138808.337402
+T1,nav_ready_continuous,True,PASS,最长连续 ready=50.50s（要求>=3.0s），任务窗口 25.6s，覆盖率=100%（要求>=70%）
+T1,no_airborne_fault,True,PASS,窗口样本=296，airborne_fault=0，gate={}
+T1,ekf_using_ev,True,PASS,任务窗口内 cs_ev_pos=100% hgt=100% vel=100%（pos/hgt 要求>=90%，vel>=50%）
+T1,bt_task_completed,True,PASS,"phases={'WAIT_PILOT': 1244, 'NAVIGATE': 349, 'HOLD': 164, 'REVOKED': 1} 到达过 HOLD=True 目标距离=5.00（指令 5.00 m）"
+T1,truth_distance_hold,True,PASS,真值最大水平位移=5.00 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=13.5s（要求>=2.0s）
+T1,takeover_position,True,PASS,TAKEOVER=True FAULT=False 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 141}
+T1,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.16 m（要求<=0.35）
+T1,imu_stereo_viba,True,PASS,VIBA1=True VIBA2=True VIBA2 完成=True
+T1,vio_published,True,PASS,/slam/pose 样本=1890
+T1,vio_tracking_health,True,PASS,C 任务段帧=774 丢失帧比例=0.0%（<=20%）；时间未覆盖=0.0%（<=20%）；窗口末态=2；A 初始化=True 耗时=21.14 s；B 接管准备丢失帧比例=0.0；整轮分布仅作诊断
+T1,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+T1,vio_vs_truth,True,PASS,校准窗口冻结 yaw=-9.90 deg；任务窗口样本=774，水平 RMSE=0.0284 m（<=0.50） 最大=0.0450 m（<=1.50）；时间匹配 p50=4.0 ms max=12.0 ms；输出空窗=0 段/0.000 s
+T1,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+T2,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+T2,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+T2,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+T2,offboard_accepted,True,PASS,NAVIGATE 共 442 行，DDS nav_state=14(Offboard) 共 256 行，首末=1795138959.897826..1795138985.39761
+T2,nav_ready_continuous,True,PASS,最长连续 ready=48.20s（要求>=3.0s），任务窗口 25.6s，覆盖率=100%（要求>=70%）
+T2,no_airborne_fault,True,PASS,窗口样本=296，airborne_fault=0，gate={}
+T2,ekf_using_ev,True,PASS,任务窗口内 cs_ev_pos=100% hgt=100% vel=100%（pos/hgt 要求>=90%，vel>=50%）
+T2,bt_task_completed,True,PASS,"phases={'WAIT_PILOT': 1248, 'NAVIGATE': 348, 'HOLD': 165, 'REVOKED': 1} 到达过 HOLD=True 目标距离=5.00（指令 5.00 m）"
+T2,truth_distance_hold,True,PASS,真值最大水平位移=5.07 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=13.7s（要求>=2.0s）
+T2,takeover_position,True,PASS,"TAKEOVER=True FAULT=False 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 116, '14.0': 1}"
+T2,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.17 m（要求<=0.35）
+T2,imu_stereo_viba,True,PASS,VIBA1=True VIBA2=True VIBA2 完成=True
+T2,vio_published,True,PASS,/slam/pose 样本=1809
+T2,vio_tracking_health,True,PASS,C 任务段帧=771 丢失帧比例=0.0%（<=20%）；时间未覆盖=0.0%（<=20%）；窗口末态=2；A 初始化=True 耗时=21.02 s；B 接管准备丢失帧比例=0.0；整轮分布仅作诊断
+T2,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+T2,vio_vs_truth,True,PASS,校准窗口冻结 yaw=+3.12 deg；任务窗口样本=771，水平 RMSE=0.0764 m（<=0.50） 最大=0.1025 m（<=1.50）；时间匹配 p50=4.0 ms max=12.0 ms；输出空窗=0 段/0.000 s
+T2,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄
+T3,no_bypass_env,True,PASS,forbidden_env=[] bt_probe_mentioned=False
+T3,time_sync_profile,False,PASS,vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收
+T3,px4_bridge_start,True,PASS,[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured
+T3,offboard_accepted,True,FAIL,飞手从未进入 NAVIGATE（见 pilot.log）
+T3,nav_ready_continuous,True,UNVERIFIED,未找到任务窗口（NAVIGATE 未发生）
+T3,no_airborne_fault,True,FAIL,窗口样本=1416，airborne_fault=131，gate={'airborne_fault_latched': 131}
+T3,ekf_using_ev,True,UNVERIFIED,缺少遥测或任务窗口
+T3,bt_task_completed,True,FAIL,phases={'WAIT_PILOT': 2869} 到达过 HOLD=False 目标距离=无（指令 5.00 m）
+T3,truth_distance_hold,True,FAIL,真值最大水平位移=7.75 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=1.5s（要求>=2.0s）
+T3,takeover_position,True,FAIL,"TAKEOVER=False FAULT=True 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 788, '1.0': 508, '4.0': 118, 'None': 2}"
+T3,landed_disarmed,True,PASS,末态=DONE armed=False 真值高度残差=0.07 m（要求<=0.35）
+T3,imu_stereo_viba,True,PASS,VIBA1=True VIBA2=True VIBA2 完成=True
+T3,vio_published,True,PASS,/slam/pose 样本=3116
+T3,vio_tracking_health,True,UNVERIFIED,未找到由飞手/BT 状态定义的任务窗口（NAVIGATE 未发生）；不能把整轮分布当任务段质量指标。整轮诊断：帧=3399 非OK=272 丢失帧比例=0.08，NOT_INITIALIZED=272，首次OK=True，navigation_ready=True
+T3,gate_attitude_continuity,True,PASS,GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无
+T3,vio_vs_truth,True,UNVERIFIED,无有效任务窗口或 navigation_ready 起点（m0=None m1=None ready=1795139160.642668）：没有冻结变换的依据
+T3,latency_evidence,False,UNVERIFIED,latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄

@@ -1,0 +1,2 @@
+# CSV evidence keeps the original CRLF record delimiters.
+*.csv whitespace=cr-at-eol

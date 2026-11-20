@@ -1,0 +1,261 @@
+{
+  "run": "/home/gengyinghao/drone_sim/analysis/stage_vio_shortloss_20261120_0915/runs/T3",
+  "profile": "vio_closed_loop",
+  "distance_m": 5.0,
+  "mission_window_epoch": [
+    null,
+    null
+  ],
+  "truth_clock": {
+    "n": 7407,
+    "offset_s": 1795139094.985529,
+    "offset_drift_ms": 111.15
+  },
+  "evaluator_version": "phase4-v2",
+  "input_hashes": {
+    "slam_pose.csv": "adf5ad0217c38d636aba3a67e5df743e",
+    "truth.csv": "ab4b716d0bf0c2d29c233fcbbab2abd3",
+    "pilot.csv": "d6b383b903e5d85c5a6fd8f17ee70d3b",
+    "telemetry.csv": "b0a16ce841dd0d0b82ee504cf6bcbd08",
+    "latency.csv": "34872ad85e5df9bb4e7a778148ce4902",
+    "slam.log": "2949115bafed733fac0b00e5336c7942",
+    "check.txt": "d41d8cd98f00b204e9800998ecf8427e",
+    "manifest.json": "483a0b3e042a2f91cc869f83caf94a58"
+  },
+  "checks": [
+    {
+      "name": "no_bypass_env",
+      "status": "PASS",
+      "required": true,
+      "detail": "forbidden_env=[] bt_probe_mentioned=False"
+    },
+    {
+      "name": "time_sync_profile",
+      "status": "PASS",
+      "required": false,
+      "detail": "vio_config=transport：仅 timesync/样本年龄为 [SIM-ONLY] 传输补偿，该两项不得登记为实机同源验收"
+    },
+    {
+      "name": "px4_bridge_start",
+      "status": "PASS",
+      "required": true,
+      "detail": "[PX4] domain=0 topic=/fmu/in/vehicle_visual_odometry extrinsics=configured"
+    },
+    {
+      "name": "offboard_accepted",
+      "status": "FAIL",
+      "required": true,
+      "detail": "飞手从未进入 NAVIGATE（见 pilot.log）"
+    },
+    {
+      "name": "nav_ready_continuous",
+      "status": "UNVERIFIED",
+      "required": true,
+      "detail": "未找到任务窗口（NAVIGATE 未发生）"
+    },
+    {
+      "name": "no_airborne_fault",
+      "status": "FAIL",
+      "required": true,
+      "detail": "窗口样本=1416，airborne_fault=131，gate={'airborne_fault_latched': 131}"
+    },
+    {
+      "name": "ekf_using_ev",
+      "status": "UNVERIFIED",
+      "required": true,
+      "detail": "缺少遥测或任务窗口"
+    },
+    {
+      "name": "bt_task_completed",
+      "status": "FAIL",
+      "required": true,
+      "detail": "phases={'WAIT_PILOT': 2869} 到达过 HOLD=False 目标距离=无（指令 5.00 m）"
+    },
+    {
+      "name": "truth_distance_hold",
+      "status": "FAIL",
+      "required": true,
+      "detail": "真值最大水平位移=7.75 m（指令 5.00±0.60），在 5.00±0.50 m 内最长保持=1.5s（要求>=2.0s）"
+    },
+    {
+      "name": "takeover_position",
+      "status": "FAIL",
+      "required": true,
+      "detail": "TAKEOVER=False FAULT=True 接管后 DDS nav_state=2(Position)=True，尾段模式={'2.0': 788, '1.0': 508, '4.0': 118, 'None': 2}"
+    },
+    {
+      "name": "landed_disarmed",
+      "status": "PASS",
+      "required": true,
+      "detail": "末态=DONE armed=False 真值高度残差=0.07 m（要求<=0.35）"
+    },
+    {
+      "name": "imu_stereo_viba",
+      "status": "PASS",
+      "required": true,
+      "detail": "VIBA1=True VIBA2=True VIBA2 完成=True"
+    },
+    {
+      "name": "vio_published",
+      "status": "PASS",
+      "required": true,
+      "detail": "/slam/pose 样本=3116"
+    },
+    {
+      "name": "vio_tracking_health",
+      "status": "UNVERIFIED",
+      "required": true,
+      "detail": "未找到由飞手/BT 状态定义的任务窗口（NAVIGATE 未发生）；不能把整轮分布当任务段质量指标。整轮诊断：帧=3399 非OK=272 丢失帧比例=0.08，NOT_INITIALIZED=272，首次OK=True，navigation_ready=True"
+    },
+    {
+      "name": "gate_attitude_continuity",
+      "status": "PASS",
+      "required": true,
+      "detail": "GATE_FAULT=0 行，attitude_discontinuity=0 行；首条=无"
+    },
+    {
+      "name": "vio_vs_truth",
+      "status": "UNVERIFIED",
+      "required": true,
+      "detail": "无有效任务窗口或 navigation_ready 起点（m0=None m1=None ready=1795139160.642668）：没有冻结变换的依据"
+    },
+    {
+      "name": "latency_evidence",
+      "status": "UNVERIFIED",
+      "required": false,
+      "detail": "latency.csv 无 age_ms 列；现有字段分属 sim/epoch/mono 三个时钟域，缺逐帧 sim->epoch 映射与发布时刻，不能可靠重算样本年龄；仅派生处理耗时供诊断，不代替样本年龄"
+    }
+  ],
+  "counts": {
+    "PASS": 7,
+    "FAIL": 5,
+    "UNVERIFIED": 5
+  },
+  "phase4_diagnostics": {
+    "vio_tracking_health": {
+      "evaluator": "phase4-v2",
+      "source": "latency.csv per-frame tracking_state + rx_wall_us(epoch)",
+      "windows_defined_by": "A=[first frame, first navigation_ready), B=[first navigation_ready, NAVIGATE), C=[NAVIGATE, TAKEOVER]",
+      "whole_run_distribution": {
+        "frames": 3399,
+        "ok": 3127,
+        "not_initialized": 272,
+        "recently_lost": 0,
+        "lost": 0,
+        "other": 0,
+        "lost_frame_ratio": 0.08
+      },
+      "stage_boundaries_epoch": {
+        "A_start": 1795139139.492442,
+        "A_end_B_start": 1795139160.642668,
+        "B_end_C_start": null,
+        "C_end": null
+      },
+      "stage_A_startup_init": {
+        "frames": 641,
+        "ok": 369,
+        "not_initialized": 272,
+        "recently_lost": 0,
+        "lost": 0,
+        "other": 0,
+        "lost_frame_ratio": 0.4243
+      },
+      "stage_B_pre_takeover": {
+        "frames": 0,
+        "ok": 0,
+        "not_initialized": 0,
+        "recently_lost": 0,
+        "lost": 0,
+        "other": 0,
+        "lost_frame_ratio": null
+      },
+      "stage_C_mission": {
+        "frames": 0,
+        "ok": 0,
+        "not_initialized": 0,
+        "recently_lost": 0,
+        "lost": 0,
+        "other": 0,
+        "lost_frame_ratio": null
+      },
+      "init_completed": true,
+      "init_seconds": 21.15,
+      "init_basis": "first navigation_ready epoch minus first latency frame",
+      "first_ok_frame_seconds": 8.97,
+      "never_initialized": false,
+      "mission_window_epoch": [
+        null,
+        null
+      ]
+    },
+    "vio_vs_truth": {
+      "evaluator": "phase4-v2",
+      "reference_point": "camera optical centre -> body/IMU via IMU.T_b_c1",
+      "lever_arm_cam_to_body_m": [
+        0.025,
+        0.242,
+        -0.12
+      ],
+      "scale_fitted": false,
+      "transform_source": "calibration window only (pre-NAVIGATE)",
+      "discontinuities": {
+        "epoch_values_seen": [
+          0
+        ],
+        "epoch_changes": [],
+        "time_base_reanchor": 0,
+        "track_reset": 0
+      },
+      "match_stats": {
+        "n": 3116,
+        "dt_ms_p50": 4.0,
+        "dt_ms_max": 8.0
+      }
+    },
+    "latency_evidence": {
+      "evaluator": "phase4-v2",
+      "header": [
+        "pair",
+        "sim_us",
+        "rx_mono_us",
+        "rx_wall_us",
+        "track_start_us",
+        "track_end_us",
+        "imu_count",
+        "tracking_state",
+        "obs_status",
+        "obs_reason",
+        "src_sim_us",
+        "sample_us",
+        "map_offset_us",
+        "map_offset_valid",
+        "clock_epoch",
+        "reference_epoch",
+        "submit_seq",
+        "submit_wall_us",
+        "submit_mono_us",
+        "time_valid",
+        "offset_jumps"
+      ],
+      "clock_domains": {
+        "sim_us": "Gazebo sim time (source sample)",
+        "rx_wall_us": "host epoch (receive)",
+        "rx_mono_us/track_start_us/track_end_us": "host steady/mono"
+      },
+      "cannot_use": [
+        "rx_wall_us - sim_us: different clock domains",
+        "track_end_us - track_start_us: processing duration, NOT sample age",
+        "unknown values filled with 0",
+        "replay wall clock as real-time age"
+      ],
+      "derived_processing_only_ms": {
+        "n": 3399,
+        "p50": 19.29,
+        "p95": 23.87,
+        "max": 37.59,
+        "note": "TrackStereo duration only; explicitly NOT sample age"
+      }
+    }
+  },
+  "verdict": "FAIL"
+}

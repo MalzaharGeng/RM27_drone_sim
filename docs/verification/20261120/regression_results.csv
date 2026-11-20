@@ -1,0 +1,22 @@
+﻿case_id,kind,change,expectation,result,evidence
+REG-01,diagnostic,诊断默认关闭（未设 RM27_TRACKDIAG_DIR）,不产生 track_frames.csv、不改行为,PASS,"T1/T2/T3 均无 trackdiag 目录；check.json 与 D3 逐项同构成"
+REG-02,diagnostic,诊断开启,字段真实存在且语义正确,PASS,"D2 track_frames.csv 856 行；kind/state/nav_valid/nav_tracking_state 与 slam.log 一致"
+REG-03,diagnostic,诊断开启不拖慢跟踪线程,PASS（本项判定有限）,D2 track_ms p50 17.5 ms / p90 22.8 ms ≪ 33 ms 周期；pairs_hz 30.3、imu_hz 250
+REG-04,diagnostic,诊断开启不影响起飞段裕度,FAIL,D2 起飞后 8.63 s 触发飞手包络 tilt 25.7>25.0；D3（关闭）同位 tilt 7.8
+REG-05,lifecycle,agent 启动后登记,记录 pid+starttime+cmdline+sid,PASS,"runs/D3/agent_owner.json：pid 104809 sid 104809 starttime 366043"
+REG-06,lifecycle,清理按身份回收 agent,terminated 且复查为空,PASS,"reclaim=terminated；post-cleanup scan_count=0；cleanup_verify clean=true"
+REG-07,lifecycle,pid 复用不误杀,PASS,"tests/test_agent_registry.py::test_pid_reuse_is_skipped"
+REG-08,lifecycle,agent 自建会话仍能回收,PASS,"test_self_session_is_recorded + test_reclaim_terminates_matching_identity"
+REG-09,lifecycle,agent 启动失败不崩,PASS,test_start_failure_records_unavailable_and_skips
+REG-10,lifecycle,非本轮启动的 agent 不回收,PASS,test_not_started_by_us_is_skipped
+REG-11,lifecycle,僵尸态判死,PASS,"test_already_gone；实现改为读 /proc/<pid>/stat state=='Z'"
+REG-12,control,正常帧不误拒,PASS,"D3/T1/T2 任务段丢帧 0.0%（776/774/771 帧）"
+REG-13,control,真实丢失仍被拒,PASS,"LR1 4 帧 tracking_invalid 均被 Gate 拒绝（rejected 583→587）"
+REG-14,control,陈旧/跨 epoch 数据仍被拦截,PASS,"Gate 分支未改；ref_epoch 变化仍走 epoch 判定（D2 ref_epoch 1→2→3 未放行发布）"
+REG-15,control,reset 保护保持,PASS,"T3 1795139245.8 px4_local_frame_reset 仍锁存 requires_disarm=true"
+REG-16,control,初始化与 ready 收益不回退,PASS,"VIBA2 完成：D3 20.73 s / T1 21.14 s / T2 21.02 s（LR1 20.49 s）"
+REG-17,control,Position/Offboard 交接正常,PASS,"T1/T2/D3 均 TAKEOVER=True 且 nav_state=2"
+REG-18,control,无新增控制权竞争,PASS,"BT 仍是唯一 setpoint 源；no_bypass_env PASS；authority_diag 无 ready 反复"
+REG-19,control,任务到达/速度/dwell/HOLD 保持,PASS,"T1/T2 到达 5.00/5.07 m、HOLD 164/165 行、保持 13.5/13.7 s"
+REG-20,safety,不改门限与判据,PASS,"check_run.py 5f7d4ff1 / phase4_eval.py 09057681 未改；stable/max_age/gap/tracking_error 未改"
+REG-21,safety,真值不进估计/控制/锚点/激励,PASS,"Gate/BT/pilot 均不读 truth；truth 仅进 supervisor 与离线评价"

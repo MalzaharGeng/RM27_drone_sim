@@ -1,22 +1,32 @@
 # RM27 无人机导航仿真
 
 WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2027
-官方 STP 转出的实体网格，任务是"已知地图 + A* 规划 + offboard 航点飞行"的避障航线验证。
+官方 STP 转出的实体网格，当前用于双目惯性定位、PX4 外部视觉融合与航点闭环验证；早期已知地图 A* 避障演示继续保留。
 渲染走本机 RTX 5070 Ti。
 
 ![RMUC 2027 场地在 Gazebo 中的实体渲染](docs/images/arena_gazebo_20261107.png)
 
-场地主体使用官方 CAD 实体网格；当前视觉定位实验另外叠加地面纹理。官方 `RMUC2027_V1.0.0.stp` 经 OCCT 三角化，按 XCAF 的逐面颜色
+场地主体使用官方 CAD 实体网格；当前 Harrier 原场地实验使用 CAD 分色外观和网格碰撞，不叠加人工特征贴片。早期宽场地纹理对照保留在独立 world 中。官方 `RMUC2027_V1.0.0.stp` 经 OCCT 三角化，按 XCAF 的逐面颜色
 分成 9 组网格，颜色和布局都来自原始 CAD，构建流程见
 [tools/step_to_arena/](tools/step_to_arena/)。
 
-## 当前进展（2026-11-16）
+## 当前进展（2026-11-20）
 
-双目/IMU VIO 仿真联调流程：ORB-SLAM3 → PX4 EV → Position/Offboard → 5 m → 接回降落。FIX20 修复 EXCITE 高度参考随 z-reset 同号平移，新版本独立冷启动 **3/3 正常任务通过**。中断专项 **B / UNVERIFIED**，因共享进程运行后证据缺失未判 C；原场地可靠性、延迟性能、Nano 实机未验证。
+当前联调链路为双目/IMU → ORB-SLAM3 → PX4 外部视觉融合 → Position/Offboard → 5 m 航点 → 飞手接回降落。原场地已接入 Drone-Harrier 机体、官方 CAD 碰撞和中间机库出生位姿；双目为 960 × 720 @ 30 Hz、50 mm 基线，IMU 为 250 Hz。
 
-当前状态、运行入口和验收范围见 [阶段记录](docs/NP01_STATUS_20261116.md)、[完整中断审计](docs/verification/20261116/INTERRUPTION_AUDIT_REPORT.md)。[算法主线](https://github.com/MalzaharGeng/ORB_SLAM3) 与本仓库分别维护；ROS 输入节点源码在 `ros2/rm27_slam/`。旧 A* 演示和新 VIO 闭环的证据分别记录。
+最新冻结候选在 `rm27_midhangar_n_world` 执行东向 5 m 正式验收：**T1、T2 通过，T3 失败，整组未通过**。T1/T2 的真值最大水平位移分别为 5.00/5.07 m，在目标距离带内保持 13.5/13.7 s，完成 BT HOLD、Position 接管和落地上锁。T3 未进入 NAVIGATE，交接前 `at_home` 条件未满足，随后超时退出。通过轮不能外推到原北向任务或长期可靠率。
 
-本仓库飞行记录均来自仿真，实机尚未验收。中断实验脚本默认启动仿真，运行前需单独确认授权范围和次数。
+| 路径 | 内容与使用范围 |
+|---|---|
+| `scripts/` | 既有飞手、行为树、监督器及评价器；保留历史生产入口 |
+| `experiments/vio_20261120/` | 最新隔离候选：故障退出驻留、任务方位角、独立 PX4 参数目录、Agent 身份回收及回归测试 |
+| `ros2/rm27_slam/` | 双目惯性输入节点、源时间映射、空中初始化入口、默认关闭的跟踪诊断 |
+| `rm27_sim/models/`、`rm27_sim/worlds/` | Harrier 机体、相机与惯性传感器、场地碰撞和不同出生位置 |
+| `docs/verification/20261120/` | 六次运行的台账、逐项判据及清理结果 |
+
+候选构建、运行与判读见 [原场地 VIO 联调记录](docs/VIO_HARRIER_20261120.md)；入口见 [候选运行说明](experiments/vio_20261120/README.md)。算法与相机配置由 [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3) 维护。旧 A* 规划演示、11-16 冷启动 3/3 和本轮原场地候选属于不同实验条件，分别记录；历史中断专项仍为 B / UNVERIFIED。
+
+本仓库飞行记录均来自仿真。`transport` 配置包含仿真时间传输补偿，尚无 Nano 实飞、碰撞回正或空中跨地图导航恢复的验收结论。
 
 配套文档：
 
@@ -28,7 +38,7 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 | [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3) | 双目 VIO、PX4 外部视觉桥、相机规格与仿真配置 |
 | [docs/specs/2026-10-31-px4-gazebo-ubuntu2604-design.md](docs/specs/2026-10-31-px4-gazebo-ubuntu2604-design.md) | 环境选型与验收标准 |
 | [docs/worklog/](docs/worklog/) | 11-03 / 11-04 两天的排障过程 |
-| [docs/flight_records/](docs/flight_records/) | 实飞日志（nav_positions.csv、mission.log、PX4 控制台） |
+| [docs/flight_records/](docs/flight_records/) | 仿真飞行日志（nav_positions.csv、mission.log、PX4 控制台） |
 
 ## 环境
 
@@ -63,34 +73,29 @@ PX4 官方只认证到 24.04，26.04 靠 ROS 的 gz vendor 包对齐版本，所
 
 ## 目录
 
-```
-RM27_drone_sim
-├── env.sh                    环境变量（PATH、GPU、世界、出生点）
-├── start_rm27_px4.sh         启动 PX4 SITL + Gazebo（GPU 预检、世界与模型同步）
-├── stop_sim.sh               收尾，确认无残留进程
-├── PX4-Autopilot/            v1.17.0 源码（按下方步骤单独 clone，不入库）
-├── rm27_sim/                 场地与独立查看器
-│   ├── run_rm27.sh           Linux/WSL 下只开场地（不接 PX4）
-│   ├── start_rm27.ps1        Windows + pixi 版
-│   ├── pixi.toml             pixi 依赖（win-64，gz-sim 10.*）
-│   ├── worlds/
-│   │   ├── rm27_world.sdf        纯场地
-│   │   ├── rm27_nav_world.sdf    场地 + 导航障碍块
-│   │   └── rm27_gui.config       GUI 布局与面板
-│   └── models/
-│       ├── rmuc_2027/            场地：model.sdf + meshes/color_*.stl（9 组，约 117 MB）
-│       └── nav_obstacles/        1 个高地柱 + 2 个 3 m 方块（带碰撞）
-├── tools/
-│   └── step_to_arena/        STP → 网格 → SDF 的构建脚本
+```text
+RM27_drone_sim/
+├── env.sh                         ROS、渲染路径、默认 world 与出生位姿
+├── start_rm27_px4.sh              同步场景和模型，启动 PX4 SITL
+├── start_px4_direct.sh            直接启动已构建的 SITL
+├── stop_sim.sh                    常规仿真收尾入口
+├── PX4-Autopilot/                 v1.17.0，单独检出，不入本仓库
+├── rm27_sim/
+│   ├── worlds/                    官方场地、宽场地及中间机库 world
+│   └── models/                    场地 CAD、Harrier 分色网格、传感器与碰撞
+├── ros2/rm27_slam/                双目惯性、纯双目及真值对照 ROS 节点
 ├── scripts/
-│   ├── nav_planner.py        网格 A*，纯标准库
-│   ├── rm27_nav.py           带避障的航点任务（含安全中断）
-│   ├── rm27_waypoints.py     最早那版方形航点，无避障
-│   ├── test_nav_planner.py   规划器单元测试
-│   ├── run_nav_demo.sh       全流程：起仿真 → 飞任务 → 关仿真
-│   ├── obstacles_rm27.json   障碍与目标点（Gazebo 世界坐标）
-│   └── obstacles_rm27_plain.json  纯场地版本
-└── docs/
+│   ├── sim_pilot.py               RC 飞手状态机与安全包络
+│   ├── pilot_navigation_bt.py     航点行为树与授权链
+│   ├── np01_truth_supervisor.py   独立真值监督，不向导航提供定位
+│   ├── check_run.py               单轮判据与结论
+│   ├── phase4_eval.py             跟踪、真值误差及时间证据评价
+│   ├── harrier_20261117/          world 对应的几何边界
+│   └── nav_planner.py             历史已知地图 A* 规划器
+├── experiments/vio_20261120/      最新冻结候选及独立运行环境
+├── tests/                        生产路径回放回归
+├── tools/step_to_arena/           官方 STP 到场地网格
+└── docs/                         接入说明、历史记录与验收证据
 ```
 
 ## 安装 PX4
@@ -133,6 +138,8 @@ glxinfo -B | grep -E "Device|Accelerated"
 机器上还有一块 AMD 610M 核显，D3D12 默认会挑它，所以 NVIDIA 是显式指定的。
 
 ## 运行方法
+
+当前 VIO 候选按 [独立运行说明](experiments/vio_20261120/README.md) 构建和启动。以下命令为历史已知地图 A* 演示，采用各自的 world 和出生点，不与 Harrier 候选混用。
 
 先离线看航线，不碰仿真：
 
@@ -230,6 +237,8 @@ cd rm27_sim && ./run_rm27.sh
 
 ## 坐标系
 
+以下出生点说明对应历史 A* 演示。Harrier 候选使用 `(6.80, 8.05, 0.504900, 0, 0, 1.5707963)`；VIO 导航参考与初始航向、任务方位角另见 [联调记录](docs/VIO_HARRIER_20261120.md)。
+
 - Gazebo 世界是 ENU：x 向东、y 向北、z 向上，单位米
 - PX4 本地 NED：北 = 世界 y − 出生点 y，东 = 世界 x − 出生点 x，下 = −高度
   （`GZBridge.cpp` 里是 `(north, east) = (gz.y, gz.x)`，不是直接相减）
@@ -250,8 +259,8 @@ cd rm27_sim && ./run_rm27.sh
   models 目录，`env.sh` 里设的值不生效，所以模型要软链进那个目录，否则世界能开但场地是空的
 - **位置 setpoint 给太远会砸机**：首版直接给 11 m 外的点，PX4 按 12 m/s 上限冲，
   实测 7.1 m/s，过冲后姿态发散从 2 m 掉到地面。现在靠 0.5 m 加密 + 限速 2.0 m/s
-- **场地网格没有碰撞体**：远端基地前那块抬升平台顶面在 z≈0.318 m，碰撞地面在
-  z=0.019 m，直接降落会陷进网格，世界文件里补了 `base_landing_pad` 碰撞盒
+- **早期场地网格没有碰撞体**：远端基地前那块抬升平台顶面在 z≈0.318 m，碰撞地面在
+  z=0.019 m，直接降落会陷进网格，早期世界文件里补了 `base_landing_pad` 碰撞盒；当前 Harrier world 由官方 CAD 网格提供实际接触面
 - **MAVSDK 端口**：遥测 14550、offboard 14540；WSL 用 mirrored 网络，Windows 侧
   QGC 连 `localhost:14550`
 - **offboard 必须持续发 setpoint**：停超过 1 s PX4 会退出 offboard 并悬停/降落
@@ -260,9 +269,7 @@ cd rm27_sim && ./run_rm27.sh
 
 ## 待办
 
-1. 场地已改实体渲染，贴图方案停用；9 个主色是聚类结果，如果要逐面保留 319 色，
-   需要先解决 Gazebo 的材质切换开销
-2. 机载视觉（相机 + VIO）还没接进 SITL，方案在
-   `docs/TERMINAL_SLAM_GAZEBO.md` 第 3 节，未实机验证；双目配置与相机规格在
-   [ORB_SLAM3](https://github.com/MalzaharGeng/ORB_SLAM3)
-3. 多机与动态障碍不在当前范围内
+1. 查清交接前位置保持与 `at_home` 超时，完成同一冻结候选三轮完整验收。
+2. 低开销捕获 NAVIGATE 内短时失锁，区分跟踪状态与导航快照有效性；平均输入频率不能排除逐帧同步或排队问题。
+3. 联调碰撞检测、飞控回正和参考变化后的定位恢复；现有地面重置流程尚不能直接用于空中接续导航。
+4. 多机、动态障碍和 Nano 实飞另行验证。

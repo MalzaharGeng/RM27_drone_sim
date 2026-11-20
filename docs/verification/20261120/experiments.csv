@@ -1,0 +1,8 @@
+round,role,candidate,track_diag,verdict,pass,fail,unverified,required_failed,note
+LR1,上一阶段局部回归（北向=0? 实为 bearing=90 诊断候选）,旧候选,OFF(旧电机诊断),FAIL,13,3,1,no_airborne_fault;bt_task_completed;truth_distance_hold,
+D1,诊断轮,本阶段候选,ON,FAIL,7,5,5,offboard_accepted;nav_ready_continuous;ekf_using_ev;bt_task_completed;truth_distance_hold;takeover_position;imu_stereo_viba;vio_tracking_health;vio_vs_truth,无效：运行期外来 PX4(-i 7) 污染，DDS 串流
+D2,诊断轮,本阶段候选,ON,FAIL,6,6,5,offboard_accepted;nav_ready_continuous;ekf_using_ev;bt_task_completed;truth_distance_hold;takeover_position;landed_disarmed;imu_stereo_viba;vio_tracking_health;vio_vs_truth,未进 NAVIGATE：起飞后 8.63s 飞手包络 tilt25.7>25.0
+D3,诊断轮(对照),本阶段候选,OFF,PASS,16,0,1,,完整任务达成（诊断关闭）
+T1,正式组第 1 轮,本阶段候选,OFF,PASS,16,0,1,,
+T2,正式组第 2 轮,本阶段候选,OFF,PASS,16,0,1,,
+T3,正式组第 3 轮,本阶段候选,OFF,FAIL,7,5,5,offboard_accepted;nav_ready_continuous;no_airborne_fault;ekf_using_ev;bt_task_completed;truth_distance_hold;takeover_position;vio_tracking_health;vio_vs_truth,
