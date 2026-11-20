@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "rc_selector": "three_position",
+  "mission": "line",
+  "distance_m": 5.0,
+  "side_m": 1.0,
+  "speed_m_s": 0.25,
+  "max_radius_m": 12.0,
+  "max_alt_error_m": 1.5,
+  "max_tracking_error_m": 1.8
+}

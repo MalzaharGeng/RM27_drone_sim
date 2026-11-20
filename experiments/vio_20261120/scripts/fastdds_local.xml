@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Fast DDS 强制 loopback 配置
+     适用场景：WSL / Docker / 多网卡环境下，participant 把发现监听绑到了
+     eth* 的地址上，导致同一台机器上的进程互相看不见。
+
+     要点：不仅要把"初始对端"设成 127.0.0.1（往哪发），
+     还要把 metatraffic 与 default 的 unicast locator 也设成 127.0.0.1（在哪听），
+     否则会出现"两边都在喊、没人接收"的现象。
+
+     用法：export FASTDDS_DEFAULT_PROFILES_FILE=$HOME/drone_sim/scripts/fastdds_local.xml
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+  <participant profile_name="loopback_forced" is_default_profile="true">
+    <rtps>
+      <!-- 用户数据走 127.0.0.1 -->
+      <defaultUnicastLocatorList>
+        <locator>
+          <udpv4>
+            <address>127.0.0.1</address>
+          </udpv4>
+        </locator>
+      </defaultUnicastLocatorList>
+
+      <builtin>
+        <!-- 发现消息（SPDP/SEDP）的监听地址，必须显式给，否则绑到网卡上 -->
+        <metatrafficUnicastLocatorList>
+          <locator>
+            <udpv4>
+              <address>127.0.0.1</address>
+            </udpv4>
+          </locator>
+        </metatrafficUnicastLocatorList>
+
+        <!-- 主动向对端打招呼的地址 -->
+        <initialPeersList>
+          <locator>
+            <udpv4>
+              <address>127.0.0.1</address>
+            </udpv4>
+          </locator>
+        </initialPeersList>
+      </builtin>
+    </rtps>
+  </participant>
+</profiles>

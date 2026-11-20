@@ -1,0 +1,44 @@
+diff --git a/ROMFS/px4fmu_common/init.d-posix/airframes/4010_gz_x500_mono_cam b/ROMFS/px4fmu_common/init.d-posix/airframes/4010_gz_x500_mono_cam
+index 8352119..27aab93 100644
+--- a/ROMFS/px4fmu_common/init.d-posix/airframes/4010_gz_x500_mono_cam
++++ b/ROMFS/px4fmu_common/init.d-posix/airframes/4010_gz_x500_mono_cam
+@@ -8,3 +8,25 @@
+ PX4_SIM_MODEL=${PX4_SIM_MODEL:=x500_mono_cam}
+ 
+ . ${R}etc/init.d-posix/airframes/4001_gz_x500
++
++# 三档开关的「档位 -> 飞行模式」映射。
++#
++# PX4 的 COM_FLTMODE1..6 默认是 -1、RC_MAP_FLTMODE 默认是 0，即三档切换功能
++# 处于未配置状态：拨动遥控档位只会改变 manual_control_switches.mode_slot，
++# vehicle_status.nav_state 保持不变。实机上这一段同样必须配置，否则飞行员
++# 拨档不会有任何模式变化，所以它不是仿真专属的补丁。
++#
++# COM_FLTMODE 参数是「模式选择索引」，不是 vehicle_status.nav_state 枚举。
++# src/modules/manual_control/ManualControl.cpp::navStateFromParam()：
++#   1=ALTCTL(nav 1), 2=POSCTL(nav 2), 7=OFFBOARD(nav 14), 14=ORBIT(nav 21)。
++# 曾误把 nav_state 的 14 直接写进参数，PX4 实际进入 ORBIT 绕圈，
++# 授权链因 nav_state!=14 永久 waiting_for_rc_offboard。此处按源码索引修正。
++# RM27 的三档布局：低位 Altitude、中位 Position、高位 Offboard。
++param set RC_MAP_FLTMODE 6
++param set COM_FLTMODE1 1
++param set COM_FLTMODE2 2
++param set COM_FLTMODE3 7
++
++# 外部视觉融合开关：EKF2_EV_CTRL 默认 0 表示完全不融合外部视觉。
++# 7 = 水平位置 + 垂直位置 + 3D 速度。
++param set EKF2_EV_CTRL 7
+diff --git a/src/modules/uxrce_dds_client/dds_topics.yaml b/src/modules/uxrce_dds_client/dds_topics.yaml
+index 7cc39d1..907909d 100644
+--- a/src/modules/uxrce_dds_client/dds_topics.yaml
++++ b/src/modules/uxrce_dds_client/dds_topics.yaml
+@@ -36,6 +36,9 @@ publications:
+     type: px4_msgs::msg::ManualControlSetpoint
+     rate_limit: 25.
+ 
++  - topic: /fmu/out/manual_control_switches
++    type: px4_msgs::msg::ManualControlSwitches
++
+   - topic: /fmu/out/message_format_response
+     type: px4_msgs::msg::MessageFormatResponse
+ 

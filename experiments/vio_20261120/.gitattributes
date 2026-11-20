@@ -1,0 +1,2 @@
+# Unified diff context lines contain required leading spaces.
+px4_sitl.patch -whitespace
