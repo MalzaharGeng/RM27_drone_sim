@@ -177,7 +177,7 @@ set -u
 
 # 独立真值记录（不参与控制，实体名/sim 时间）
 say "真值记录启动"
-TRUTH_ENTITY="${TRUTH_ENTITY:-x500_mono_cam_0}" \
+TRUTH_ENTITY="${TRUTH_ENTITY:-Drone-Harrier}" \
   python3 "$SCRIPTS/truth_recorder.py" --out "$D/truth.csv" \
   >"$D/truth.log" 2>&1 &
 PIDS+=($!)
@@ -208,6 +208,19 @@ if [[ "$PROFILE" == "control_truth" ]]; then
   PIDS+=($!)
 else
   say "ORB-SLAM3 IMU_STEREO 启动（bridge + stereo_inertial_sim_node）"
+  # [NP-01 FIX18] Independent truth-pose bridge, owned here instead of by the
+  # VIO helper. The supervisor is fail-closed (no pose -> abort the round), so
+  # its input must not vanish when the VIO node exits and its EXIT trap tears
+  # down the bridge. Exactly one publisher stays on this ROS topic because the
+  # VIO helper is told to skip it (BRIDGE_SKIP_TRUTH=1).
+  TRUTH_ROS_TOPIC="/world/${NP01_WORLD}/dynamic_pose/info"
+  ros2 run ros_gz_bridge parameter_bridge \
+    "${TRUTH_ROS_TOPIC}@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V" \
+    >"$D/truth_bridge.log" 2>&1 &
+  PIDS+=($!)
+  export BRIDGE_SKIP_TRUTH=1
+  say "独立真值位姿桥启动（$TRUTH_ROS_TOPIC；不随 VIO 节点退出而消失）"
+
   RECORD_DIR=""
   if [[ "${RECORD:-0}" == "1" ]]; then
     RECORD_DIR="$D/recording"

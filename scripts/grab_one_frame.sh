@@ -21,7 +21,7 @@ source /opt/ros/lyrical/setup.bash >/dev/null 2>&1
 source /home/gengyinghao/px4_ws/install/setup.bash >/dev/null 2>&1
 set -u
 
-LEFT=/world/rm27_world/model/x500_mono_cam_0/link/cam_left_link/sensor/cam_left/image
+LEFT=/world/rm27_world/model/Drone-Harrier/link/cam_left_link/sensor/cam_left/image
 ros2 run ros_gz_bridge parameter_bridge "$LEFT@sensor_msgs/msg/Image[gz.msgs.Image" \
   >"$OUT/bridge.log" 2>&1 &
 BR_PID=$!

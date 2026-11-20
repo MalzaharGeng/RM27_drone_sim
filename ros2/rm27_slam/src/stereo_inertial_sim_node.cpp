@@ -67,6 +67,7 @@
 #include "InputRecording.h"
 #include "Px4Bridge.h"
 #include "time_trace.hpp"
+#include "track_diag.hpp"   // [DIAG-ONLY] 默认关闭
 #include <rclcpp/message_info.hpp>
 
 // [WORKPKG-TRACE] image_group_ is MutuallyExclusive, so onImage ->
@@ -751,6 +752,9 @@ private:
     gate_open_ = true;
     gate_opened_us_ = now_us;
     gate_open_epoch_ = epoch;
+    // [READY-FIX] Align processed_epoch_ with gate-open epoch so the first
+    // post-gate sample does not spuriously reset the freshly built map.
+    processed_epoch_ = epoch;
     gate_block_reason_.clear();
     RCLCPP_INFO(get_logger(),
       "[INIT_GATE] OPEN after %.2fs airborne | left=%.1fHz right=%.1fHz imu=%.1fHz "
@@ -1024,6 +1028,9 @@ private:
       // 仍然把无效样本交给 Px4Bridge：Gate 需要看到 tracking_invalid 才会
       // 及时撤销，而不是因为“没有新消息”被动超时。
       auto nav = slam_->GetNavigationState();
+      // [DIAG-ONLY] kind=1：ORB-SLAM3 真实非跟踪态（含 RECENTLY_LOST）
+      trackDiagFrame(1, state, nav, epoch_us, tl, rx_mono_us, track_start_us,
+                     static_cast<int>(v_imu.size()), static_cast<int>(imu_buf_.size()));
       bridge_->Submit(nav, static_cast<uint64_t>(epoch_us), epoch,
                       makeSubmitMeta(nav, Tcw, v_imu, tl));
       return;
@@ -1081,6 +1088,13 @@ private:
         nav_guard_has_good_ = false;
       }
     }
+    // [DIAG-ONLY] kind=0 正常；2 = state==OK 但 nav.valid=false（消费者语义分叉）；
+    // 3 = 被 sim_nav_guard 置为无效（[SIM-ONLY] 钩子，默认关闭）
+    {
+      const int kind = nav.valid ? 0 : (sim_nav_guard_ ? 3 : 2);
+      trackDiagFrame(kind, state, nav, epoch_us, tl, rx_mono_us, track_start_us,
+                     static_cast<int>(v_imu.size()), static_cast<int>(imu_buf_.size()));
+    }
     bridge_->Submit(nav, static_cast<uint64_t>(epoch_us), epoch,
                     makeSubmitMeta(nav, Tcw, v_imu, tl));
 
@@ -1098,6 +1112,42 @@ private:
   // same GetNavigationState() copy and the same v_imu bundle that TrackStereo
   // consumed. Not used by SensorClock, Gate, Bridge decisions or sample times;
   // truth is never read here.
+  // [DIAG-ONLY] 每帧一行，默认关闭时是空调用；不改变任何提交内容与时机。
+  void trackDiagFrame(int kind, int state, const ORB_SLAM3::System::NavigationState& nav,
+                      int64_t epoch_us, double tl, uint64_t rx_mono_us, uint64_t track_start_us,
+                      int n_imu, int imu_depth)
+  {
+    if (!rm27::TrackDiag::instance().enabled()) {
+      return;
+    }
+    rm27::TrackDiagRow r;
+    r.seq = static_cast<uint64_t>(++diag_seq_);
+    r.frame_id = static_cast<uint64_t>(nav.frameId);
+    r.src_sim_us = static_cast<int64_t>(std::llround(tl * 1e6));
+    r.rx_mono_us = static_cast<int64_t>(rx_mono_us);
+    r.submit_epoch_us = epoch_us;
+    r.track_ms = static_cast<double>(ORB_SLAM3::px4::SteadyMicros() - track_start_us) * 1e-3;
+    r.tracking_state = state;
+    // tracked_kp = 当前帧去畸变 ORB 关键点容器大小（GetTrackedKeyPointsUn），非匹配内点数
+    r.tracked_kp = static_cast<int>(slam_->GetTrackedKeyPointsUn().size());
+    r.n_imu = n_imu;
+    r.imu_buf_depth = imu_depth;
+    r.nav_valid = static_cast<int>(nav.valid);
+    r.nav_tracking_state = static_cast<int>(nav.trackingState);
+    r.nav_imu_init = static_cast<int>(nav.inertialInitialized);
+    r.nav_ba2 = static_cast<int>(nav.inertialBA2);
+    r.nav_vel_valid = static_cast<int>(nav.velocityValid);
+    r.map_id = static_cast<uint64_t>(nav.mapId);
+    r.ref_epoch = static_cast<uint64_t>(nav.referenceEpoch);
+    r.clock_epoch = static_cast<uint64_t>(processed_epoch_);
+    r.kind = kind;
+    r.navguard_fired = nav_guard_rejects_;
+    r.n_ok = n_ok_;
+    r.n_lost = n_lost_;
+    r.n_pairs = n_pairs_;
+    rm27::TrackDiag::instance().frame(r);
+  }
+
   ORB_SLAM3::px4::SubmitMeta makeSubmitMeta(
       const ORB_SLAM3::System::NavigationState& nav,
       const Sophus::SE3f& Tcw,
@@ -1321,6 +1371,7 @@ private:
   int n_left_{0}, n_right_{0}, n_imu_{0}, n_pairs_{0}, n_ok_{0}, n_lost_{0}, n_skew_{0};
   int n_no_imu_{0}, n_zero_stamp_{0}, n_time_regress_{0}, n_clock_reject_{0};
   int n_imu_dropped_{0}, n_imu_reorder_{0};
+  uint64_t diag_seq_{0};   // [DIAG-ONLY] 每帧提交序号
   // [NP01-FIX15] 拒绝原因聚合桶，顺序见 reasonIndex()。
   int n_clock_reject_reason_[6] = {0, 0, 0, 0, 0, 0};
 };
@@ -1328,6 +1379,13 @@ private:
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
+  // [DIAG-ONLY] 只有显式设置 RM27_TRACKDIAG_DIR 才启用；否则直接返回。
+  {
+    const char* diag_dir = std::getenv("RM27_TRACKDIAG_DIR");
+    if (diag_dir && *diag_dir) {
+      rm27::TrackDiag::instance().init(diag_dir);
+    }
+  }
   try {
     auto node = std::make_shared<StereoInertialSim>();
     // [SIM-ONLY] 第 24 轮单变量：执行器线程 4 -> 8。
@@ -1343,5 +1401,6 @@ int main(int argc, char ** argv)
     return 1;
   }
   rclcpp::shutdown();
+  rm27::TrackDiag::instance().shutdown();
   return 0;
 }

@@ -22,10 +22,10 @@ find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 
 # ---- ORB_SLAM3（源码在 $HOME/ORB_SLAM3，已编译） ----
-if(NOT EXISTS "$ENV{HOME}/ORB_SLAM3/include/System.h")
+set(ORB_ROOT "$ENV{HOME}/ORB_SLAM3" CACHE PATH "ORB_SLAM3 source checkout")
+if(NOT EXISTS "${ORB_ROOT}/include/System.h")
   message(FATAL_ERROR "未找到 $ENV{HOME}/ORB_SLAM3/include/System.h，请先编译 ORB_SLAM3")
 endif()
-set(ORB_ROOT     "$ENV{HOME}/ORB_SLAM3")
 set(ORB_LIB_DIR  "${ORB_ROOT}/build/lib")
 set(ORB_G2O_DIR  "${ORB_ROOT}/build/Thirdparty/g2o/lib")
 
@@ -139,6 +139,7 @@ endif()
 
 add_executable(stereo_inertial_sim_node
   src/stereo_inertial_sim_node.cpp
+  src/track_diag.cpp
   ${ORB_ROOT}/src/Px4Bridge.cc
 )
 

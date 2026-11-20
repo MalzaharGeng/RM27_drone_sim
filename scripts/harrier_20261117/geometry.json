@@ -1,0 +1,22 @@
+{
+  "world": "rm27_world",
+  "generated_by": "prepare_vio.py (measured CAD geometry)",
+  "spawn": {
+    "x": 14.149,
+    "y": 8.065,
+    "z": 0.504806301,
+    "yaw_deg": 0.0
+  },
+  "walls_inner_faces": {
+    "west": 0.349,
+    "east": 27.949,
+    "south": 0.264,
+    "north": 15.867
+  },
+  "ground_top_z": 0.4686563,
+  "rotor_envelope_m": 0.385971,
+  "note": "Envelope retains previous conservative x500 dynamics bound. Walls only; internal CAD obstacles collide physically.",
+  "hashes": {
+    "world": "30c80e98dd058ba2f75d126548402b18"
+  }
+}

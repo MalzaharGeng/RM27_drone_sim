@@ -5,7 +5,7 @@
 与旧 truth_odom_node 的区别（旧实现的三处缺陷都在这里修掉）：
 
 1. 按实体名选机，不用 transforms[0] / TF 下标。
-   实测 dynamic_pose/info 里 model 根节点名为 x500_mono_cam_0，其 position
+   实测 dynamic_pose/info 里 model 根节点名为 Drone-Harrier，其 position
    就是世界系（ENU）坐标；base_link/rotor_* 是相对 model 的局部坐标，不能混用。
 2. 速度由「源时间 sim 秒」差分得到，不用回调接收时刻差分。
    记录里同时保留 recv_wall_us / recv_mono_us，便于事后单独统计传输延迟，
@@ -70,7 +70,7 @@ def parse_pose_block(lines):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    ap.add_argument("--entity", default=os.environ.get("TRUTH_ENTITY", "x500_mono_cam_0"))
+    ap.add_argument("--entity", default=os.environ.get("TRUTH_ENTITY", "Drone-Harrier"))
     ap.add_argument("--topic", default=os.environ.get(
         "TRUTH_GZ_TOPIC", "/world/rm27_world/dynamic_pose/info"))
     ap.add_argument("--seconds", type=float, default=0.0, help="0 = 不限时")

@@ -146,6 +146,79 @@
         </material>
       </visual>
 
+
+      <!-- Exact static CAD triangle collisions, shared with the visuals.
+           No convex hull is applied to the arena. -->
+      <collision name="cad_arena_black"><geometry>
+          <mesh>
+            <uri>meshes/color_black.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_darkgrey"><geometry>
+          <mesh>
+            <uri>meshes/color_darkgrey.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_grey"><geometry>
+          <mesh>
+            <uri>meshes/color_grey.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_beige_a"><geometry>
+          <mesh>
+            <uri>meshes/color_beige_a.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_beige_b"><geometry>
+          <mesh>
+            <uri>meshes/color_beige_b.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_white"><geometry>
+          <mesh>
+            <uri>meshes/color_white.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_red"><geometry>
+          <mesh>
+            <uri>meshes/color_red.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_blue"><geometry>
+          <mesh>
+            <uri>meshes/color_blue.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_deepblue"><geometry>
+          <mesh>
+            <uri>meshes/color_deepblue.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
+      <collision name="cad_arena_cyan"><geometry>
+          <mesh>
+            <uri>meshes/color_cyan.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        </collision>
     </link>
   </model>
 </sdf>

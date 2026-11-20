@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Launch PX4 SITL (x500) inside the RM27 arena with Gazebo Jetty + WSLg GUI.
+# Launch PX4 SITL (Drone-Harrier / gz_x500_mono_cam) inside the RM27 arena with Gazebo Sim + WSLg GUI.
 #
 #   ./start_rm27_px4.sh                               # rm27_world (plain arena)
 #   PX4_GZ_WORLD=rm27_nav_world ./start_rm27_px4.sh   # arena + nav blocks
@@ -77,10 +77,10 @@ fi
 
 cd "$ROOT/PX4-Autopilot"
 echo "World: $PX4_GZ_WORLD | Pose: $PX4_GZ_MODEL_POSE"
-MODEL="${PX4_GZ_MODEL:-x500}"    # x500 | x500_mono_cam | x500_mono_cam_down | x500_depth
+MODEL="${PX4_GZ_MODEL:-x500_mono_cam}"  # make/airframe 名；Gazebo 实体名由 PX4_GZ_MODEL_NAME 指定
 # rm27_d435i 只是一个参考模型目录：PX4 的 gz_<name> make 目标是在 configure
 # 阶段按已知机型列表生成的，新建目录不会被识别。它的双目参数已经合并进
-# x500_mono_cam（50 mm 基线、1360x960@30、91.1° 视场），这里自动纠正。
+# x500_mono_cam（50 mm 基线、960x720@30、91.1° 视场），这里自动纠正。
 if [[ "$MODEL" == "rm27_d435i" ]]; then
   echo "提示：rm27_d435i 没有对应的 make 目标，自动改用 x500_mono_cam（同一套双目参数）"
   MODEL=x500_mono_cam
@@ -99,13 +99,13 @@ if [[ -f "$NINJA" ]] && ! grep -q "gz_$MODEL\b" "$NINJA"; then
 fi
 echo "Model: $MODEL"
 case "$MODEL" in
-  x500_mono_cam)      W="/world/${PX4_GZ_WORLD:-rm27_world}/model/$MODEL/link"
-                      echo "Stereo LEFT : $W/cam_left_link/sensor/cam_left/image   (1360x960@30, 平视)"
+  x500_mono_cam)      W="/world/${PX4_GZ_WORLD:-rm27_world}/model/${PX4_GZ_MODEL_NAME:-Drone-Harrier}/link"
+                      echo "Stereo LEFT : $W/cam_left_link/sensor/cam_left/image   (960x720@30, HFOV 1.590, 基线 50 mm, 平视)"
                       echo "Stereo RIGHT: $W/cam_right_link/sensor/cam_right/image" ;;
   x500_mono_cam_down) echo "Camera topic: /world/${PX4_GZ_WORLD:-rm27_world}/model/$MODEL/link/camera_link/sensor/imager/image  (1270x960@30, 朝下)" ;;
   x500_depth)         W="/world/${PX4_GZ_WORLD:-rm27_world}/model/$MODEL/link/camera_link/sensor"
                       echo "RGB   topic: $W/IMX214/image          (1920x1080@30, 平视)"
                       echo "Depth topic: $W/depth_camera/image    + /depth_image  (640x480@30)" ;;
 esac
-echo "提示：PX4 生成的实例名常带 _0 后缀，实际话题以 gz topic -l | grep cam_left 为准"
+echo "提示：PX4_GZ_MODEL_NAME=${PX4_GZ_MODEL_NAME:-Drone-Harrier}，gz_bridge 直接 attach 到该实体；话题以 gz topic -l | grep cam_left 为准"
 exec make px4_sitl "gz_$MODEL"

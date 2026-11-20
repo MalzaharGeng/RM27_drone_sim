@@ -34,7 +34,7 @@
       <specular>0.2 0.2 0.2 1</specular>
     </light>
 
-    <!-- 场地视觉由文件末尾的 model://rmuc_2027 include 提供 -->
+    <!-- 场地视觉见文件末尾 model://rmuc_2027 官方 CAD 分色模型 -->
 
     <include>
       <uri>model://nav_obstacles</uri>
@@ -99,26 +99,17 @@
         </collision>
       </link>
     </model>
-
-  
-      <!-- 场地视觉：model://rmuc_2027 内是官方 STP 转出的四块纯色网格，
-           不再使用贴图或 UV。碰撞仍由上面的 arena_ground / arena_walls 提供。 -->
+    <!-- ===== RMUC 2027 官方 CAD 分色模型（最终成品） 2026-11-16 =====
+         使用 model://rmuc_2027：官方 STP 逐面颜色聚类的三维网格
+         （米色地面 + 黑色功能区 + 蓝/红描边线条），保留完整三维结构。
+         人为 ORB 贴片 arena_texture_patches 与俯视贴图 arena_textured 均停用。
+         物理碰撞仍由 arena_ground / arena_walls / base_landing_pad 提供，未改动。 -->
     <include>
       <uri>model://rmuc_2027</uri>
       <name>rmuc_2027</name>
       <pose>0 0 0 0 0 0</pose>
     </include>
-    <!-- Visual texture decals for ORB-SLAM3 feature extraction.
-         Purely visual (no collision), does NOT modify rmuc_2027 or any
-         existing model/geometry. Delete this whole block to revert;
-         backup: <world>.sdf.bak_before_texture_20261111 -->
-    <include>
-      <uri>model://arena_texture_patches</uri>
-      <name>arena_texture_patches</name>
-      <pose>0 0 0 0 0 0</pose>
-    </include>
-
-    <!-- Landing-gear contact pad: COLLISION ONLY, no visual.
+<!-- Landing-gear contact pad: COLLISION ONLY, no visual.
          The visible arena floor along the launch/landing corridor is z~0.265,
          but arena_ground's collision plane is z=0.019, so the gear used to
          sink ~0.25 m into the floor. This raises the physical contact surface
@@ -134,5 +125,13 @@
       </link>
     </model>
 
+    <!-- ===== Drone-Harrier (Gabel airframe, PX4 attaches via PX4_GZ_MODEL_NAME) =====
+         uri keeps x500_mono_cam (hardware params / make target), instance renamed to
+         Drone-Harrier. Sensors: cam_left/cam_right, imu, mag, baro, navsat unchanged. -->
+    <include>
+      <uri>model://x500_mono_cam</uri>
+      <name>Drone-Harrier</name>
+      <pose>14.149 8.065 0.019 0 0 0</pose>
+    </include>
   </world>
 </sdf>

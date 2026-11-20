@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <sdf version="1.9">
   <world name="rm27_world">
     <!-- 渲染传感器（相机/深度）必须由 Sensors 系统驱动，否则 model 里的
@@ -35,7 +35,7 @@
       <specular>0.2 0.2 0.2 1</specular>
     </light>
 
-    <!-- 场地视觉由文件末尾的 model://rmuc_2027 include 提供 -->
+    <!-- 场地视觉见文件末尾 model://rmuc_2027 官方 CAD 分色模型 -->
 
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
@@ -82,54 +82,26 @@
       </link>
     </model>
 
-    <!-- The arena mesh has no collision, so its raised base platform near the
-         far (enemy) base is invisible to physics. This pad matches the visible
-         platform top (z=0.318) under base_far_front, so the drone lands on it
-         instead of sinking through the visual floor. -->
-    <model name="base_landing_pad">
-      <static>true</static>
-      <pose>24.7 8.0 0.169 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry><box><size>2.0 2.0 0.3</size></box></geometry>
-        </collision>
-      </link>
-    </model>
-
-  
-      <!-- 场地视觉：model://rmuc_2027 内是官方 STP 转出的四块纯色网格，
-           不再使用贴图或 UV。碰撞仍由上面的 arena_ground / arena_walls 提供。 -->
+    <!-- Official CAD collision surfaces are supplied by model://rmuc_2027. -->
+<!-- ===== RMUC 2027 官方 CAD 分色模型（最终成品） 2026-11-16 =====
+         使用 model://rmuc_2027：官方 STP 逐面颜色聚类的三维网格
+         （米色地面 + 黑色功能区 + 蓝/红描边线条），保留完整三维结构。
+         人为 ORB 贴片 arena_texture_patches 与俯视贴图 arena_textured 均停用。
+         静态碰撞由同一份官方 CAD 网格提供；arena_ground / arena_walls 保留边界兜底。 -->
     <include>
       <uri>model://rmuc_2027</uri>
       <name>rmuc_2027</name>
       <pose>0 0 0 0 0 0</pose>
     </include>
-    <!-- Visual texture decals for ORB-SLAM3 feature extraction.
-         Purely visual (no collision), does NOT modify rmuc_2027 or any
-         existing model/geometry. Delete this whole block to revert;
-         backup: rm27_world.sdf.bak_before_texture_20261111 -->
+<!-- Legacy launch pad removed: the CAD mesh supplies the actual contact. -->
+<!-- ===== Drone-Harrier (Gabel airframe, PX4 attaches via PX4_GZ_MODEL_NAME) =====
+         uri keeps x500_mono_cam (hardware params / make target), instance renamed to
+         Drone-Harrier. Sensors: cam_left/cam_right, imu, mag, baro, navsat unchanged. -->
     <include>
-      <uri>model://arena_texture_patches</uri>
-      <name>arena_texture_patches</name>
-      <pose>0 0 0 0 0 0</pose>
+      <uri>model://x500_mono_cam</uri>
+      <name>Drone-Harrier</name>
+      <pose>14.149 8.065 0.504806301 0 0 0</pose>
     </include>
-
-    <!-- Landing-gear contact pad: COLLISION ONLY, no visual.
-         The visible arena floor along the launch/landing corridor is z~0.265,
-         but arena_ground's collision plane is z=0.019, so the gear used to
-         sink ~0.25 m into the floor. This raises the physical contact surface
-         to the visible floor without changing any mesh or appearance.
-         Delete this block to revert; backup: *.bak_before_ground_fix_20261111 -->
-    <model name="launch_ground_pad">
-      <static>true</static>
-      <pose>7.5 6.0 0.13 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry><box><size>9.0 6.0 0.27</size></box></geometry>
-        </collision>
-      </link>
-    </model>
-
   </world>
 </sdf>
 

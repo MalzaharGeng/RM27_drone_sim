@@ -15,7 +15,7 @@
     python3 nudge_drone.py                          # 沿 +x 平移 2 m，约 10 s
     python3 nudge_drone.py --axis y --dist -2       # 沿 -y 平移 2 m
     python3 nudge_drone.py --dist 1 --duration 5 --hz 20
-    python3 nudge_drone.py --model x500_mono_cam_0 --world rm27_world --start 5 6 0.5
+    python3 nudge_drone.py --model Drone-Harrier --world rm27_world --start 5 6 0.5
 """
 import argparse
 import subprocess
@@ -42,7 +42,7 @@ def set_pose(world, model, x, y, z):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--world', default='rm27_world')
-    ap.add_argument('--model', default='x500_mono_cam_0')
+    ap.add_argument('--model', default='Drone-Harrier')
     ap.add_argument('--start', nargs=3, type=float, default=[5.0, 6.0, 0.5],
                     metavar=('X', 'Y', 'Z'), help='起始位姿（与 PX4_GZ_MODEL_POSE 一致）')
     ap.add_argument('--axis', choices=['x', 'y', 'z'], default='x')

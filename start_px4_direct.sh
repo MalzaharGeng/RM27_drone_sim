@@ -40,8 +40,16 @@ if [[ -x "$AGENT_BIN" ]] && ! pgrep -f "MicroXRCEAgent.*udp4" >/dev/null 2>&1; t
 fi
 
 cd "$BUILD/src/modules/simulation/gz_bridge" || exit 1
+
+# [PX4-STDIN] PX4 的交互 shell (pxh) 在 stdin 立即 EOF 时会空转：实测 40 s 写出
+# 2200 万行 "pxh> "，CPU 被打满，PX4 自己的模块线程被饿死 —— 表现是 EKF2 /
+# commander / sensors 全都不出 uORB 数据，飞手看到 no_height_feedback(0)、
+# MAVLink 只收到心跳、ROS 侧 /fmu/out/* 话题存在但零消息。
+# 用一个长眠进程把 stdin 读端一直撑开（它不产生任何字节），pxh 就只打印一次提示。
+# 不能用 </dev/null（同样立即 EOF），也不能用 </dev/zero（会读进无穷 NUL 字符）。
+exec 3< <(sleep 86400)
 exec /usr/bin/cmake -E env \
   PX4_SIM_MODEL="$SIM_MODEL" \
   PX4_GZ_WORLD="$PX4_GZ_WORLD" \
   GZ_IP=127.0.0.1 \
-  "$BUILD/bin/px4"
+  "$BUILD/bin/px4" <&3

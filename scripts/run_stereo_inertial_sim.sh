@@ -96,6 +96,26 @@ echo "LEFT : $LEFT"
 echo "RIGHT: $RIGHT"
 echo "IMU  : $IMU"
 
+# ROS 2 话题名只允许 [A-Za-z0-9_~{}]；Gazebo 实体名（如 Drone-Harrier）里的连字符会
+# 原样出现在 gz 话题中，若直接当 ROS 话题名，rcl 会在节点启动时抛
+#   Invalid topic name: ... 'Drone-Harrier' ...
+# 并让 stereo_inertial_sim_node 立即退出。且 rcl 的 remap 规则同样受该词法限制，
+# 所以不能用 -r 绕过。
+# 解法：gz 侧保留实体原名（不改实体名、不改 world），ROS 侧统一把非法字符换成
+# 下划线，再用 ros_gz_bridge 的 YAML 配置（config_file 参数）做双向映射。
+sanitize_ros_topic() {
+  local t="$1"
+  t="${t//-/_}"
+  t="${t// /_}"
+  printf '%s' "$t"
+}
+LEFT_ROS=$(sanitize_ros_topic "$LEFT")
+RIGHT_ROS=$(sanitize_ros_topic "$RIGHT")
+IMU_ROS=$(sanitize_ros_topic "$IMU")
+echo "LEFT (ROS) : $LEFT_ROS"
+echo "RIGHT(ROS) : $RIGHT_ROS"
+echo "IMU  (ROS) : $IMU_ROS"
+
 BRIDGE_PID=""
 cleanup() {
   [[ -n "$BRIDGE_PID" ]] && kill "$BRIDGE_PID" 2>/dev/null
@@ -104,18 +124,38 @@ trap cleanup EXIT INT TERM
 
 # /clock 必须桥接：节点用它把 gz sim time 映射到 epoch µs，再交给 Px4Bridge 的
 # SensorClock。没有 /clock 时节点会退化为「首帧时刻」对齐，跨时钟域验收不成立。
-BRIDGE_ARGS=(
-  "$LEFT@sensor_msgs/msg/Image[gz.msgs.Image"
-  "$RIGHT@sensor_msgs/msg/Image[gz.msgs.Image"
-  "$IMU@sensor_msgs/msg/Imu[gz.msgs.IMU"
-  "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"
-)
+# 桥接配置走 YAML（ros_gz_bridge 的 config_file 参数），这样才能让
+# gz_topic_name 带连字符、ros_topic_name 带下划线，二者不同名。
+# 旧写法 "$TOPIC@ros_type[gz_type" 强制 ROS 话题名 == gz 话题名，无法改名。
+# 按用户区分，避免 root 与普通用户互抢同一文件（曾因属主 root 导致 ": >" 写失败）
+BRIDGE_YAML="${BRIDGE_YAML:-/tmp/rm27_bridge_inertial.${USER:-$(id -u)}.yaml}"
+
+yaml_add() {  # $1=ros topic  $2=gz topic  $3=ros type  $4=gz type
+  {
+    printf -- '- ros_topic_name: "%s"\n' "$1"
+    printf -- '  gz_topic_name: "%s"\n'  "$2"
+    printf -- '  ros_type_name: "%s"\n'  "$3"
+    printf -- '  gz_type_name: "%s"\n'   "$4"
+    printf -- '  direction: GZ_TO_ROS\n'
+  } >> "$BRIDGE_YAML"
+}
+
+: > "$BRIDGE_YAML"
+yaml_add "$LEFT_ROS"  "$LEFT"  "sensor_msgs/msg/Image" "gz.msgs.Image"
+yaml_add "$RIGHT_ROS" "$RIGHT" "sensor_msgs/msg/Image" "gz.msgs.Image"
+yaml_add "$IMU_ROS"   "$IMU"   "sensor_msgs/msg/Imu"   "gz.msgs.IMU"
+yaml_add "/clock"     "/clock" "rosgraph_msgs/msg/Clock" "gz.msgs.Clock"
 
 # 真值位姿（供 accuracy 评估/对照使用）
 WORLD_PREFIX="${LEFT%%/model/*}"
 TRUTH_TOPIC="$WORLD_PREFIX/dynamic_pose/info"
-if gz topic -l 2>/dev/null | grep -qx "$TRUTH_TOPIC"; then
-  BRIDGE_ARGS+=("$TRUTH_TOPIC@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V")
+if [[ "${BRIDGE_SKIP_TRUTH:-0}" == "1" ]]; then
+  # 由上层（run_profile.sh）独占真值桥，保证同一 ROS 话题只有一个发布者，
+  # 且监督器的输入不随 VIO 节点存活与否而消失。
+  echo "TRUTH: 跳过（BRIDGE_SKIP_TRUTH=1，真值桥由 run_profile.sh 负责）"
+elif gz topic -l 2>/dev/null | grep -qx "$TRUTH_TOPIC"; then
+  yaml_add "$(sanitize_ros_topic "$TRUTH_TOPIC")" "$TRUTH_TOPIC" \
+           "tf2_msgs/msg/TFMessage" "gz.msgs.Pose_V"
   echo "TRUTH: $TRUTH_TOPIC"
 else
   echo "TRUTH: (未找到 $TRUTH_TOPIC)"
@@ -123,9 +163,11 @@ fi
 
 if [[ "$WITH_BRIDGE" == "1" ]]; then
   echo "--- 启动 ros_gz_bridge ---"
-  BRIDGE_LOG=/tmp/rm27_bridge_inertial.log
+  BRIDGE_LOG=/tmp/rm27_bridge_inertial.${USER:-$(id -u)}.log
   : > "$BRIDGE_LOG"
-  ros2 run ros_gz_bridge parameter_bridge "${BRIDGE_ARGS[@]}" >"$BRIDGE_LOG" 2>&1 &
+  echo "    bridge yaml: $BRIDGE_YAML"
+  ros2 run ros_gz_bridge parameter_bridge \
+    --ros-args -p config_file:="$BRIDGE_YAML" >"$BRIDGE_LOG" 2>&1 &
   BRIDGE_PID=$!
 
   bridge_ok=0
@@ -135,7 +177,7 @@ if [[ "$WITH_BRIDGE" == "1" ]]; then
       sed 's/^/   /' "$BRIDGE_LOG" >&2
       exit 1
     fi
-    if timeout 6 ros2 topic list --no-daemon 2>/dev/null | grep -qxF "$LEFT"; then
+    if timeout 6 ros2 topic list --no-daemon 2>/dev/null | grep -qxF "$LEFT_ROS"; then
       bridge_ok=1
       break
     fi
@@ -143,7 +185,7 @@ if [[ "$WITH_BRIDGE" == "1" ]]; then
   done
 
   if [[ "$bridge_ok" == "1" ]]; then
-    pubs=$(timeout 6 ros2 topic info --no-daemon "$LEFT" 2>/dev/null | awk -F': ' '/Publisher count/{print $2}')
+    pubs=$(timeout 6 ros2 topic info --no-daemon "$LEFT_ROS" 2>/dev/null | awk -F': ' '/Publisher count/{print $2}')
     echo "bridge 就绪 | ROS 话题可见 | publisher=${pubs:-?}"
   else
     echo "提示：ROS 侧暂时看不到相机话题（可能是 ros2 daemon 或 DDS 发现问题）。"
@@ -198,9 +240,9 @@ else
   NODE_CMD=(ros2 run rm27_slam stereo_inertial_sim_node)
 fi
 "${NODE_CMD[@]}" --ros-args \
-  -p left_topic:="$LEFT" \
-  -p right_topic:="$RIGHT" \
-  -p imu_topic:="$IMU" \
+  -p left_topic:="$LEFT_ROS" \
+  -p right_topic:="$RIGHT_ROS" \
+  -p imu_topic:="$IMU_ROS" \
   -p clock_topic:="/clock" \
   -p vocab_file:="$ORB_ROOT/Vocabulary/ORBvoc.txt" \
   -p settings_file:="${ORB_SETTINGS_FILE:-$ORB_ROOT/config/RM27_Sim_IMU_Stereo.yaml}" \

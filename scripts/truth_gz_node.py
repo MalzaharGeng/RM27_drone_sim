@@ -138,7 +138,7 @@ class TruthGzNode(Node):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--entity", default=os.environ.get("TRUTH_ENTITY", "x500_mono_cam_0"))
+    ap.add_argument("--entity", default=os.environ.get("TRUTH_ENTITY", "Drone-Harrier"))
     ap.add_argument("--topic", default=os.environ.get(
         "TRUTH_GZ_TOPIC", "/world/rm27_world/dynamic_pose/info"))
     args = ap.parse_args()

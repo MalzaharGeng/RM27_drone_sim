@@ -44,7 +44,7 @@ class TruthAdapter(Node):
 
 def main():
     rclpy.init()
-    n = TruthAdapter('x500_mono_cam_0')
+    n = TruthAdapter('Drone-Harrier')
     try:
         rclpy.spin(n)
     except KeyboardInterrupt:

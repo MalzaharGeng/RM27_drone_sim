@@ -49,3 +49,8 @@ wb_handoff_*/**/bin/
 wb_handoff_*/**/frozen/
 wb_handoff_*/**/candidate/
 wb_handoff_*/**/prechange/
+
+# 独立候选的运行输出与本机分析目录
+/analysis/
+/backups/
+/experiments/*/runs/

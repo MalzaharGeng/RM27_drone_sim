@@ -1,0 +1,22 @@
+{
+  "world": "rm27_harrier_vio_world",
+  "generated_by": "prepare_vio.py (measured CAD geometry)",
+  "spawn": {
+    "x": 8,
+    "y": 10,
+    "z": 0.307146,
+    "yaw_deg": 0
+  },
+  "walls_inner_faces": {
+    "west": 0.349,
+    "east": 27.949,
+    "south": 0.264,
+    "north": 15.867
+  },
+  "ground_top_z": 0.267996,
+  "rotor_envelope_m": 0.385971,
+  "note": "Envelope retains previous conservative x500 dynamics bound. Walls only; internal CAD obstacles collide physically.",
+  "hashes": {
+    "world": "ff6ad9dc55944b21158b6465e01de0a6"
+  }
+}

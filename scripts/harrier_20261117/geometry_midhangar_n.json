@@ -1,0 +1,22 @@
+{
+  "world": "rm27_midhangar_n_world",
+  "generated_by": "prepare_vio.py (measured CAD geometry)",
+  "spawn": {
+    "x": 6.8,
+    "y": 8.05,
+    "z": 0.5049,
+    "yaw_deg": 90.0
+  },
+  "walls_inner_faces": {
+    "west": 0.349,
+    "east": 27.949,
+    "south": 0.264,
+    "north": 15.867
+  },
+  "ground_top_z": 0.4687,
+  "rotor_envelope_m": 0.385971,
+  "note": "Official CAD MIDDLE hangar (left hex pad). User-authorized change: spawn yaw 0->90 deg ENU so the measured open-loop excitation drift (body-right, previously south short axis) maps to the east long axis. Wall warn/stop restored to ORIGINAL 2.0/1.2 m. Only truth displacement limits raised 6.5->12.0 m (user authorized) for the VIBA2 re-stabilization window. No arena geometry/STL/hardware changed.",
+  "hashes": {
+    "world": "3f0596560678d844debc78e710744d97"
+  }
+}

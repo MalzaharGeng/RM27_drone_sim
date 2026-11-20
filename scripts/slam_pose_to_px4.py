@@ -121,7 +121,7 @@ def main():
     ap.add_argument('--slam-topic', default='/slam/pose')
     # gz Pose_V 桥成 TFMessage 后，ROS 话题名沿用 gz 话题名
     ap.add_argument('--tf-topic', default='/world/rm27_world/dynamic_pose/info')
-    ap.add_argument('--model', default='x500_mono_cam', help='真值 TF 里的机型名')
+    ap.add_argument('--model', default='Drone-Harrier', help='真值 TF 里的机型名')
     ap.add_argument('--origin', nargs=3, type=float, default=[5.0, 6.0, 0.5],
                     metavar=('E', 'N', 'U'), help='起飞点 ENU（PX4_GZ_MODEL_POSE）')
     ap.add_argument('--yaw0', type=float, default=90.0,

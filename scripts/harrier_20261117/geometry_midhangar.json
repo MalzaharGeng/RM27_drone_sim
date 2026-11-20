@@ -1,0 +1,22 @@
+{
+  "world": "rm27_midhangar_world",
+  "generated_by": "prepare_vio.py (measured CAD geometry)",
+  "spawn": {
+    "x": 6.8,
+    "y": 8.05,
+    "z": 0.5049,
+    "yaw_deg": 0
+  },
+  "walls_inner_faces": {
+    "west": 0.349,
+    "east": 27.949,
+    "south": 0.264,
+    "north": 15.867
+  },
+  "ground_top_z": 0.4687,
+  "rotor_envelope_m": 0.385971,
+  "note": "Official CAD field MIDDLE hangar (left hex pad, red mark). Flat top z=0.4687, net wall clearance 6.065m. +X mission corridor clear x=9..14 at y=4..8. User-authorized threshold change: SUP_MAX_XY_INIT 6.5->9.0 to allow the post-VIBA2 re-stabilization window; wall STOP 1.2m and warn 2.0m unchanged. No arena geometry/STL/hardware changed.",
+  "hashes": {
+    "world": "9dbb6d06e3e0879054bd8f4a299cc657"
+  }
+}

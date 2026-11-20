@@ -186,7 +186,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--log", required=True)
     ap.add_argument("--tf-topic", default="/world/rm27_world/dynamic_pose/info")
-    ap.add_argument("--model", default="x500_mono_cam")
+    ap.add_argument("--model", default="Drone-Harrier")
     ap.add_argument("--origin", nargs=3, type=float, default=[5.0, 6.0, 0.5])
     ap.add_argument("--topic-prefix", default="")
     args = ap.parse_args()
