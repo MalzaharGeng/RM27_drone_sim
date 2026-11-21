@@ -1,8 +1,8 @@
 # PX4 源码与构建
 
-`PX4-Autopilot/` 收录地面翻正分支的完整已跟踪源码快照，共 13210 个普通文件；源码身份为 `8313a4a342374d867518e8b4de97cfdabecfe7c0`，翻正基底为 `60889745af001515a62872420de2d32fb602803b`，上游版本为 v1.17.0。29 个外部依赖按原提交固定在仓库根 `.gitmodules`；不是仅保存补丁或一个仓库链接。
+`PX4-Autopilot/` 收录基于 [PX4-Autopilot v1.17.0](https://github.com/PX4/PX4-Autopilot) 的完整源码快照。地面翻正代码源于 [natgeng/PX4-MicoAir743v2-AIO 的 `feat/flip-recovery` 分支](https://github.com/natgeng/PX4-MicoAir743v2-AIO/tree/feat/flip-recovery)，本仓库补入的功能列于 [翻正实现与改动](PX4_FLIP_RECOVERY.md)。
 
-原始子模块 SHA 与来源见 [清单](PX4_SOURCE_MANIFEST.json)。上游自带的文档、许可证、示例数据和测试源码一并保留；本机构建、参数缓存和设备产物不进入源码快照。
+快照含 13,210 个普通文件和 29 个按版本固定的子模块。源码身份、子模块来源和版本见 [源码清单](PX4_SOURCE_MANIFEST.json)。快照保留上游文档、许可证、示例及测试；本机构建产物和设备参数不属于快照。
 
 ## 翻正相关目录
 
@@ -17,14 +17,13 @@
 | `msg/FlipRecovery*.msg` | 控制请求和执行结果 |
 | `test/flip_recovery/` | 真实 C++ 规划器、时序和混控回归 |
 
-这些路径均相对于 `PX4-Autopilot/`。完整接入行为见 [翻正接入说明](../PX4-Autopilot/docs/flip-recovery/INTEGRATION-20261120.md)，按日期变化的结果放在 [回正验证记录](verification/flip_recovery_20261120/README.md)。实机 DShot 路径与 Gazebo 输出路径分别维护，仿真不代表电调实测。
+表中路径均相对于 `PX4-Autopilot/`。DShot 实机路径与 Gazebo 试验桥分开维护；SITL 参数、试验方法和结论见 [地面翻正验证](verification/flip_recovery_20261121/README.md)。
 
 ## 独立构建树
 
-PX4 原生 Makefile 要求其源码根存在独立 `.git`，不能直接在嵌入 drone-sim 的快照目录运行 `make`。导出工具从本仓库的已跟踪快照生成独立构建源码，并重建原子模块索引；不会覆盖现有目录。
+PX4 原生 Makefile 要求源码根具有独立 Git 元数据。导出工具从本仓库的快照生成独立源码树并重建子模块索引，目标目录必须是新目录。在本仓库根目录执行：
 
 ```bash
-cd ~/drone_sim
 python3 tools/px4/create_build_tree.py \
   --output "$HOME/rm27_px4_source" --submodules
 cd ~/rm27_px4_source
@@ -36,6 +35,6 @@ make px4_sitl_default
 bash test/flip_recovery/run_host_tests.sh
 ```
 
-导出树的 Git commit 是本机生成的快照版本；原始源码 SHA 记录在 `SOURCE_REVISION.json`，不得将二者混为同一历史提交。依赖按清单中的 SHA 初始化，首次操作需要下载。板级构建另需相应 ARM 工具链。
+导出树的源码身份以 `SOURCE_REVISION.json` 为准。子模块按清单固定的版本初始化，首次操作需要下载。板级构建另需 ARM 工具链。
 
-本次测试复用了具有相同核心源码的既有 WSL 构建；新导出树只完成源码和索引核验，未另做一次全量板级编译。原场地 VIO 使用的 PX4 参数与本翻正模式试验不同，不能直接复用参数快照。
+翻正动力学验证复用既有 WSL 构建，在独立 SITL 树应用 Gazebo 试验补丁。Harrier 原场地 VIO 使用独立的 PX4 参数配置。

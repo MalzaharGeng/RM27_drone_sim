@@ -33,9 +33,9 @@ Fallback
 
 “立即”指接收回调或下一个 50ms tick 撤销，没有硬实时保证；物理开关到 DDS 的延迟及飞控模式切换延迟需实测。已发送、尚在传输的包无法撤回，PX4 实际退出 Offboard 后应忽略其轨迹。接管/失效撤销后不再预发心跳；要执行新任务，重新启动脚本，并让程序看到一次非 Offboard 模式和未选中的开关。
 
-## 为什么 Altitude/Position 下有心跳
+## Altitude 与 Position 模式中的 Offboard 预发送
 
-PX4 要求进入 Offboard 前持续接收超过约 1 秒的控制存活信号。如果严格等实际 Offboard 才发送心跳，会永远进不去。这里仅预发 `OffboardControlMode(position=True)`；不发轨迹，不请求切模式，不解锁。该消息本身不会让 Altitude/Position 的飞机执行行为树。飞手退出后连这个心跳也停止。
+PX4 在切入 Offboard 前要求连续接收约 1 秒以上的控制存活信号。Altitude 和 Position 模式仅预发送 `OffboardControlMode(position=True)`，轨迹目标、切换模式和解锁均由各自条件控制。预发送消息本身不触发行为树，飞手退出后停止发送。
 
 2026-11-08 更新：条件持续满足、20Hz 心跳连续预流 1.2s 后，程序输出 `OFFBOARD READY`，状态话题置 `offboard_ready=true`。看到提示后再拨 Offboard。提前拨动不会延迟自动启动，需要切回非 Offboard，等提示再拨。正常选择后最多等待实际 Offboard 3s，期间维持心跳；超时后要求重新拨杆。循环间隔超过 0.2s 会重置预流准备状态。
 

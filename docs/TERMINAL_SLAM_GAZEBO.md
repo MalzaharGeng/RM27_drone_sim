@@ -24,7 +24,7 @@
 
 ---
 
-## 1. 之前改了什么，为什么
+## 1. 场地联调与坐标修正
 
 ### 1.1 根因：Gazebo 是 ENU，PX4 是 NED
 
@@ -101,7 +101,7 @@ PX4 的 gz 桥在 `PX4-Autopilot/src/modules/simulation/gz_bridge/GZBridge.cpp` 
 
 ### 1.6 避障和安全中断
 
-避障不是靠机载传感器，而是靠已知地图：
+该演示根据预置场地障碍图规划航线：
 
 - `scripts/obstacles_rm27.json`：导航世界用的障碍
 - `scripts/obstacles_rm27_plain.json`：纯场地用的障碍（只有围栏和中央高地）
@@ -156,7 +156,7 @@ glxinfo -B | grep -E "Device|Accelerated"
 
 ### 2.2 两种跑法
 
-**一键跑完（起仿真 → 飞 → 关仿真）**
+**启动仿真、执行航点任务并回收进程**
 
 ```bash
 cd ~/drone_sim
@@ -914,9 +914,9 @@ gz sim -r --physics-engine gz-physics-dartsim-plugin \
 
 - **世界必须同步到 PX4 的 worlds 目录**：PX4 只认 `PX4-Autopilot/Tools/simulation/gz/worlds/<world>.sdf`
 - **模型必须能被 `GZ_SIM_RESOURCE_PATH` 找到**：PX4 会覆盖这个变量，所以要把 `rm27_sim/models/*` 软链到 PX4 的 models 目录
-- **不要无脑 `cp` 硬链接文件**：`rm27_world.sdf` 可能是硬链接，`cp` 会报 `are the same file`
+- **世界文件同步**：复制 `rm27_world.sdf` 前确认源和目标不是同一 inode。同一文件的两个硬链接会使 `cp` 报 `are the same file`。
 - **WSLg 的 OpenGL**：必须 `source env.sh`，否则可能选到 AMD 核显或 llvmpipe
-- **GUI 卡顿**：先关 shadows、降分辨率，或改用 `-s` 无界面跑数据
+- **GUI 渲染负载**：关闭阴影或降低分辨率；采集数据时可用 `-s` 启动无界面服务端。
 - **重置后 PX4 状态不一致**：世界重置不等于飞控重置；干净重来请重启仿真
 
 ---
@@ -927,8 +927,8 @@ gz sim -r --physics-engine gz-physics-dartsim-plugin \
 |---|---|---|
 | `env.sh` | 渲染、ROS、世界、出生点环境变量 | `source ./env.sh` |
 | `start_rm27_px4.sh` | 同步世界/模型，预检 GPU，启动 PX4 SITL + Gazebo | `PX4_GZ_WORLD=rm27_world ./start_rm27_px4.sh` |
-| `stop_sim.sh` | 杀掉 PX4、gz-sim 残留进程 | `./stop_sim.sh` |
-| `scripts/run_nav_demo.sh` | 一键起仿真、飞任务、关仿真 | `./scripts/run_nav_demo.sh --enemy-base --hold 3` |
+| `stop_sim.sh` | 结束 PX4 与 Gazebo 仿真进程 | `./stop_sim.sh` |
+| `scripts/run_nav_demo.sh` | 启动仿真、执行导航任务并结束仿真 | `./scripts/run_nav_demo.sh --enemy-base --hold 3` |
 | `scripts/rm27_nav.py` | 带避障的航点任务主程序 | `python3 scripts/rm27_nav.py --enemy-base --hold 3` |
 | `scripts/nav_planner.py` | 纯标准库 A* 规划器、ENU→NED 换算 | 被 `rm27_nav.py` 调用 |
 | `scripts/rm27_waypoints.py` | 最早的方形航点示例，无避障 | `python3 scripts/rm27_waypoints.py` |
@@ -946,10 +946,10 @@ gz sim -r --physics-engine gz-physics-dartsim-plugin \
 ```bash
 cd ~/drone_sim
 
-# 1. 先规划，不碰仿真
+# 1. 离线生成航线
 python3 scripts/rm27_nav.py --enemy-base --dry-run
 
-# 2. 一键飞敌方基地
+# 2. 执行远端基地仿真任务
 PX4_GZ_WORLD=rm27_world ./scripts/run_nav_demo.sh --enemy-base --hold 3
 
 # 3. 分步跑时，终端 B 的命令

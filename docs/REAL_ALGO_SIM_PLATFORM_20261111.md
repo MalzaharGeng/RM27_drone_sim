@@ -5,7 +5,7 @@
 授权边界：只改本机；未写 Nano、未推送 GitHub、未改 ORB-SLAM3 算法源码、未改
 `pilot_authority.py` 的 `LIMITS`/`SAMPLE_LIMITS` 数值。
 
-## 1. 这次改了什么
+## 1. 双目惯性链路变更
 
 旧链路是「STEREO（无 IMU）+ `/slam/pose` + MAVLink 注入 + `sim_vio_health.py` 仿真桩」。
 它验证的是行为树流程，但 `/vio/navigation_health` 是仿真侧适配器伪造的，不能代表实机门控。
@@ -142,7 +142,7 @@ python3 sim_pilot.py --log /tmp/pilot.csv --excite-seconds 20 \
   要求上锁才能恢复**。因此节点只在真正的时钟域跳变时才 `ResetActiveMap()`；任何
   未解锁阶段的重置都只是重新建系。
 
-## 6. 怎么判断它真的在工作
+## 6. 运行观测量与验证判据
 
 `stereo_inertial_sim_node` 每 3 秒打印 `[stat]`，每秒打印 `[VIO_PERF]`：
 
