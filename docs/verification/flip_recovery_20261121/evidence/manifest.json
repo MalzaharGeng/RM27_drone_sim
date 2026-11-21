@@ -1,0 +1,73 @@
+{
+  "commit": "8313a4a342374d867518e8b4de97cfdabecfe7c0",
+  "branch": "codex/flip-sitl-reversible-bridge",
+  "worktree_status": [
+    " M src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp",
+    " M src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp"
+  ],
+  "gz_models_commit": "b6127f4ec20de867e215fb5f78ae88b80f371909",
+  "gz_version": "10.5.0",
+  "sha256": {
+    "build/px4_sitl_default/bin/px4": "352359abadd803da70248c29b1fbc7a20fdc5d600d1cfe72df20c9c00d9aaa75",
+    "Tools/simulation/gz/worlds/default.sdf": "457a363a22c437b788a4aaf1e2335aa149efce4e5b988cdc108065663cd879b2",
+    "Tools/simulation/gz/models/x500/model.sdf": "cfe92f98360967faa895b77aa8a6fff3fc9b290286e94e45297c4bdd7b62fbf9",
+    "Tools/simulation/gz/models/x500_base/model.sdf": "e807dca3406f7cd5cb3d545898601c3ec17e0e5242e25cf467a69df1812cf436",
+    "src/modules/flip_recovery/FlipRecovery.cpp": "0c4d9417b863cf0d6f1f7d1799e60f150b92650fe79a22c970f3fe55a8e09aab",
+    "src/lib/flip_recovery/FlipPlanner.hpp": "a1317e87cd3d6c4956017c5f405f0c2d2976b1e585859bfc79855110a352d40d",
+    "src/lib/flip_recovery/DirectionSequencer.hpp": "483836a7d95bde54fc0eab9729337f66d6a2fd243b83f9f8c515b08b08a8fafd",
+    "sitl_bridge.diff": "103b57db24f682e56926922238bfad1f217f92dbfeceddbf70f4a00acc2a8a5d"
+  },
+  "cases": [
+    {
+      "batch": "confirm1",
+      "trial": "same_recheck_default",
+      "artifacts": {
+        "confirm1/same_recheck_default/meta.json": "5da87752c2c516e2e89404f75d79a91757febccea429a6a71705f5e7c3e06395",
+        "confirm1/same_recheck_default/truth.csv": "34409db200092f6c1c38030f658575ef1f5973890c24a206898dc011ad77bbec",
+        "confirm1/same_recheck_default/motor.csv": "29456d0544fd367a2438bcf14aff13954ae58081dbdedf539851d8ba344aa56c",
+        "confirm1/same_recheck_default/rootfs/log/2026-11-21/01_40_10.ulg": "03b3db8fb1632d2db3ba667957b0b081a3c75c4f940affd4edf1a8b8a5f9aa40"
+      }
+    },
+    {
+      "batch": "confirm1",
+      "trial": "same_recheck_off",
+      "artifacts": {
+        "confirm1/same_recheck_off/meta.json": "48c8c0bfb822c1be092c92640f5dc98b23e95b34de7112c5c06c227a96713bcb",
+        "confirm1/same_recheck_off/truth.csv": "f5a41a2bced31838cb8263f9637f1b24eeb9a964d1bab36d8c0d61e6ab51b1eb",
+        "confirm1/same_recheck_off/motor.csv": "62a5ecc89d0783c1841c23727ccced7594a191354ab0c837f45b4d5a607d965a",
+        "confirm1/same_recheck_off/rootfs/log/2026-11-21/01_40_10.ulg": "d1c8ef2933986110c2a9fbd8be32e6a3e9cf782f414a1cd4650574373033ec3b"
+      }
+    },
+    {
+      "batch": "confirm_auto1",
+      "trial": "inverted_check_auto",
+      "artifacts": {
+        "confirm_auto1/inverted_check_auto/meta.json": "392278430de73c9d8aefeb852c21833afa264eec823300f0cf694c21ae6c09f7",
+        "confirm_auto1/inverted_check_auto/truth.csv": "37ab2a337c501a74da4c877c69e159d632671222cae1a725b48d1ac3c5c3c567",
+        "confirm_auto1/inverted_check_auto/motor.csv": "5af9197077c3938a342fc820eb6427f6231df1cd817c7b5604289010003c1f50",
+        "confirm_auto1/inverted_check_auto/rootfs/log/2026-11-21/01_41_16.ulg": "f1818f7ad3b853cb4d6ecd8314577b6fb710435f15d7d98dcd12b131132db640"
+      }
+    },
+    {
+      "batch": "confirm_auto1",
+      "trial": "same_recheck_auto",
+      "artifacts": {
+        "confirm_auto1/same_recheck_auto/meta.json": "0aa6f0c6c0366fbafc026c5122f88f91b81903e52ad0e45770f37dba87d2c4b8",
+        "confirm_auto1/same_recheck_auto/truth.csv": "dfcaeb9e68a10c83ffcfdceb5d5ecd71b71b813adcfedfb46a835cf7df35dc9b",
+        "confirm_auto1/same_recheck_auto/motor.csv": "86a08c9f21dc331fa36f7979e38ac3d90fd31459ae5398d2039070fd94bdd808",
+        "confirm_auto1/same_recheck_auto/rootfs/log/2026-11-21/01_40_49.ulg": "30177b8a3a92d48c697a5ac3a04bb647bec04e4150642c37d2a30cb30164f868"
+      }
+    },
+    {
+      "batch": "confirm_low1",
+      "trial": "mirror_yaw210_low",
+      "artifacts": {
+        "confirm_low1/mirror_yaw210_low/meta.json": "c02622f0dca7bffe1bbe0785bd2d5bed2dac04a384ba17c323f498eb81ca31ca",
+        "confirm_low1/mirror_yaw210_low/truth.csv": "f27d2972b66f26e08f366910a994d3e4176aed05761de25afee7670e74baeb47",
+        "confirm_low1/mirror_yaw210_low/motor.csv": "b3a4b11ea7c530bf8001ac8c7ff86b465dbdc5b2d3855b97bb38026072d60756",
+        "confirm_low1/mirror_yaw210_low/rootfs/log/2026-11-21/01_43_11.ulg": "0b794e2c37dd4ce891a5e0e261173530b8de07a817b89b245a7ace85824beffa"
+      }
+    }
+  ],
+  "raw_archive_scope": "Representative trials; paths in meta.json are relative to the PX4 source tree."
+}

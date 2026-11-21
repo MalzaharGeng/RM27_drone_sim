@@ -1,0 +1,52 @@
+{
+  "partition": "flip_sweep_e4c05d3b0c8d",
+  "instance": 75,
+  "params": {
+    "EN": 1,
+    "MODE": 0,
+    "ENTRY_ANG": 75,
+    "STOP_ANG": 38,
+    "THR_HIGH": 0.45,
+    "THR_LOW": 0.35,
+    "LOW_MODE": 0,
+    "SLEW": 2,
+    "TIME": 4,
+    "MIN_PROG": 3,
+    "PROG_T": 1.5,
+    "EXIT_MODE": 2,
+    "RC_CONFIRM": 0,
+    "OUT_DIRECT": 0
+  },
+  "world": "Tools/simulation/gz/worlds/default.sdf",
+  "model": "Tools/simulation/gz/models/x500/model.sdf",
+  "requested": [
+    105.0,
+    180.0,
+    210.0,
+    0.34
+  ],
+  "phases": [
+    {
+      "phase": "recovery",
+      "wall_s": 14.620263765000004,
+      "sim_s": 12.032
+    },
+    {
+      "phase": "cleanup",
+      "wall_s": 25.96132160600007,
+      "sim_s": 23.372
+    }
+  ],
+  "processes": [
+    {
+      "pid": 48450,
+      "rc": 0
+    },
+    {
+      "pid": 49016,
+      "rc": 0
+    }
+  ],
+  "pose_samples": 1167,
+  "motor_samples": 886
+}

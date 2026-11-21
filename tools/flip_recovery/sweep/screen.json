@@ -1,0 +1,20 @@
+[
+  {"id":"off_roll","params":{"EN":0}},
+  {"id":"off_pitch","axis":90,"params":{"EN":0}},
+  {"id":"off_side","tilt":100,"params":{"EN":0}},
+  {"id":"default_pitch","axis":90},
+  {"id":"default_side","tilt":100},
+  {"id":"a_high_roll","params":{"THR_HIGH":0.6,"THR_LOW":0,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"b_high_roll","params":{"MODE":1,"THR_HIGH":0.6,"LOW_MODE":3,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"a_low_normal_roll","params":{"THR_HIGH":0.6,"THR_LOW":0.3,"LOW_MODE":1,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"a_fast_pitch","axis":90,"params":{"THR_HIGH":0.6,"THR_LOW":0.08,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"b_mixed_pitch","axis":90,"params":{"MODE":1,"THR_HIGH":0.6,"THR_LOW":0.5,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2,"STOP_ANG":45}},
+  {"id":"a_medium_roll","params":{"THR_HIGH":0.4,"THR_LOW":0.08,"SLEW":1,"TIME":4,"MIN_PROG":1,"PROG_T":1.5,"STOP_ANG":45}},
+  {"id":"b_medium_side","tilt":100,"params":{"MODE":1,"ENTRY_ANG":65,"THR_HIGH":0.45,"THR_LOW":0.15,"SLEW":1.5,"TIME":4,"MIN_PROG":1,"PROG_T":1.5}},
+  {"id":"b_fast_side","tilt":100,"params":{"MODE":1,"ENTRY_ANG":65,"THR_HIGH":0.6,"THR_LOW":0.3,"LOW_MODE":2,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2,"STOP_ANG":42}},
+  {"id":"a_fast_side","tilt":100,"params":{"ENTRY_ANG":65,"THR_HIGH":0.6,"THR_LOW":0.08,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"off_diag","axis":45,"yaw":41,"tilt":155,"params":{"EN":0}},
+  {"id":"default_diag","axis":45,"yaw":41,"tilt":155},
+  {"id":"a_lift_diag","axis":45,"yaw":41,"tilt":155,"params":{"THR_HIGH":0.6,"THR_LOW":0.5,"SLEW":1.75,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"b_mixed_diag","axis":45,"yaw":41,"tilt":155,"params":{"MODE":1,"THR_HIGH":0.6,"THR_LOW":0.3,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}}
+]

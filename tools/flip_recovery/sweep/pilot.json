@@ -1,0 +1,5 @@
+[
+  {"id":"default180"},
+  {"id":"mode1_180","params":{"MODE":1,"THR_HIGH":0.6,"THR_LOW":0.3,"SLEW":2,"TIME":5,"MIN_PROG":0,"PROG_T":2}},
+  {"id":"disabled105","tilt":105,"params":{"EN":0}}
+]

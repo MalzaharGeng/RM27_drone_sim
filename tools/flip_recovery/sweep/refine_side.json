@@ -1,0 +1,14 @@
+[
+  {"id":"side_stop40_default","tilt":100,"params":{"STOP_ANG":40,"PROG_T":1.5}},
+  {"id":"side_030_010_stop35","tilt":100,"params":{"THR_HIGH":0.30,"THR_LOW":0.10,"SLEW":0.7,"STOP_ANG":35,"PROG_T":1.5}},
+  {"id":"side_040_010_stop35","tilt":100,"params":{"THR_HIGH":0.40,"THR_LOW":0.10,"SLEW":1,"STOP_ANG":35,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_050_010_stop35","tilt":100,"params":{"THR_HIGH":0.50,"THR_LOW":0.10,"SLEW":1.2,"STOP_ANG":35,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_060_no_low_stop30","tilt":100,"params":{"THR_HIGH":0.60,"LOW_MODE":3,"SLEW":2,"STOP_ANG":30,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_060_035_stop38","tilt":100,"params":{"THR_HIGH":0.60,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_045_low_rev_stop40","tilt":100,"params":{"THR_HIGH":0.45,"THR_LOW":0.15,"LOW_MODE":2,"SLEW":1.2,"STOP_ANG":40,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_045_low_normal_stop40","tilt":100,"params":{"THR_HIGH":0.45,"THR_LOW":0.15,"LOW_MODE":1,"SLEW":1.2,"STOP_ANG":40,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_060_050_slow_stop25","tilt":100,"params":{"THR_HIGH":0.60,"THR_LOW":0.50,"SLEW":0.85,"STOP_ANG":25,"PROG_T":2,"TIME":5,"MIN_PROG":1}},
+  {"id":"side_045_030_stop50","tilt":100,"params":{"THR_HIGH":0.45,"THR_LOW":0.30,"SLEW":1,"STOP_ANG":50,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_055_020_stop48","tilt":100,"params":{"THR_HIGH":0.55,"THR_LOW":0.20,"SLEW":1.5,"STOP_ANG":48,"PROG_T":1.5,"TIME":4}},
+  {"id":"side_025_015_stop48","tilt":100,"params":{"THR_HIGH":0.25,"THR_LOW":0.15,"SLEW":0.5,"STOP_ANG":48,"PROG_T":1.5,"TIME":4}}
+]

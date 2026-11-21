@@ -22,6 +22,8 @@ WSL2 Ubuntu 26.04 上的 PX4 SITL + Gazebo Jetty 仿真环境，场地用 RMUC 2
 
 构建与使用见 [PX4 源码说明](docs/PX4_SOURCE.md)、[VIO 配置与运行](experiments/vio_20261120/README.md)；运行记录与判据统一归档在 [验证资料](docs/verification/README.md)。
 
+地面翻正的测试方法、仿真参数与结果见 [PX4 翻正验证](docs/verification/flip_recovery_20261121/README.md)。
+
 配套文档：
 
 | 文档 | 内容 |

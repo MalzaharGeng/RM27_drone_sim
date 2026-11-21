@@ -1,0 +1,93 @@
+diff --git a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp
+index f556817e..bfb814d1 100644
+--- a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp
++++ b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp
+@@ -65,6 +65,11 @@ bool GZMixingInterfaceESC::init(const std::string &model_name)
+ bool GZMixingInterfaceESC::updateOutputs(uint16_t outputs[MAX_ACTUATORS], unsigned num_outputs,
+ 		unsigned num_control_groups_updated)
+ {
++	// FLIP 旁路激活时，原混控路径不得发布（避免与旁路竞争写 /command/motor_speed）
++	if (flipBypassActive()) {
++		return true;
++	}
++
+ 	unsigned active_output_count = 0;
+ 
+ 	for (unsigned i = 0; i < num_outputs; i++) {
+@@ -92,11 +97,46 @@ bool GZMixingInterfaceESC::updateOutputs(uint16_t outputs[MAX_ACTUATORS], unsign
+ 	return false;
+ }
+ 
++bool GZMixingInterfaceESC::flipBypassActive()
++{
++	_vehicle_status_sub.update(&_vehicle_status);
++	_flip_control_sub.update(&_flip_control);
++	const bool in_flip = (_vehicle_status.nav_state == vehicle_status_s::NAVIGATION_STATE_FLIP_RECOVERY);
++	const bool driving = in_flip && (_flip_control.action == flip_recovery_control_s::ACTION_DRIVE);
++	_flip_bypass_active = driving;
++	return driving;
++}
++
++bool GZMixingInterfaceESC::publishFlipOutputs()
++{
++	// 只在旁路激活时调用：把带符号归一化 control[] 映射到 gz velocity（double，可负）。
++	gz::msgs::Actuators msg;
++	msg.mutable_velocity()->Resize(4, 0.0);
++	for (int i = 0; i < 4; ++i) {
++		float u = _flip_control.control[i];
++		if (!PX4_ISFINITE(u)) { u = 0.f; }
++		u = (u > 1.f) ? 1.f : (u < -1.f ? -1.f : u);
++		msg.set_velocity(i, static_cast<double>(u * FLIP_MAX_RAD_S));
++	}
++	if (_actuators_pub.Valid()) {
++		return _actuators_pub.Publish(msg);
++	}
++	return false;
++}
++
+ void GZMixingInterfaceESC::Run()
+ {
+ 	pthread_mutex_lock(&_node_mutex);
+-	_mixing_output.update();
+-	_mixing_output.updateSubscriptions(false);
++	if (flipBypassActive()) {
++		publishFlipOutputs();
++		// 旁路期间不调用 _mixing_output.update()，避免 disarmed 门控覆盖带符号输出。
++		// 修复：_mixing_output.update() 原本负责重新调度 Run()；旁路绕过了它，
++		// 必须显式 ScheduleNow() 维持周期调度，否则 Run() 只执行一次就不再发布。
++		ScheduleNow();
++	} else {
++		_mixing_output.update();
++		_mixing_output.updateSubscriptions(false);
++	}
+ 	pthread_mutex_unlock(&_node_mutex);
+ }
+ 
+diff --git a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp
+index 5ffe105b..f2a6b6f5 100644
+--- a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp
++++ b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp
+@@ -40,6 +40,8 @@
+ 
+ #include <uORB/PublicationMulti.hpp>
+ #include <uORB/topics/esc_status.h>
++#include <uORB/topics/vehicle_status.h>
++#include <uORB/topics/flip_recovery_control.h>
+ 
+ 
+ // GZBridge mixing class for ESCs.
+@@ -84,4 +86,14 @@ private:
+ 
+ 	uORB::Publication<esc_status_s> _esc_status_pub{ORB_ID(esc_status)};
+ 
++	// ---- FLIP 可逆输出旁路（实验分支）----
++	uORB::Subscription _vehicle_status_sub{ORB_ID(vehicle_status)};
++	uORB::Subscription _flip_control_sub{ORB_ID(flip_recovery_control)};
++	vehicle_status_s _vehicle_status{};
++	flip_recovery_control_s _flip_control{};
++	bool _flip_bypass_active{false};
++	static constexpr float FLIP_MAX_RAD_S = 684.f;  // 标定: gz thrust=k*(v)^2, k=8.54858e-6; v=684 -> 4.0N/motor (~x500 hover), gz maxRotVel=1000
++
++	bool flipBypassActive();       // 判断当前是否应走 FLIP 旁路
++	bool publishFlipOutputs();     // 发布带符号 control 到 gz velocity
+ };

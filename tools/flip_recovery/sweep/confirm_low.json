@@ -1,0 +1,8 @@
+[
+  {"id":"same_recheck_low","tilt":100,"axis":0,"yaw":0,"height":0.38,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"roll_yaw30_low","tilt":103,"axis":0,"yaw":30,"height":0.4,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"roll_yaw135_low","tilt":106,"axis":0,"yaw":135,"height":0.34,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"mirror_yaw60_low","tilt":103,"axis":180,"yaw":60,"height":0.39,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"mirror_yaw210_low","tilt":105,"axis":180,"yaw":210,"height":0.34,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}},
+  {"id":"near_side_low","tilt":95,"axis":5,"yaw":80,"height":0.38,"params":{"THR_HIGH":0.45,"THR_LOW":0.35,"SLEW":2,"STOP_ANG":38,"PROG_T":1.5,"TIME":4}}
+]

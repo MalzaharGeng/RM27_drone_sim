@@ -1,0 +1,3 @@
+*.py text eol=lf
+*.json text eol=lf
+sitl_bridge.diff -text -whitespace
