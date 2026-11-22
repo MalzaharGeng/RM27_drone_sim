@@ -1,0 +1,3 @@
+batch,id,enabled,initial_requested,axis,yaw,strategy,start_deg,start_est_deg,min_deg,final_deg,dwell_s,mode_entered,drive_frames,drive_s,min_motor,max_motor,motor_stop,px4_result,reason,exit_posctl,landed_before,ulog,truth_samples,log_dropouts,esc_min,esc_max,drive_started_us,drive_fwd_masks,drive_rev_masks,px4_terminal_s,outcome
+probe,cancel_inverted,1,180.0,90.0,45.0,0,180.0,179.921,163.32,180.0,0.0,True,24,0.46,-571.63,545.04,True,2,SAFETY_LOST,True,True,rootfs/log/2026-11-22/07_40_24.ulg,596,0,-539,514,13632000,5,10,0.5,NO_TRUTH_RECOVERY
+probe,cancel_side,1,105.0,90.0,45.0,0,90.0,90.019,84.196,90.0,0.0,True,25,0.48,-389.11,371.01,True,2,SAFETY_LOST,True,True,rootfs/log/2026-11-22/07_40_24.ulg,600,0,-389,371,13756000,5,10,0.52,NO_TRUTH_RECOVERY

@@ -1,6 +1,6 @@
 # RM27 无人机导航仿真
 
-本仓库维护 RMUC 2027 场地的 PX4 SITL 与 Gazebo 仿真环境。Harrier 机型用于双目惯性定位、PX4 外部视觉融合和航点跟踪；X500 用于独立验证 PX4 的地面侧翻恢复。已知地图 A* 演示保留为独立运行入口。
+本仓库维护 RMUC 2027 场地的 PX4 SITL 与 Gazebo 仿真环境。Harrier 机型用于双目惯性定位、PX4 外部视觉融合和航点跟踪，也提供独立的地面侧翻与倒扣恢复入口。X500 保留为地面翻正的基准机型。
 
 ![RMUC 2027 场地的 Gazebo 渲染](docs/images/arena_gazebo_20261107.png)
 
@@ -10,10 +10,10 @@
 | --- | --- | --- |
 | RMUC 2027 场地 | 官方 STP 经 OCCT 三角化；按 CAD 逐面颜色导出九组网格。Harrier 原场地使用分色外观和网格碰撞。 | [场地构建](tools/step_to_arena/) |
 | 双目惯性导航 | Harrier 双目与 IMU 数据经 ROS 2 接入 ORB-SLAM3，定位结果送入 PX4；Gazebo 真值用于独立监督和误差评价。 | [运行配置](experiments/vio_20261120/README.md) · [联调记录](docs/VIO_HARRIER_20261120.md) |
-| PX4 地面侧翻恢复 | 飞控在落地、未解锁且姿态满足进入条件时，按电机位置分组出力。达到停油角后等待姿态稳定，再判定结果并退出模式。 | [实现与改动](docs/PX4_FLIP_RECOVERY.md) · [试验报告](docs/verification/flip_recovery_20261121/README.md) |
+| PX4 地面侧翻恢复 | 飞控在落地、未解锁且姿态满足进入条件时输出恢复力矩。Harrier SITL 根据姿态和角速度调节电机输出，覆盖侧躺和完全倒扣工况。 | [实现与改动](docs/PX4_FLIP_RECOVERY.md) · [Harrier 验证](docs/verification/harrier_flip_20261122/README.md) · [X500 基线](docs/verification/flip_recovery_20261121/README.md) |
 | 已知地图规划 | A* 按场地障碍图生成航点，经 PX4 Offboard 接口执行。 | [操作说明](docs/TERMINAL_SLAM_GAZEBO.md) |
 
-侧翻恢复由飞控执行，默认关闭（`FLIP_EN=0`）。启用后仍需切入 Flip Recovery 模式，功能只在落地且未解锁时出力，不参与飞行中的姿态保护。X500 试验通过独立 Gazebo 输出桥驱动电机，未运行 ORB-SLAM3。
+侧翻恢复由飞控执行，PX4 通用配置默认关闭（`FLIP_EN=0`）；启用后须切入 Flip Recovery 模式。该功能只在落地且未解锁时出力，不参与飞行中的姿态保护。Harrier 与 X500 的翻正试验均由 Gazebo 输出桥驱动电机，不依赖 ORB-SLAM3。
 
 ## 上游项目与本仓库改动
 
@@ -39,6 +39,7 @@ make -C "$HOME/rm27_px4_source" px4_sitl_default
 ```
 
 - **Harrier 双目惯性导航：** 按[实验运行说明](experiments/vio_20261120/README.md)配置模型、参数和运行目录。
+- **Harrier 地面侧翻与倒扣恢复：** 按[Harrier SITL 构建与运行](tools/flip_recovery/harrier/README.md)准备独立构建，再用 `bash start_rm27_px4.sh --flip-recovery` 启动。
 - **X500 地面侧翻恢复：** 按[复现流程](docs/verification/flip_recovery_20261121/README.md#仿真配置与复现)在独立 PX4 树应用试验补丁，运行配对场景并生成评分。
 - **已知地图 A*：** 在仓库根目录加载 `env.sh` 后，执行 `python3 scripts/rm27_nav.py --dry-run` 检查航线；仿真入口为 `./scripts/run_nav_demo.sh`。
 - **仅加载场地：** 在 `rm27_sim/` 中运行 `./run_rm27.sh`。
@@ -52,5 +53,5 @@ make -C "$HOME/rm27_px4_source" px4_sitl_default
 | [ros2/rm27_slam/](ros2/rm27_slam/) | 双目惯性输入、时间映射和跟踪诊断 |
 | [scripts/](scripts/) | 仿真控制、飞手接管、航点与独立真值评价 |
 | [experiments/](experiments/) | 固定配置的实验运行环境 |
-| [tools/flip_recovery/](tools/flip_recovery/) | X500 翻正试验脚本、评分程序和 Gazebo 输出桥补丁 |
+| [tools/flip_recovery/](tools/flip_recovery/) | Harrier 启动入口、X500 基线脚本、评分程序和 SITL 补丁 |
 | [docs/](docs/) | 工程文档与[验证记录](docs/verification/README.md) |

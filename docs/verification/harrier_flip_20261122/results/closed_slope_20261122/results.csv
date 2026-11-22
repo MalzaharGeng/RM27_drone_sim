@@ -1,0 +1,11 @@
+batch,id,enabled,initial_requested,axis,yaw,strategy,start_deg,start_est_deg,min_deg,final_deg,dwell_s,mode_entered,drive_frames,drive_s,min_motor,max_motor,motor_stop,px4_result,reason,exit_posctl,landed_before,ulog,truth_samples,log_dropouts,esc_min,esc_max,outcome,drive_started_us,drive_fwd_masks,drive_rev_masks,px4_terminal_s
+probe,ramp_135_e0,0,135.0,90.0,0.0,0,0.0,0.034,0.0,0.0,11.384,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_24.ulg,608,0,0,0,SETUP_ONLY,,,,
+probe,ramp_135_e1,1,135.0,90.0,0.0,0,0.0,0.071,0.0,0.0,11.32,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_24.ulg,607,0,0,0,SETUP_ONLY,,,,
+probe,ramp_150_e0,0,150.0,90.0,0.0,0,150.0,150.369,150.0,150.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_25.ulg,609,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_150_e1,1,150.0,90.0,0.0,0,150.0,150.349,1.212,180.0,0.0,True,249,4.96,-567.54,593.98,True,2,TIMEOUT,True,True,rootfs/log/2026-11-22/07_40_24.ulg,607,0,-576,600,NO_TRUTH_RECOVERY,13604000,"5,6,9,10","5,6,9,10",5.0
+probe,ramp_165_e0,0,165.0,90.0,0.0,0,165.003,165.163,164.997,165.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_24.ulg,603,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_165_e1,1,165.0,90.0,0.0,0,165.0,165.093,0.641,90.0,0.0,True,249,4.96,-600.0,600.0,True,2,TIMEOUT,True,True,rootfs/log/2026-11-22/07_40_53.ulg,627,0,-600,600,NO_TRUTH_RECOVERY,13120000,"5,10,14","1,5,10",5.0
+probe,ramp_175_e0,0,175.0,90.0,0.0,0,175.0,175.068,175.0,175.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_53.ulg,612,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_175_e1,1,175.0,90.0,0.0,0,175.0,175.072,0.433,85.0,0.0,True,63,1.24,-600.0,600.0,True,2,NOT_SETTLED,True,True,rootfs/log/2026-11-22/07_40_53.ulg,613,0,-600,600,NO_TRUTH_RECOVERY,13156000,"5,10","5,10",4.28
+probe,ramp_179_e0,0,179.0,90.0,0.0,0,179.0,179.015,179.0,179.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_40_53.ulg,610,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_179_e1,1,179.0,90.0,0.0,0,179.0,179.0,0.0,0.0,6.596,True,187,3.72,-600.0,600.0,True,1,NONE,True,True,rootfs/log/2026-11-22/07_40_53.ulg,617,0,-600,600,PASS,13372000,"1,4,5,6,9,10,11","4,5,6,9,10,11,14",4.76

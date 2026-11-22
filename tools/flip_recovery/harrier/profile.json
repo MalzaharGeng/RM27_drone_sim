@@ -1,0 +1,16 @@
+{
+  "EN": 1,
+  "MODE": 0,
+  "ENTRY_ANG": 75,
+  "STOP_ANG": 50,
+  "THR_HIGH": 0.60,
+  "THR_LOW": 0.35,
+  "LOW_MODE": 1,
+  "SLEW": 1.0,
+  "TIME": 5.0,
+  "MIN_PROG": 1.0,
+  "PROG_T": 2.0,
+  "EXIT_MODE": 2,
+  "RC_CONFIRM": 0,
+  "OUT_DIRECT": 0
+}

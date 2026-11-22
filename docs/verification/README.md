@@ -2,6 +2,7 @@
 
 本目录归档仿真工况、验证判据、试验结果和运行证据。
 
+- [2026-11-22 Harrier 地面侧翻及倒扣恢复](harrier_flip_20261122/README.md)
 - [2026-11-21 PX4 地面侧翻恢复试验](flip_recovery_20261121/README.md)
 - [2026-11-20 仿真阶段记录](20261120/PROGRESS.md)
 - [2026-11-20 同步检查](20261120/SYNC_VALIDATION.md)

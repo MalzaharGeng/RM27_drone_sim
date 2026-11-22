@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 import uuid
+import xml.etree.ElementTree as ET
 
 for lib in ("gz_transport_vendor", "gz_msgs_vendor"):
     sys.path.insert(0, f"/opt/ros/lyrical/opt/{lib}/lib/python")
@@ -62,6 +63,13 @@ def main():
     ap.add_argument("--params", type=json.loads, default={})
     ap.add_argument("--world", type=Path)
     ap.add_argument("--model", type=Path)
+    ap.add_argument("--airframe", default="gz_x500")
+    ap.add_argument("--entity", default="x500_sweep")
+    ap.add_argument("--xy", nargs=2, type=float, default=(0., 0.))
+    ap.add_argument("--gui", action="store_true")
+    ap.add_argument("--manual", action="store_true", help="wait for TRIGGER after writing READY.json")
+    ap.add_argument("--startup-timeout", type=float, default=45)
+    ap.add_argument("--cancel-after", type=float, help="disable recovery after this many simulation seconds")
     args = ap.parse_args()
     for name, val in args.params.items():
         lo, hi = RANGES[name]
@@ -88,16 +96,21 @@ def main():
     os.environ["GZ_PARTITION"] = part
     os.environ["GZ_DISCOVERY_MSG_PORT"] = str(16800 + 2*args.instance)
     os.environ["GZ_DISCOVERY_SRV_PORT"] = str(16801 + 2*args.instance)
-    base_env = os.environ | dict(HEADLESS="1", PX4_GZ_MODEL_NAME="x500_sweep",
-                                 PX4_SIM_MODEL="gz_x500", PX4_GZ_STANDALONE="1")
+    base_env = os.environ | dict(HEADLESS="1", PX4_GZ_MODEL_NAME=args.entity,
+                                 PX4_SIM_MODEL=args.airframe, PX4_GZ_STANDALONE="1")
     base_env = {k:v for k,v in base_env.items() if not k.startswith("PX4_PARAM_")}
     pxenv = base_env | {f"PX4_PARAM_FLIP_{k}":str(v) for k,v in params.items()}
-    pxenv |= dict(PX4_PARAM_SDLOG_MODE="1", PX4_PARAM_UXRCE_DDS_CFG="0",
-                  PX4_PARAM_SIM_GZ_EN="1", PX4_PARAM_MAV_BROADCAST="0")
+    pxenv |= dict(PX4_PARAM_SDLOG_MODE="1", PX4_PARAM_SIM_GZ_EN="1",
+                  PX4_UXRCE_DDS_PORT=str(30000+args.instance))
     for k in ("PX4_GZ_MODEL_POSE", "PX4_GZ_WORLD", "PX4_SYS_AUTOSTART"):
         pxenv.pop(k, None)
     world = (args.world or repo / "Tools/simulation/gz/worlds/default.sdf").resolve()
     model = (args.model or repo / "Tools/simulation/gz/models/x500/model.sdf").resolve()
+    world_name = ET.parse(world).getroot().find("world").get("name")
+    if not world_name or not args.entity or not all(c.isalnum() or c in "_-" for c in args.entity):
+        ap.error("invalid world or entity name")
+    world_topic = f"/world/{world_name}"
+    pxenv["PX4_GZ_WORLD"] = world_name
     node = Node()
     truth, motor, phases, procs, files = [], [], [], [], []
     phase = ["boot"]
@@ -106,7 +119,7 @@ def main():
 
     def pose_cb(msg):
         for p in msg.pose:
-            if p.name != "x500_sweep":
+            if p.name != args.entity:
                 continue
             q, xyz = p.orientation, p.position
             sim = msg.header.stamp.sec + msg.header.stamp.nsec * 1e-9
@@ -153,40 +166,61 @@ def main():
         px.stdin.flush()
 
     result = dict(partition=part, instance=args.instance, params=params, world=str(world),
+                  entity=args.entity, airframe=args.airframe,
                   model=str(model), requested=[args.tilt,args.axis,args.yaw,args.height])
     px = None
     try:
-        node.subscribe(Pose_V, "/world/default/dynamic_pose/info", pose_cb)
-        node.subscribe(Actuators, "/x500_sweep/command/motor_speed", motor_cb)
+        node.subscribe(Pose_V, f"{world_topic}/dynamic_pose/info", pose_cb)
+        node.subscribe(Actuators, f"/{args.entity}/command/motor_speed", motor_cb)
         gz = launch(["gz", "sim", "-r", "-s", "--verbose=1", str(world)], "gz.log",
                     stdin=subprocess.DEVNULL, env=base_env)
-        r,p,y = initial_rpy(args.tilt,args.axis,args.yaw)
+        r,p,yaw = initial_rpy(args.tilt,args.axis,args.yaw)
         factory = EntityFactory()
-        factory.name = "x500_sweep"
+        factory.name = args.entity
+        x, y = args.xy
         factory.sdf = (f'<sdf version="1.9"><include><uri>file://{model}</uri>'
-                       f'<pose>0 0 {args.height} {r} {p} {y}</pose></include></sdf>')
+                       f'<pose>{x} {y} {args.height} {r} {p} {yaw}</pose></include></sdf>')
         def spawn():
-            ok, response = node.request("/world/default/create", factory, EntityFactory, Boolean, 700)
+            ok, response = node.request(f"{world_topic}/create", factory, EntityFactory, Boolean, 700)
             return ok and response.data
         wait(spawn, 30, "spawn")
+        gui = None
+        if args.gui:
+            gui_env = {k:v for k,v in base_env.items() if k != "HEADLESS"}
+            gui = launch(["gz", "sim", "-g"], "gui.log", stdin=subprocess.DEVNULL, env=gui_env)
         px = launch([str(build/"bin/px4"), "-i", str(args.instance), "-w", str(root),
                      "-s", str(build/"etc/init.d-posix/rcS")], "px4.log",
                     env=pxenv, cwd=root, stdin=subprocess.PIPE, text=True)
         wait(lambda: truth and len(motor) >= 15 and truth[-1][0] >= max(11, motor[0][0]+7)
              and "pxh>" in (out/"px4.log").read_text(errors="replace"),
-             45, "PX4 startup and simulator settling")
+             args.startup_timeout, "PX4 startup and simulator settling")
         send("flip_recovery status", "param show FLIP_*")
         t = truth[-1][0]
-        wait(lambda: truth[-1][0] >= t+1, 10, "precheck")
+        wait(lambda: truth[-1][0] >= t+1, max(10,args.startup_timeout/6), "precheck")
+        if args.manual:
+            ready = dict(partition=part, instance=args.instance, entity=args.entity,
+                         tilt_deg=truth[-1][-1], trigger=str(out/"TRIGGER"))
+            (out/"READY.json").write_text(json.dumps(ready,indent=2)+"\n")
+            print("READY", json.dumps(ready), flush=True)
+            wait(lambda: (out/"TRIGGER").is_file(), 1800, "manual trigger")
         mark("recovery")
         send("commander mode flip")
         t = truth[-1][0]
-        wait(lambda: truth[-1][0] >= t+11, 38, "recovery observation")
+        if args.cancel_after is not None:
+            wait(lambda: truth[-1][0] >= t+args.cancel_after, 20, "cancellation checkpoint")
+            phases.append(dict(phase="disable_requested", wall_s=time.monotonic()-t0, sim_s=truth[-1][0]))
+            send("param set FLIP_EN 0")
+        wait(lambda: truth[-1][0] >= t+11, max(38,args.startup_timeout), "recovery observation")
         send("flip_recovery status", "listener flip_recovery_status -n 1", "logger status")
         t = truth[-1][0]
-        wait(lambda: truth[-1][0] >= t+.3, 5, "readback")
+        wait(lambda: truth[-1][0] >= t+.3, max(5,args.startup_timeout/20), "readback")
         mark("cleanup")
-        send("logger off", "shutdown")
+        send("logger off")
+        if args.gui and args.manual:
+            print(f"DONE: close Gazebo or create {out/'STOP'}", flush=True)
+            while gui.poll() is None and not (out/"STOP").is_file() and px.poll() is None and gz.poll() is None:
+                time.sleep(.25)
+        send("shutdown")
         try:
             px.wait(timeout=7)
         except subprocess.TimeoutExpired:

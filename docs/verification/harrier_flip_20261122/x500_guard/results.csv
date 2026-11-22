@@ -1,0 +1,2 @@
+batch,id,enabled,initial_requested,axis,yaw,strategy,start_deg,start_est_deg,min_deg,final_deg,dwell_s,mode_entered,drive_frames,drive_s,min_motor,max_motor,motor_stop,px4_result,reason,exit_posctl,landed_before,ulog,truth_samples,log_dropouts,esc_min,esc_max,drive_started_us,drive_fwd_masks,drive_rev_masks,px4_terminal_s,outcome
+probe,legacy_x500,1,100.0,0,0,0,79.924,79.912,0.0,0.0,10.02,True,16,0.304,-410.4,239.4,True,1,NONE,True,True,rootfs/log/2026-11-22/07_42_29.ulg,589,0,-410,239,14020000,9,6,2.2,PASS

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cancel_inverted",
+    "tilt": 180,
+    "axis": 90,
+    "yaw": 45,
+    "height": 0.38,
+    "model": "harrier.sdf",
+    "airframe": "gz_x500_mono_cam",
+    "entity": "Drone-Harrier",
+    "params": {
+      "EN": 1,
+      "MODE": 0,
+      "ENTRY_ANG": 75,
+      "STOP_ANG": 50,
+      "THR_HIGH": 0.6,
+      "THR_LOW": 0.35,
+      "LOW_MODE": 1,
+      "SLEW": 1.0,
+      "TIME": 5.0,
+      "MIN_PROG": 1.0,
+      "PROG_T": 2.0,
+      "EXIT_MODE": 2,
+      "RC_CONFIRM": 0,
+      "OUT_DIRECT": 0
+    },
+    "cancel_after": 0.5
+  },
+  {
+    "id": "cancel_side",
+    "tilt": 105,
+    "axis": 90,
+    "yaw": 45,
+    "height": 0.38,
+    "model": "harrier.sdf",
+    "airframe": "gz_x500_mono_cam",
+    "entity": "Drone-Harrier",
+    "params": {
+      "EN": 1,
+      "MODE": 0,
+      "ENTRY_ANG": 75,
+      "STOP_ANG": 50,
+      "THR_HIGH": 0.6,
+      "THR_LOW": 0.35,
+      "LOW_MODE": 1,
+      "SLEW": 1.0,
+      "TIME": 5.0,
+      "MIN_PROG": 1.0,
+      "PROG_T": 2.0,
+      "EXIT_MODE": 2,
+      "RC_CONFIRM": 0,
+      "OUT_DIRECT": 0
+    },
+    "cancel_after": 0.5
+  }
+]

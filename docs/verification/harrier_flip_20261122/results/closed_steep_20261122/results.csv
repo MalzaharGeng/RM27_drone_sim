@@ -1,0 +1,7 @@
+batch,id,enabled,initial_requested,axis,yaw,strategy,start_deg,start_est_deg,min_deg,final_deg,dwell_s,mode_entered,drive_frames,drive_s,min_motor,max_motor,motor_stop,px4_result,reason,exit_posctl,landed_before,ulog,truth_samples,log_dropouts,esc_min,esc_max,outcome,drive_started_us,drive_fwd_masks,drive_rev_masks,px4_terminal_s
+probe,ramp_105_e0,0,105.0,90.0,0.0,0,105.0,104.785,105.0,105.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_43_10.ulg,592,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_105_e1,1,105.0,90.0,0.0,0,105.0,103.682,105.0,105.0,0.0,True,99,1.96,-396.29,377.91,True,2,NO_PROGRESS,True,True,rootfs/log/2026-11-22/07_43_10.ulg,591,0,-396,377,NO_TRUTH_RECOVERY,12968000,5,10,2.0
+probe,ramp_120_e0,0,120.0,90.0,0.0,0,120.0,120.023,120.0,120.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_43_11.ulg,589,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_120_e1,1,120.0,90.0,0.0,0,120.0,120.009,120.0,120.0,0.0,True,99,1.96,-396.12,377.73,True,2,NO_PROGRESS,True,True,rootfs/log/2026-11-22/07_43_10.ulg,590,0,-396,377,NO_TRUTH_RECOVERY,13000000,5,10,2.0
+probe,ramp_135_e0,0,135.0,90.0,0.0,0,135.0,135.454,135.0,135.0,0.0,True,0,0,0.0,0.0,True,0,NONE,False,True,rootfs/log/2026-11-22/07_43_38.ulg,572,0,0,0,DISABLED_STAYED_TIPPED,,,,
+probe,ramp_135_e1,1,135.0,90.0,0.0,0,135.0,135.448,134.573,135.0,0.0,True,99,1.96,-583.15,556.46,True,2,NO_PROGRESS,True,True,rootfs/log/2026-11-22/07_43_38.ulg,573,0,-582,556,NO_TRUTH_RECOVERY,12876000,5,10,2.0

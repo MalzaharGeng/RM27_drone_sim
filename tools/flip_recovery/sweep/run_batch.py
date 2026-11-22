@@ -26,9 +26,9 @@ def main():
             cmd = [sys.executable, str(script), "--repo", str(args.repo),
                    "--out", str(args.out/case["id"]), "--instance", str(args.first_instance+slot),
                    "--params", json.dumps(case.get("params", {}))]
-            for key in ("tilt","axis","yaw","height","model","world"):
+            for key in ("tilt","axis","yaw","height","model","world","airframe","entity","startup_timeout","cancel_after"):
                 if key in case:
-                    cmd += ["--"+key, str(case[key])]
+                    cmd += ["--"+key.replace("_","-"), str(case[key])]
             proc = subprocess.run(cmd, capture_output=True, text=True)
             meta = args.out/case["id"]/"meta.json"
             status = json.loads(meta.read_text()).get("error", "recorded") if meta.exists() else proc.stderr

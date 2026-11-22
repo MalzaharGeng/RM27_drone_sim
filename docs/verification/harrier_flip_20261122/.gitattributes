@@ -1,0 +1,4 @@
+*.csv -text whitespace=cr-at-eol
+*.json text eol=lf
+*.sdf -text whitespace=-blank-at-eol
+*.ulg binary

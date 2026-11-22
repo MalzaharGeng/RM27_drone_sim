@@ -1,0 +1,185 @@
+--- a/src/modules/flip_recovery/FlipRecovery.hpp
++++ b/src/modules/flip_recovery/FlipRecovery.hpp
+@@ -95,6 +95,9 @@
+ 	bool _exit_requested{false};   // Done/Failed 后已发过切回命令
+ 	float _tilt{NAN};
+ 	uint8_t _quat_reset{0};
++	bool _harrier_servo_session{false};
++	float _harrier_initial_tilt{0.f};
++	float _harrier_best_tilt{180.f};
+ 	flip_recovery::Zone _last_zone{flip_recovery::Zone::Off};
+ 
+ 	// 给上位机的执行结果（见 flip_recovery_status.msg）
+--- a/src/modules/flip_recovery/FlipRecovery.cpp
++++ b/src/modules/flip_recovery/FlipRecovery.cpp
+@@ -8,6 +8,8 @@
+  *   4. 把结果发布成 flip_recovery_control（以及可选的 actuator_motors 直出）
+  ****************************************************************************/
+ #include "FlipRecovery.hpp"
++#include <cstdlib>
++#include <cstring>
+ 
+ #include <commander/px4_custom_mode.h>
+ #include <drivers/drv_hrt.h>
+@@ -166,11 +168,30 @@
+ 
+ 	const auto previous = _planner.state();
+ 
+-	// 姿态被外部重置（重定位/切换估计器）时，放弃本次会话
++	// Only the Harrier SITL experiment tolerates small declared EKF resets.
++	bool attitude_discontinuity = _quat_reset != _attitude.quat_reset_counter;
++#if defined(CONFIG_ARCH_BOARD_PX4_SITL) || defined(__PX4_POSIX)
++	const char *model = getenv("PX4_SIM_MODEL");
++	const char *entity = getenv("PX4_GZ_MODEL_NAME");
++	if (attitude_discontinuity && model && entity &&
++	    strcmp(model, "gz_x500_mono_cam") == 0 && strcmp(entity, "Drone-Harrier") == 0 &&
++	    static_cast<uint8_t>(_attitude.quat_reset_counter - _quat_reset) == 1) {
++		const auto &delta = _attitude.delta_q_reset;
++		const float norm_sq = delta[0]*delta[0] + delta[1]*delta[1] +
++				      delta[2]*delta[2] + delta[3]*delta[3];
++		const float vector_sq = delta[1]*delta[1] + delta[2]*delta[2] + delta[3]*delta[3];
++		constexpr float sin_half_degree_sq = 0.0000761524f;
++		if (PX4_ISFINITE(norm_sq) && norm_sq >= .99f && norm_sq <= 1.01f &&
++		    vector_sq <= norm_sq * sin_half_degree_sq) {
++			_quat_reset = _attitude.quat_reset_counter;
++			attitude_discontinuity = false;
++		}
++	}
++#endif
+ 	if ((_planner.state() == flip_recovery::FlipPlanner::State::Ramp
+ 	     || _planner.state() == flip_recovery::FlipPlanner::State::Hold
+ 	     || _planner.state() == flip_recovery::FlipPlanner::State::Coast)
+-	    && _quat_reset != _attitude.quat_reset_counter) {
++	    && attitude_discontinuity) {
+ 		_planner.fail("attitude reset during recovery", flip_recovery::ReasonAttitudeReset);
+ 	}
+ 
+@@ -210,6 +231,38 @@
+ 				    && _param_rc_confirm.get() >= 0 && _param_rc_confirm.get() <= 6
+ 				    && _param_exit_mode.get() >= 0 && _param_exit_mode.get() <= 8;
+ 
++
++	const char *servo = getenv("PX4_HARRIER_SERVO");
++	const bool harrier_servo = servo && strcmp(servo,"1") == 0 && model && entity &&
++	    strcmp(model,"gz_x500_mono_cam") == 0 && strcmp(entity,"Drone-Harrier") == 0;
++	const bool running = previous == flip_recovery::FlipPlanner::State::Ramp ||
++			     previous == flip_recovery::FlipPlanner::State::Hold ||
++			     previous == flip_recovery::FlipPlanner::State::Coast;
++	if (!_mode_active || (!running && !_planner.session())) {
++		_harrier_servo_session = false;
++	}
++	if (harrier_servo && _mode_active && !running && _safe && _param_en.get() &&
++	    settings_valid && _tilt >= settings.entry_angle) {
++		_harrier_servo_session = true;
++		_harrier_initial_tilt = _harrier_best_tilt = _tilt;
++	}
++	const bool use_servo = harrier_servo && _harrier_servo_session;
++	if (use_servo) {
++		settings.stop_angle = hypotf(_angular_velocity.xyz[0], _angular_velocity.xyz[1]) <= .6f ? 12.f : 0.f;
++				// This controller does not follow the original planner's frozen rotation plane.
++		// Measure its progress against gravity, and keep the same bounded drive time.
++		if ((previous == flip_recovery::FlipPlanner::State::Ramp ||
++		     previous == flip_recovery::FlipPlanner::State::Hold) && _safe && PX4_ISFINITE(_tilt)) {
++			_harrier_best_tilt = fminf(_harrier_best_tilt, _tilt);
++			if (now - _planner.session() >= static_cast<uint64_t>(settings.progress_time * 1e6f) &&
++			    _harrier_initial_tilt - _harrier_best_tilt < settings.min_progress) {
++				_planner.fail("no Harrier recovery tilt progress", flip_recovery::ReasonNoProgress);
++			}
++		}
++		settings.progress_time = settings.max_time;
++		settings.min_progress = 0.f;
++	}
++
+ 	flip_recovery::Input in{};
+ 	in.now = now;
+ 	in.enabled = _param_en.get() && settings_valid;
+@@ -224,6 +277,38 @@
+ 	}
+ 
+ 	_plan = _planner.update(in, settings, _layout);
++
++	if (use_servo && _plan.active && _plan.zone != flip_recovery::Zone::Off) {
++		matrix::Quatf q{in.q};
++		q.normalize();
++		const matrix::Dcmf r{q};
++		float ax = -r(2,1);
++		float ay = r(2,0);
++		const float axis_norm = hypotf(ax,ay);
++		if (_tilt > 170.f && (now - _planner.session()) < 650_ms) {
++			ax = 0.f;
++			ay = 1.f;
++		} else if (axis_norm > .001f) {
++			ax /= axis_norm;
++			ay /= axis_norm;
++		}
++		const float omega = fminf(2.6f, math::radians(_tilt)*1.6f);
++		const float tx = (omega*ax - in.gyro[0]) * .55f;
++		const float ty = (omega*ay - in.gyro[1]) * .55f;
++		const float cap = fminf(settings.thr_high, (now - _planner.session()) * 2e-6f);
++		_plan.fwd_mask = 0;
++		_plan.rev_mask = 0;
++		for (unsigned i=0; i<4; i++) {
++			const float force = math::constrain(
++				(-_layout.py[i] * tx + _layout.px[i] * ty) /
++				fmaxf(.01f, fmaxf(fabsf(_layout.px[i]),fabsf(_layout.py[i]))), -1.f, 1.f);
++			const float output = copysignf(cap * sqrtf(fabsf(force)), force);
++			_plan.control[i] = fabsf(output) >= .01f ? output : 0.f;
++			if (_plan.control[i] > 0.f) { _plan.fwd_mask |= 1u << i; }
++			if (_plan.control[i] < 0.f) { _plan.rev_mask |= 1u << i; }
++		}
++	}
++
+ 
+ 	if (previous != _planner.state()) {
+ 		PX4_INFO("flip state %u: %s (tilt %.1f)", static_cast<unsigned>(_planner.state()), _planner.reason(),
+--- a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp
++++ b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.hpp
+@@ -91,6 +91,8 @@
+ 	uORB::Subscription _flip_control_sub{ORB_ID(flip_recovery_control)};
+ 	vehicle_status_s _vehicle_status{};
+ 	flip_recovery_control_s _flip_control{};
++	uint64_t _harrier_session{0};
++	bool _harrier_inverted{false};
+ 	bool _flip_bypass_active{false};
+ 	static constexpr float FLIP_MAX_RAD_S = 684.f;  // 标定: gz thrust=k*(v)^2, k=8.54858e-6; v=684 -> 4.0N/motor (~x500 hover), gz maxRotVel=1000
+ 
+--- a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp
++++ b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp
+@@ -32,6 +32,8 @@
+  ****************************************************************************/
+ 
+ #include "GZMixingInterfaceESC.hpp"
++#include <cstdlib>
++#include <cstring>
+ 
+ bool GZMixingInterfaceESC::init(const std::string &model_name)
+ {
+@@ -110,13 +112,26 @@
+ bool GZMixingInterfaceESC::publishFlipOutputs()
+ {
+ 	// 只在旁路激活时调用：把带符号归一化 control[] 映射到 gz velocity（double，可负）。
++	// The Harrier inverse-session calibration is latched on its first DRIVE frame.
++	// X500 and side recovery use the original mapping throughout the session.
++	const char *entity = getenv("PX4_GZ_MODEL_NAME");
++	const char *enabled = getenv("PX4_HARRIER_SERVO");
++	const bool harrier = entity && enabled && strcmp(entity,"Drone-Harrier")==0 && strcmp(enabled,"1")==0;
++	if (harrier && _harrier_session != _flip_control.session_id) {
++		_harrier_session = _flip_control.session_id;
++		_harrier_inverted = _flip_control.tilt_deg >= 125.f;
++	}
++	const float scale = harrier && _harrier_inverted ? 1000.f : FLIP_MAX_RAD_S;
++	const hrt_abstime now = hrt_absolute_time();
++	const bool expired = harrier && (now < _flip_control.timestamp ||
++					 now - _flip_control.timestamp > 200000);
+ 	gz::msgs::Actuators msg;
+ 	msg.mutable_velocity()->Resize(4, 0.0);
+ 	for (int i = 0; i < 4; ++i) {
+-		float u = _flip_control.control[i];
++		float u = expired ? 0.f : _flip_control.control[i];
+ 		if (!PX4_ISFINITE(u)) { u = 0.f; }
+ 		u = (u > 1.f) ? 1.f : (u < -1.f ? -1.f : u);
+-		msg.set_velocity(i, static_cast<double>(u * FLIP_MAX_RAD_S));
++		msg.set_velocity(i, static_cast<double>(u * scale));
+ 	}
+ 	if (_actuators_pub.Valid()) {
+ 		return _actuators_pub.Publish(msg);

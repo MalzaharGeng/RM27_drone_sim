@@ -20,6 +20,8 @@ Flip Recovery 是 PX4 多旋翼地面恢复模式。落地、未解锁、姿态�
 
 ## 验证结论
 
+Harrier 采用独立 SITL 补丁：根据 PX4 姿态及角速度控制翻转，接近正立时制动，并根据 EKF 发布的 `delta_q_reset` 区分小幅估计修正与显著姿态重置。接入范围、配置和补丁顺序见 [Harrier SITL 构建与运行](../tools/flip_recovery/harrier/README.md)，仿真工况和失败样例见 [Harrier 验证报告](verification/harrier_flip_20261122/README.md)。
+
 规划器和换向时序主机回归通过 64 项断言，实际混控功能测试通过 1 项。Gazebo X500 侧躺配对试验中，默认参数通过 0/6，自动换向调参组通过 6/6。15 次完全倒扣出力试验均未达到恢复判据。试验方法、参数和代表性 ULog 见 [Gazebo 验证报告](verification/flip_recovery_20261121/README.md)。
 
 DShot 停机和换向等待为软件时序。Gazebo 试验桥直接设置带符号的转速命令，未复现真实电调换向保护、带桨负载及实机接触条件。侧躺通过结论适用于该 X500 仿真配置。

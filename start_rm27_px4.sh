@@ -6,6 +6,14 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "${1:-}" == "--flip-recovery" ]]; then
+  shift
+  if [[ "${1:-}" == "--arena" ]]; then
+    shift
+    exec bash "$ROOT/tools/flip_recovery/harrier/launch.sh" --arena --gui --manual "$@"
+  fi
+  exec bash "$ROOT/tools/flip_recovery/harrier/launch.sh" --gui --manual "$@"
+fi
 # shellcheck disable=SC1091
 source "$ROOT/env.sh"
 

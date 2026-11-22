@@ -1,0 +1,54 @@
+{
+  "partition": "flip_sweep_afdc7ce4aa1b",
+  "instance": 253,
+  "params": {
+    "EN": 1,
+    "MODE": 0,
+    "ENTRY_ANG": 75,
+    "STOP_ANG": 50,
+    "THR_HIGH": 0.6,
+    "THR_LOW": 0.35,
+    "LOW_MODE": 1,
+    "SLEW": 1.0,
+    "TIME": 5.0,
+    "MIN_PROG": 1.0,
+    "PROG_T": 2.0,
+    "EXIT_MODE": 2,
+    "RC_CONFIRM": 0,
+    "OUT_DIRECT": 0
+  },
+  "world": "arena.sdf",
+  "entity": "Drone-Harrier",
+  "airframe": "gz_x500_mono_cam",
+  "model": "x500_mono_cam/model.sdf",
+  "requested": [
+    105.0,
+    90.0,
+    90.0,
+    0.5049
+  ],
+  "phases": [
+    {
+      "phase": "recovery",
+      "wall_s": 115.95090705399343,
+      "sim_s": 12.02
+    },
+    {
+      "phase": "cleanup",
+      "wall_s": 235.5869332680013,
+      "sim_s": 23.356
+    }
+  ],
+  "processes": [
+    {
+      "pid": 516201,
+      "rc": 0
+    },
+    {
+      "pid": 517291,
+      "rc": 0
+    }
+  ],
+  "pose_samples": 1454,
+  "motor_samples": 2087
+}
