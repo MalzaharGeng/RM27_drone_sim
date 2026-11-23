@@ -19,12 +19,20 @@ export QT_XCB_GL_INTEGRATION="${QT_XCB_GL_INTEGRATION:-xcb_glx}"
 export QT_OPENGL="${QT_OPENGL:-desktop}"
 
 # RM27 arena resources (model://rmuc_2027 lives under models/).
-export GZ_SIM_RESOURCE_PATH="$HOME/drone_sim/rm27_sim/models:$HOME/drone_sim/rm27_sim/models/rmuc_2027/meshes${GZ_SIM_RESOURCE_PATH:+:$GZ_SIM_RESOURCE_PATH}"
+_rm27_env_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export GZ_SIM_RESOURCE_PATH="$_rm27_env_root/rm27_sim/models:$_rm27_env_root/rm27_sim/models/rmuc_2027/meshes${GZ_SIM_RESOURCE_PATH:+:$GZ_SIM_RESOURCE_PATH}"
+unset _rm27_env_root
 
 # PX4 SITL selects the RM27 world and a start pose inside the arena.
 export PX4_GZ_WORLD="${PX4_GZ_WORLD:-rm27_world}"
-# [NP01_CENTER_START] 场馆中心 (14.149, 8.065)：CAD 支撑面 z=0.4686563；出生高度包含机身下半部与 2 mm 初始间隙。
-export PX4_GZ_MODEL_POSE="${PX4_GZ_MODEL_POSE:-14.149,8.065,0.504806301,0,0,0}"
+# Default pose for PX4's self-spawn path. When attaching to Drone-Harrier, the
+# world SDF already places the model; keep the rm27_world fallback in sync.
+case "$PX4_GZ_WORLD" in
+  rm27_world) _rm27_spawn_pose=13.116631,7.032968,1.9558063,0,0,0 ;;
+  *)          _rm27_spawn_pose=14.149,8.065,0.504806301,0,0,0 ;;
+esac
+export PX4_GZ_MODEL_POSE="${PX4_GZ_MODEL_POSE:-$_rm27_spawn_pose}"
+unset _rm27_spawn_pose
 
 # [Drone-Harrier] Attach PX4 to the pre-spawned model named Drone-Harrier in the world.
 # Airframe/make target stays x500_mono_cam (no rebuild); only the Gazebo entity is renamed.

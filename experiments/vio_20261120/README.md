@@ -39,7 +39,7 @@ for f in rm27_sim/worlds/*.sdf; do
 done
 install -m 644 rm27_sim/models/x500_mono_cam/model.sdf "$PX4_GZ_RES/models/x500_mono_cam/model.sdf.new"
 mv "$PX4_GZ_RES/models/x500_mono_cam/model.sdf.new" "$PX4_GZ_RES/models/x500_mono_cam/model.sdf"
-for name in rmuc_2027 gabel_airframe; do
+for name in rmuc_2027 gabel_airframe drone_harrier rm27_hangar_apriltags; do
   test -e "$PX4_GZ_RES/models/$name" || ln -s "$PWD/rm27_sim/models/$name" "$PX4_GZ_RES/models/$name"
 done
 ```

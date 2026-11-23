@@ -94,13 +94,18 @@
       <pose>0 0 0 0 0 0</pose>
     </include>
 <!-- Legacy launch pad removed: the CAD mesh supplies the actual contact. -->
-<!-- ===== Drone-Harrier (Gabel airframe, PX4 attaches via PX4_GZ_MODEL_NAME) =====
-         uri keeps x500_mono_cam (hardware params / make target), instance renamed to
-         Drone-Harrier. Sensors: cam_left/cam_right, imu, mag, baro, navsat unchanged. -->
+    <!-- PX4 attaches to the pre-spawned Drone-Harrier entity. -->
     <include>
-      <uri>model://x500_mono_cam</uri>
+      <uri>model://drone_harrier</uri>
       <name>Drone-Harrier</name>
-      <pose>14.149 8.065 0.504806301 0 0 0</pose>
+      <!-- Near blue rune, right-pillar H pad. CAD deck z=1.9196563 m;
+           spawn adds 0.03415 m for the body collision and 0.002 m clearance. -->
+      <pose>13.116631 7.032968 1.9558063 0 0 0</pose>
+    </include>
+    <!-- Fiducials on the near blue-rune H platform. Static visuals only. -->
+    <include>
+      <uri>model://rm27_hangar_apriltags</uri>
+      <pose>13.142631 7.032968 1.9203 0 0 0</pose>
     </include>
   </world>
 </sdf>

@@ -6,11 +6,10 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODEL_ROOT="$HERE/models"
 MODEL_SDF="$MODEL_ROOT/rmuc_2027/model.sdf"
 MODEL_CONFIG="$MODEL_ROOT/rmuc_2027/model.config"
-MESH="$MODEL_ROOT/rmuc_2027/meshes/rmuc_2027.stl"
 WORLD="$HERE/worlds/rm27_world.sdf"
 GUI_CONFIG="$HERE/worlds/rm27_gui.config"
 
-for f in "$MODEL_SDF" "$MODEL_CONFIG" "$MESH" "$WORLD" "$GUI_CONFIG"; do
+for f in "$MODEL_SDF" "$MODEL_CONFIG" "$WORLD" "$GUI_CONFIG"; do
   [[ -f "$f" ]] || { echo "Required file not found: $f" >&2; exit 1; }
 done
 

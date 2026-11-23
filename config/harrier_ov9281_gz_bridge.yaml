@@ -1,0 +1,15 @@
+# Optional ROS 2 input for a hangar detector; the flight and front stereo bridges are separate.
+- gz_topic_name: "/world/rm27_world/model/Drone-Harrier/link/base_link/sensor/ov9281_down/image"
+  ros_topic_name: "/harrier/ov9281/image_rect"
+  gz_type_name: "gz.msgs.Image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  direction: GZ_TO_ROS
+  subscriber_queue: 1
+  publisher_queue: 1
+- gz_topic_name: "/world/rm27_world/model/Drone-Harrier/link/base_link/sensor/ov9281_down/camera_info"
+  ros_topic_name: "/harrier/ov9281/camera_info"
+  gz_type_name: "gz.msgs.CameraInfo"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  direction: GZ_TO_ROS
+  subscriber_queue: 1
+  publisher_queue: 1

@@ -1,0 +1,60 @@
+{
+  "vehicle": "Drone-Harrier",
+  "project": "RoboMaster 小无人机",
+  "gazebo_resource": "drone_harrier",
+  "hardware_confirmed_on": "2026-11-23",
+  "front_stereo": {
+    "product": "DECXIN 成品双目",
+    "gazebo_links": [
+      "cam_left_link",
+      "cam_right_link"
+    ],
+    "gazebo_sensors": [
+      "cam_left",
+      "cam_right"
+    ],
+    "sim_profile": "Existing 960x720 at 30 Hz per camera; existing 50 mm baseline and extrinsics retained"
+  },
+  "flight_controller": {
+    "product": "MicoAir 743 V2 AIO 35A",
+    "board_target": "micoair_h743-v2_default",
+    "gazebo_visual": "micoair_743_v2_aio_35a",
+    "geometry_status": "Existing 40 mm class upper CAD plate used as a provisional board proxy; mounting pose unverified",
+    "flight_firmware_in_sim": "PX4 SITL"
+  },
+  "companion_computer": {
+    "product": "Orange Pi CM5",
+    "soc": "Rockchip RK3588S",
+    "ram_gb": 4,
+    "storage_gb": 32,
+    "gazebo_visual": "orange_pi_cm5_rk3588s_4gb_32gb",
+    "geometry_status": "Existing approximately 55 x 40 mm lower CAD board used as a module proxy; mounting pose unverified"
+  },
+  "propulsion": {
+    "motor": "T-MOTOR 1204",
+    "kv_rpm_per_volt": 6500,
+    "propeller": "1816",
+    "count": 4,
+    "gazebo_motor_visual_pattern": "tmotor_1204_6500kv_motor_N",
+    "gazebo_prop_visual_pattern": "propeller_1816_N",
+    "geometry_status": "CAD motor and prop proxies retained, props have an approximately 45 mm swept outline. Visuals fixed on the body as in the original CAD.",
+    "dynamics_status": "Original X500 SITL mass, inertia, virtual rotor lever arms and motor plugin parameters retained; not calibrated to the real motor/prop combination"
+  },
+  "downward_camera": {
+    "sensor": "OmniVision OV9281",
+    "type": "Monochrome global shutter",
+    "selected_mode": {
+      "width_px": 1280,
+      "height_px": 800,
+      "target_fps": 120
+    },
+    "roles": [
+      "visible-light message receiver input",
+      "hangar AprilTag observations"
+    ],
+    "gazebo_sensor": "base_link/sensor/ov9281_down",
+    "sim_mount_status": "Provisional optical center, orientation and lens FOV; calibrate on the actual carrier and lens.",
+    "sim_limit": "Simulated image stream only; no physical shutter timing or optical modulation/demodulation model."
+  },
+  "px4_sitl_airframe": "gz_x500_mono_cam"
+}
